@@ -37,7 +37,7 @@
 // // import "./globals.css";
 
 // // export const metadata = {
-// //   title: "SPEETTS AI - Fire Triage System",
+// //   title: "SPETTS AI - Fire Triage System",
 // //   description:
 // //     "Smart Pre-hospital Emergency Evaluation, Triage & Transport System",
 // // };
@@ -60,7 +60,7 @@
 
 
 // export const metadata = {
-//   title: "SPEETTS AI",
+//   title: "SPETTS AI",
 //   description: "Smart Emergency Triage System",
 // };
 

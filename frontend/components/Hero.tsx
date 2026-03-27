@@ -20,7 +20,7 @@
 // // //   return (
 // // //     <section className="text-center py-16">
 // // //       <h1 className="text-4xl font-bold mb-4">
-// // //         SPEETTS AI
+// // //         SPETTS AI
 // // //       </h1>
 
 // // //       <p className="text-gray-600 mb-2">
@@ -39,7 +39,7 @@
 // //     <section className="text-center py-20 bg-gradient-to-r from-blue-50 to-red-50">
 
 // //       <h1 className="text-4xl font-bold mb-4 animate-pulse">
-// //         🔥 SPEETTS AI
+// //         🔥 SPETTS AI
 // //       </h1>
 
 // //       <p className="text-gray-600 mb-2">
@@ -66,7 +66,7 @@
 //       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
 
 //         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-//           SPEETTS AI
+//           SPETTS AI
 //         </h1>
 
 //         <p className="text-gray-600 mb-2">
@@ -94,7 +94,7 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
 
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          SPEETTS AI
+          SPETTS AI
         </h1>
 
         <p className="text-gray-600 mb-2">
