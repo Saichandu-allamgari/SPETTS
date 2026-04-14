@@ -1,148 +1,223 @@
 // // "use client";
-// // import { useEffect, useState } from "react";
+// // import { useState } from "react";
 
-// // export default function PatientList() {
-// //   const [patients, setPatients] = useState<any[]>([]);
+// // export default function PatientForm({ onCreate }: any) {
+// //   const [patient, setPatient] = useState({
+// //     name: "",
+// //     gender: "",
+// //     age: "",
+// //     pregnant: "",
+// //   });
 
-// //   useEffect(() => {
-// //     const data = JSON.parse(localStorage.getItem("patients") || "[]");
-// //     setPatients(data);
-// //   }, []);
+// //   function handleSubmit() {
+// //     if (!patient.name || !patient.gender || !patient.age) {
+// //       alert("Please fill all required (*) fields");
+// //       return;
+// //     }
+
+// //     onCreate(patient);
+// //   }
 
 // //   return (
-// //     <section className="bg-gray-100 py-16">
-// //       <div className="max-w-6xl mx-auto px-4">
+// //     <div className="max-w-md mx-auto bg-white p-6 rounded-xl border mb-6">
 
-// //         <h2 className="text-2xl font-bold mb-6">📋 Patient Dashboard</h2>
+// //       <h2 className="text-xl font-bold mb-4 text-center">
+// //         🧾 Patient Registration
+// //       </h2>
 
-// //         <div className="bg-white p-4 rounded border">
-// //           {patients.length === 0 ? (
-// //             <p>No patients yet</p>
-// //           ) : (
-// //             <table className="w-full">
-// //               <thead>
-// //                 <tr className="border-b">
-// //                   <th>Name</th>
-// //                   <th>Age</th>
-// //                   <th>Severity</th>
-// //                   <th>Time</th>
-// //                 </tr>
-// //               </thead>
+// //       <input
+// //         type="text"
+// //         placeholder="Patient Name *"
+// //         className="w-full border p-2 mb-3 rounded"
+// //         onChange={(e) =>
+// //           setPatient({ ...patient, name: e.target.value })
+// //         }
+// //       />
 
-// //               <tbody>
-// //                 {patients.map((p, i) => (
-// //                   <tr key={i} className="border-b">
-// //                     <td>{p.name}</td>
-// //                     <td>{p.age}</td>
-// //                     <td>{p.result}</td>
-// //                     <td>{p.time}</td>
-// //                   </tr>
-// //                 ))}
-// //               </tbody>
-// //             </table>
-// //           )}
-// //         </div>
+// //       <select
+// //         defaultValue=""
+// //         className="w-full border p-2 mb-3 rounded"
+// //         onChange={(e) =>
+// //           setPatient({ ...patient, gender: e.target.value })
+// //         }
+// //       >
+// //         <option value="" disabled>Select Gender *</option>
+// //         <option>Male</option>
+// //         <option>Female</option>
+// //       </select>
 
-// //       </div>
-// //     </section>
+// //       <select
+// //         defaultValue=""
+// //         className="w-full border p-2 mb-3 rounded"
+// //         onChange={(e) =>
+// //           setPatient({ ...patient, age: e.target.value })
+// //         }
+// //       >
+// //         <option value="" disabled>Select Age *</option>
+// //         <option>Child</option>
+// //         <option>Adult</option>
+// //         <option>Elderly</option>
+// //       </select>
+
+// //       {patient.gender === "Female" && (
+// //         <select
+// //           defaultValue=""
+// //           className="w-full border p-2 mb-3 rounded"
+// //           onChange={(e) =>
+// //             setPatient({ ...patient, pregnant: e.target.value })
+// //           }
+// //         >
+// //           <option value="" disabled>Pregnant?</option>
+// //           <option>Yes</option>
+// //           <option>No</option>
+// //         </select>
+// //       )}
+
+// //       <button
+// //         onClick={handleSubmit}
+// //         className="w-full bg-blue-600 text-white py-2 rounded"
+// //       >
+// //         ➡️ Continue to Triage
+// //       </button>
+// //     </div>
 // //   );
 // // }
 
-
+// // src/components/PatientForm.tsx
 // "use client";
+
 // import { useState } from "react";
 
 // export default function PatientForm({ onCreate }: any) {
 //   const [patient, setPatient] = useState({
 //     name: "",
-//     gender: "Male",
-//     age: "Adult",
-//     pregnant: "No",
+//     gender: "",
+//     age: "",
+//     pregnant: "",
+//     image: "",
 //   });
 
-//   function handleSubmit() {
-//     if (!patient.name) {
-//       alert("Name is required");
+//   function submit() {
+//     if (!patient.name || !patient.gender || !patient.age) {
+//       alert("Please fill required fields");
 //       return;
 //     }
 
-//     onCreate(patient); // send to parent
+//     onCreate(patient);
 //   }
 
 //   return (
-//     <div className="max-w-md mx-auto bg-white p-6 rounded-xl border mb-6">
+//     <section className="bg-white py-14">
+//       <div className="max-w-6xl mx-auto px-4">
 
-//       <h3 className="text-lg font-semibold mb-4">
-//         🧾 Patient Details
-//       </h3>
+//         <h2 className="text-3xl font-bold text-center mb-8">
+//           🧾 Patient Registration
+//         </h2>
 
-//       <input
-//         type="text"
-//         placeholder="Patient Name *"
-//         className="w-full border p-2 mb-3 rounded"
-//         onChange={(e) =>
-//           setPatient({ ...patient, name: e.target.value })
-//         }
-//       />
+//         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-//       <select
-//         className="w-full border p-2 mb-3 rounded"
-//         onChange={(e) =>
-//           setPatient({ ...patient, gender: e.target.value })
-//         }
-//       >
-//         <option>Male</option>
-//         <option>Female</option>
-//       </select>
+//           <input
+//             type="text"
+//             placeholder="Patient Name *"
+//             className="w-full border rounded p-3 mb-4"
+//             onChange={(e) =>
+//               setPatient({ ...patient, name: e.target.value })
+//             }
+//           />
 
-//       <select
-//         className="w-full border p-2 mb-3 rounded"
-//         onChange={(e) =>
-//           setPatient({ ...patient, age: e.target.value })
-//         }
-//       >
-//         <option>Child</option>
-//         <option>Adult</option>
-//         <option>Elderly</option>
-//       </select>
+//           <select
+//             defaultValue=""
+//             className="w-full border rounded p-3 mb-4"
+//             onChange={(e) =>
+//               setPatient({ ...patient, gender: e.target.value })
+//             }
+//           >
+//             <option value="" disabled>Select Gender *</option>
+//             <option>Male</option>
+//             <option>Female</option>
+//           </select>
 
-//       {patient.gender === "Female" && (
-//         <select
-//           className="w-full border p-2 mb-3 rounded"
-//           onChange={(e) =>
-//             setPatient({ ...patient, pregnant: e.target.value })
-//           }
-//         >
-//           <option>No</option>
-//           <option>Yes</option>
-//         </select>
-//       )}
+//           <select
+//             defaultValue=""
+//             className="w-full border rounded p-3 mb-4"
+//             onChange={(e) =>
+//               setPatient({ ...patient, age: e.target.value })
+//             }
+//           >
+//             <option value="" disabled>Select Age Group *</option>
+//             <option>Child</option>
+//             <option>Adult</option>
+//             <option>Elderly</option>
+//           </select>
 
-//       <button
-//         onClick={handleSubmit}
-//         className="w-full bg-blue-600 text-white py-2 rounded"
-//       >
-//         ➡️ Continue to Triage
-//       </button>
-//     </div>
+//           {/* pregnancy only adult female */}
+//           {patient.gender === "Female" &&
+//             patient.age === "Adult" && (
+//               <select
+//                 defaultValue=""
+//                 className="w-full border rounded p-3 mb-4"
+//                 onChange={(e) =>
+//                   setPatient({
+//                     ...patient,
+//                     pregnant: e.target.value,
+//                   })
+//                 }
+//               >
+//                 <option value="" disabled>
+//                   Pregnant?
+//                 </option>
+//                 <option>Yes</option>
+//                 <option>No</option>
+//               </select>
+//             )}
+
+//           {/* image option */}
+//           <input
+//             type="file"
+//             className="w-full border rounded p-3 mb-4"
+//             onChange={(e: any) =>
+//               setPatient({
+//                 ...patient,
+//                 image: e.target.files?.[0]?.name || "",
+//               })
+//             }
+//           />
+
+//           <button
+//             onClick={submit}
+//             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
+//           >
+//             Continue to Triage →
+//           </button>
+//         </div>
+//       </div>
+//     </section>
 //   );
 // }
 
-
 "use client";
-import { useState } from "react";
+
+import { useRef, useState } from "react";
 
 export default function PatientForm({ onCreate }: any) {
+  const cameraRef = useRef<HTMLInputElement>(null);
+  const uploadRef = useRef<HTMLInputElement>(null);
+
   const [patient, setPatient] = useState({
     name: "",
     gender: "",
     age: "",
     pregnant: "",
+    image: "",
   });
 
-  function handleSubmit() {
-    if (!patient.name || !patient.gender || !patient.age) {
-      alert("Please fill all required (*) fields");
+  function submit() {
+    if (
+      !patient.name ||
+      !patient.gender ||
+      !patient.age
+    ) {
+      alert("Please fill required fields");
       return;
     }
 
@@ -150,66 +225,164 @@ export default function PatientForm({ onCreate }: any) {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-xl border mb-6">
+    <section className="bg-white py-14">
+      <div className="max-w-6xl mx-auto px-4">
 
-      <h2 className="text-xl font-bold mb-4 text-center">
-        🧾 Patient Registration
-      </h2>
+        <h2 className="text-3xl font-bold text-center mb-8">
+          🧾 Patient Registration
+        </h2>
 
-      <input
-        type="text"
-        placeholder="Patient Name *"
-        className="w-full border p-2 mb-3 rounded"
-        onChange={(e) =>
-          setPatient({ ...patient, name: e.target.value })
-        }
-      />
+        <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-      <select
-        defaultValue=""
-        className="w-full border p-2 mb-3 rounded"
-        onChange={(e) =>
-          setPatient({ ...patient, gender: e.target.value })
-        }
-      >
-        <option value="" disabled>Select Gender *</option>
-        <option>Male</option>
-        <option>Female</option>
-      </select>
+          {/* Name */}
+          <input
+            type="text"
+            placeholder="Patient Name *"
+            className="w-full border rounded p-3 mb-4"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                name: e.target.value,
+              })
+            }
+          />
 
-      <select
-        defaultValue=""
-        className="w-full border p-2 mb-3 rounded"
-        onChange={(e) =>
-          setPatient({ ...patient, age: e.target.value })
-        }
-      >
-        <option value="" disabled>Select Age *</option>
-        <option>Child</option>
-        <option>Adult</option>
-        <option>Elderly</option>
-      </select>
+          {/* Gender */}
+          <select
+            defaultValue=""
+            className="w-full border rounded p-3 mb-4"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                gender: e.target.value,
+              })
+            }
+          >
+            <option value="" disabled>
+              Select Gender *
+            </option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
 
-      {patient.gender === "Female" && (
-        <select
-          defaultValue=""
-          className="w-full border p-2 mb-3 rounded"
-          onChange={(e) =>
-            setPatient({ ...patient, pregnant: e.target.value })
-          }
-        >
-          <option value="" disabled>Pregnant?</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-      )}
+          {/* Age Group */}
+          <select
+            defaultValue=""
+            className="w-full border rounded p-3 mb-4"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                age: e.target.value,
+              })
+            }
+          >
+            <option value="" disabled>
+              Select Age Group *
+            </option>
+            <option>Child</option>
+            <option>Adult</option>
+            <option>Elderly</option>
+          </select>
 
-      <button
-        onClick={handleSubmit}
-        className="w-full bg-blue-600 text-white py-2 rounded"
-      >
-        ➡️ Continue to Triage
-      </button>
-    </div>
+          {/* Pregnancy only for Adult Female */}
+          {patient.gender === "Female" &&
+            patient.age === "Adult" && (
+              <select
+                defaultValue=""
+                className="w-full border rounded p-3 mb-4"
+                onChange={(e) =>
+                  setPatient({
+                    ...patient,
+                    pregnant: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Pregnant?
+                </option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            )}
+
+          {/* Divider */}
+          <div className="text-center text-sm text-gray-500 mb-3">
+            OR Capture / Upload Patient Image
+          </div>
+
+          {/* Hidden Camera Input */}
+          <input
+            ref={cameraRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                image:
+                  e.target.files?.[0]?.name || "",
+              })
+            }
+          />
+
+          {/* Hidden Upload Input */}
+          <input
+            ref={uploadRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                image:
+                  e.target.files?.[0]?.name || "",
+              })
+            }
+          />
+
+          {/* Buttons */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+
+            <button
+              type="button"
+              onClick={() =>
+                cameraRef.current?.click()
+              }
+              className="border rounded-xl py-3 hover:bg-slate-50"
+            >
+              📷 Open Camera
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                uploadRef.current?.click()
+              }
+              className="border rounded-xl py-3 hover:bg-slate-50"
+            >
+              ⬆ Upload Image
+            </button>
+
+          </div>
+
+          {/* File Name */}
+          {patient.image && (
+            <p className="text-sm text-green-600 mb-4">
+              Saved: {patient.image}
+            </p>
+          )}
+
+          {/* Submit */}
+          <button
+            onClick={submit}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
+          >
+            Continue to Triage →
+          </button>
+
+        </div>
+      </div>
+    </section>
   );
 }
