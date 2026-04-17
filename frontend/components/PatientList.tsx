@@ -1,4 +1,91 @@
+// // // // "use client";
+// // // // import { useState } from "react";
+
+// // // // export default function PatientForm({ onCreate }: any) {
+// // // //   const [patient, setPatient] = useState({
+// // // //     name: "",
+// // // //     gender: "",
+// // // //     age: "",
+// // // //     pregnant: "",
+// // // //   });
+
+// // // //   function handleSubmit() {
+// // // //     if (!patient.name || !patient.gender || !patient.age) {
+// // // //       alert("Please fill all required (*) fields");
+// // // //       return;
+// // // //     }
+
+// // // //     onCreate(patient);
+// // // //   }
+
+// // // //   return (
+// // // //     <div className="max-w-md mx-auto bg-white p-6 rounded-xl border mb-6">
+
+// // // //       <h2 className="text-xl font-bold mb-4 text-center">
+// // // //         🧾 Patient Registration
+// // // //       </h2>
+
+// // // //       <input
+// // // //         type="text"
+// // // //         placeholder="Patient Name *"
+// // // //         className="w-full border p-2 mb-3 rounded"
+// // // //         onChange={(e) =>
+// // // //           setPatient({ ...patient, name: e.target.value })
+// // // //         }
+// // // //       />
+
+// // // //       <select
+// // // //         defaultValue=""
+// // // //         className="w-full border p-2 mb-3 rounded"
+// // // //         onChange={(e) =>
+// // // //           setPatient({ ...patient, gender: e.target.value })
+// // // //         }
+// // // //       >
+// // // //         <option value="" disabled>Select Gender *</option>
+// // // //         <option>Male</option>
+// // // //         <option>Female</option>
+// // // //       </select>
+
+// // // //       <select
+// // // //         defaultValue=""
+// // // //         className="w-full border p-2 mb-3 rounded"
+// // // //         onChange={(e) =>
+// // // //           setPatient({ ...patient, age: e.target.value })
+// // // //         }
+// // // //       >
+// // // //         <option value="" disabled>Select Age *</option>
+// // // //         <option>Child</option>
+// // // //         <option>Adult</option>
+// // // //         <option>Elderly</option>
+// // // //       </select>
+
+// // // //       {patient.gender === "Female" && (
+// // // //         <select
+// // // //           defaultValue=""
+// // // //           className="w-full border p-2 mb-3 rounded"
+// // // //           onChange={(e) =>
+// // // //             setPatient({ ...patient, pregnant: e.target.value })
+// // // //           }
+// // // //         >
+// // // //           <option value="" disabled>Pregnant?</option>
+// // // //           <option>Yes</option>
+// // // //           <option>No</option>
+// // // //         </select>
+// // // //       )}
+
+// // // //       <button
+// // // //         onClick={handleSubmit}
+// // // //         className="w-full bg-blue-600 text-white py-2 rounded"
+// // // //       >
+// // // //         ➡️ Continue to Triage
+// // // //       </button>
+// // // //     </div>
+// // // //   );
+// // // // }
+
+// // // // src/components/PatientForm.tsx
 // // // "use client";
+
 // // // import { useState } from "react";
 
 // // // export default function PatientForm({ onCreate }: any) {
@@ -7,11 +94,12 @@
 // // //     gender: "",
 // // //     age: "",
 // // //     pregnant: "",
+// // //     image: "",
 // // //   });
 
-// // //   function handleSubmit() {
+// // //   function submit() {
 // // //     if (!patient.name || !patient.gender || !patient.age) {
-// // //       alert("Please fill all required (*) fields");
+// // //       alert("Please fill required fields");
 // // //       return;
 // // //     }
 
@@ -19,76 +107,102 @@
 // // //   }
 
 // // //   return (
-// // //     <div className="max-w-md mx-auto bg-white p-6 rounded-xl border mb-6">
+// // //     <section className="bg-white py-14">
+// // //       <div className="max-w-6xl mx-auto px-4">
 
-// // //       <h2 className="text-xl font-bold mb-4 text-center">
-// // //         🧾 Patient Registration
-// // //       </h2>
+// // //         <h2 className="text-3xl font-bold text-center mb-8">
+// // //           🧾 Patient Registration
+// // //         </h2>
 
-// // //       <input
-// // //         type="text"
-// // //         placeholder="Patient Name *"
-// // //         className="w-full border p-2 mb-3 rounded"
-// // //         onChange={(e) =>
-// // //           setPatient({ ...patient, name: e.target.value })
-// // //         }
-// // //       />
+// // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-// // //       <select
-// // //         defaultValue=""
-// // //         className="w-full border p-2 mb-3 rounded"
-// // //         onChange={(e) =>
-// // //           setPatient({ ...patient, gender: e.target.value })
-// // //         }
-// // //       >
-// // //         <option value="" disabled>Select Gender *</option>
-// // //         <option>Male</option>
-// // //         <option>Female</option>
-// // //       </select>
+// // //           <input
+// // //             type="text"
+// // //             placeholder="Patient Name *"
+// // //             className="w-full border rounded p-3 mb-4"
+// // //             onChange={(e) =>
+// // //               setPatient({ ...patient, name: e.target.value })
+// // //             }
+// // //           />
 
-// // //       <select
-// // //         defaultValue=""
-// // //         className="w-full border p-2 mb-3 rounded"
-// // //         onChange={(e) =>
-// // //           setPatient({ ...patient, age: e.target.value })
-// // //         }
-// // //       >
-// // //         <option value="" disabled>Select Age *</option>
-// // //         <option>Child</option>
-// // //         <option>Adult</option>
-// // //         <option>Elderly</option>
-// // //       </select>
+// // //           <select
+// // //             defaultValue=""
+// // //             className="w-full border rounded p-3 mb-4"
+// // //             onChange={(e) =>
+// // //               setPatient({ ...patient, gender: e.target.value })
+// // //             }
+// // //           >
+// // //             <option value="" disabled>Select Gender *</option>
+// // //             <option>Male</option>
+// // //             <option>Female</option>
+// // //           </select>
 
-// // //       {patient.gender === "Female" && (
-// // //         <select
-// // //           defaultValue=""
-// // //           className="w-full border p-2 mb-3 rounded"
-// // //           onChange={(e) =>
-// // //             setPatient({ ...patient, pregnant: e.target.value })
-// // //           }
-// // //         >
-// // //           <option value="" disabled>Pregnant?</option>
-// // //           <option>Yes</option>
-// // //           <option>No</option>
-// // //         </select>
-// // //       )}
+// // //           <select
+// // //             defaultValue=""
+// // //             className="w-full border rounded p-3 mb-4"
+// // //             onChange={(e) =>
+// // //               setPatient({ ...patient, age: e.target.value })
+// // //             }
+// // //           >
+// // //             <option value="" disabled>Select Age Group *</option>
+// // //             <option>Child</option>
+// // //             <option>Adult</option>
+// // //             <option>Elderly</option>
+// // //           </select>
 
-// // //       <button
-// // //         onClick={handleSubmit}
-// // //         className="w-full bg-blue-600 text-white py-2 rounded"
-// // //       >
-// // //         ➡️ Continue to Triage
-// // //       </button>
-// // //     </div>
+// // //           {/* pregnancy only adult female */}
+// // //           {patient.gender === "Female" &&
+// // //             patient.age === "Adult" && (
+// // //               <select
+// // //                 defaultValue=""
+// // //                 className="w-full border rounded p-3 mb-4"
+// // //                 onChange={(e) =>
+// // //                   setPatient({
+// // //                     ...patient,
+// // //                     pregnant: e.target.value,
+// // //                   })
+// // //                 }
+// // //               >
+// // //                 <option value="" disabled>
+// // //                   Pregnant?
+// // //                 </option>
+// // //                 <option>Yes</option>
+// // //                 <option>No</option>
+// // //               </select>
+// // //             )}
+
+// // //           {/* image option */}
+// // //           <input
+// // //             type="file"
+// // //             className="w-full border rounded p-3 mb-4"
+// // //             onChange={(e: any) =>
+// // //               setPatient({
+// // //                 ...patient,
+// // //                 image: e.target.files?.[0]?.name || "",
+// // //               })
+// // //             }
+// // //           />
+
+// // //           <button
+// // //             onClick={submit}
+// // //             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
+// // //           >
+// // //             Continue to Triage →
+// // //           </button>
+// // //         </div>
+// // //       </div>
+// // //     </section>
 // // //   );
 // // // }
 
-// // // src/components/PatientForm.tsx
 // // "use client";
 
-// // import { useState } from "react";
+// // import { useRef, useState } from "react";
 
 // // export default function PatientForm({ onCreate }: any) {
+// //   const cameraRef = useRef<HTMLInputElement>(null);
+// //   const uploadRef = useRef<HTMLInputElement>(null);
+
 // //   const [patient, setPatient] = useState({
 // //     name: "",
 // //     gender: "",
@@ -98,7 +212,11 @@
 // //   });
 
 // //   function submit() {
-// //     if (!patient.name || !patient.gender || !patient.age) {
+// //     if (
+// //       !patient.name ||
+// //       !patient.gender ||
+// //       !patient.age
+// //     ) {
 // //       alert("Please fill required fields");
 // //       return;
 // //     }
@@ -116,41 +234,57 @@
 
 // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
+// //           {/* Name */}
 // //           <input
 // //             type="text"
 // //             placeholder="Patient Name *"
 // //             className="w-full border rounded p-3 mb-4"
 // //             onChange={(e) =>
-// //               setPatient({ ...patient, name: e.target.value })
+// //               setPatient({
+// //                 ...patient,
+// //                 name: e.target.value,
+// //               })
 // //             }
 // //           />
 
+// //           {/* Gender */}
 // //           <select
 // //             defaultValue=""
 // //             className="w-full border rounded p-3 mb-4"
 // //             onChange={(e) =>
-// //               setPatient({ ...patient, gender: e.target.value })
+// //               setPatient({
+// //                 ...patient,
+// //                 gender: e.target.value,
+// //               })
 // //             }
 // //           >
-// //             <option value="" disabled>Select Gender *</option>
+// //             <option value="" disabled>
+// //               Select Gender *
+// //             </option>
 // //             <option>Male</option>
 // //             <option>Female</option>
 // //           </select>
 
+// //           {/* Age Group */}
 // //           <select
 // //             defaultValue=""
 // //             className="w-full border rounded p-3 mb-4"
 // //             onChange={(e) =>
-// //               setPatient({ ...patient, age: e.target.value })
+// //               setPatient({
+// //                 ...patient,
+// //                 age: e.target.value,
+// //               })
 // //             }
 // //           >
-// //             <option value="" disabled>Select Age Group *</option>
+// //             <option value="" disabled>
+// //               Select Age Group *
+// //             </option>
 // //             <option>Child</option>
 // //             <option>Adult</option>
 // //             <option>Elderly</option>
 // //           </select>
 
-// //           {/* pregnancy only adult female */}
+// //           {/* Pregnancy only for Adult Female */}
 // //           {patient.gender === "Female" &&
 // //             patient.age === "Adult" && (
 // //               <select
@@ -171,29 +305,88 @@
 // //               </select>
 // //             )}
 
-// //           {/* image option */}
+// //           {/* Divider */}
+// //           <div className="text-center text-sm text-gray-500 mb-3">
+// //             OR Capture / Upload Patient Image
+// //           </div>
+
+// //           {/* Hidden Camera Input */}
 // //           <input
+// //             ref={cameraRef}
 // //             type="file"
-// //             className="w-full border rounded p-3 mb-4"
-// //             onChange={(e: any) =>
+// //             accept="image/*"
+// //             capture="environment"
+// //             className="hidden"
+// //             onChange={(e) =>
 // //               setPatient({
 // //                 ...patient,
-// //                 image: e.target.files?.[0]?.name || "",
+// //                 image:
+// //                   e.target.files?.[0]?.name || "",
 // //               })
 // //             }
 // //           />
 
+// //           {/* Hidden Upload Input */}
+// //           <input
+// //             ref={uploadRef}
+// //             type="file"
+// //             accept="image/*"
+// //             className="hidden"
+// //             onChange={(e) =>
+// //               setPatient({
+// //                 ...patient,
+// //                 image:
+// //                   e.target.files?.[0]?.name || "",
+// //               })
+// //             }
+// //           />
+
+// //           {/* Buttons */}
+// //           <div className="grid grid-cols-2 gap-3 mb-4">
+
+// //             <button
+// //               type="button"
+// //               onClick={() =>
+// //                 cameraRef.current?.click()
+// //               }
+// //               className="border rounded-xl py-3 hover:bg-slate-50"
+// //             >
+// //               📷 Open Camera
+// //             </button>
+
+// //             <button
+// //               type="button"
+// //               onClick={() =>
+// //                 uploadRef.current?.click()
+// //               }
+// //               className="border rounded-xl py-3 hover:bg-slate-50"
+// //             >
+// //               ⬆ Upload Image
+// //             </button>
+
+// //           </div>
+
+// //           {/* File Name */}
+// //           {patient.image && (
+// //             <p className="text-sm text-green-600 mb-4">
+// //               Saved: {patient.image}
+// //             </p>
+// //           )}
+
+// //           {/* Submit */}
 // //           <button
 // //             onClick={submit}
 // //             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
 // //           >
 // //             Continue to Triage →
 // //           </button>
+
 // //         </div>
 // //       </div>
 // //     </section>
 // //   );
 // // }
+
 
 // "use client";
 
@@ -212,12 +405,18 @@
 //   });
 
 //   function submit() {
-//     if (
-//       !patient.name ||
-//       !patient.gender ||
-//       !patient.age
-//     ) {
-//       alert("Please fill required fields");
+//     const hasDetails =
+//       patient.name &&
+//       patient.gender &&
+//       patient.age;
+
+//     const hasImage = patient.image;
+
+//     // Either details OR image required
+//     if (!hasDetails && !hasImage) {
+//       alert(
+//         "Enter patient details OR upload image"
+//       );
 //       return;
 //     }
 
@@ -234,10 +433,14 @@
 
 //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
+//           <p className="text-center text-sm text-gray-500 mb-6">
+//             Fill patient details OR use image option
+//           </p>
+
 //           {/* Name */}
 //           <input
 //             type="text"
-//             placeholder="Patient Name *"
+//             placeholder="Patient Name"
 //             className="w-full border rounded p-3 mb-4"
 //             onChange={(e) =>
 //               setPatient({
@@ -259,7 +462,7 @@
 //             }
 //           >
 //             <option value="" disabled>
-//               Select Gender *
+//               Select Gender
 //             </option>
 //             <option>Male</option>
 //             <option>Female</option>
@@ -277,14 +480,14 @@
 //             }
 //           >
 //             <option value="" disabled>
-//               Select Age Group *
+//               Select Age Group
 //             </option>
 //             <option>Child</option>
 //             <option>Adult</option>
 //             <option>Elderly</option>
 //           </select>
 
-//           {/* Pregnancy only for Adult Female */}
+//           {/* Pregnancy only Female Adult */}
 //           {patient.gender === "Female" &&
 //             patient.age === "Adult" && (
 //               <select
@@ -293,7 +496,8 @@
 //                 onChange={(e) =>
 //                   setPatient({
 //                     ...patient,
-//                     pregnant: e.target.value,
+//                     pregnant:
+//                       e.target.value,
 //                   })
 //                 }
 //               >
@@ -310,7 +514,7 @@
 //             OR Capture / Upload Patient Image
 //           </div>
 
-//           {/* Hidden Camera Input */}
+//           {/* Camera Input */}
 //           <input
 //             ref={cameraRef}
 //             type="file"
@@ -321,12 +525,13 @@
 //               setPatient({
 //                 ...patient,
 //                 image:
-//                   e.target.files?.[0]?.name || "",
+//                   e.target.files?.[0]
+//                     ?.name || "",
 //               })
 //             }
 //           />
 
-//           {/* Hidden Upload Input */}
+//           {/* Upload Input */}
 //           <input
 //             ref={uploadRef}
 //             type="file"
@@ -336,7 +541,8 @@
 //               setPatient({
 //                 ...patient,
 //                 image:
-//                   e.target.files?.[0]?.name || "",
+//                   e.target.files?.[0]
+//                     ?.name || "",
 //               })
 //             }
 //           />
@@ -349,7 +555,7 @@
 //               onClick={() =>
 //                 cameraRef.current?.click()
 //               }
-//               className="border rounded-xl py-3 hover:bg-slate-50"
+//               className="border rounded-xl py-3 hover:bg-slate-50 transition"
 //             >
 //               📷 Open Camera
 //             </button>
@@ -359,14 +565,14 @@
 //               onClick={() =>
 //                 uploadRef.current?.click()
 //               }
-//               className="border rounded-xl py-3 hover:bg-slate-50"
+//               className="border rounded-xl py-3 hover:bg-slate-50 transition"
 //             >
 //               ⬆ Upload Image
 //             </button>
 
 //           </div>
 
-//           {/* File Name */}
+//           {/* Selected File */}
 //           {patient.image && (
 //             <p className="text-sm text-green-600 mb-4">
 //               Saved: {patient.image}
@@ -376,7 +582,7 @@
 //           {/* Submit */}
 //           <button
 //             onClick={submit}
-//             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
+//             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition"
 //           >
 //             Continue to Triage →
 //           </button>
@@ -387,19 +593,22 @@
 //   );
 // }
 
-
 "use client";
 
 import { useRef, useState } from "react";
 
 export default function PatientForm({ onCreate }: any) {
-  const cameraRef = useRef<HTMLInputElement>(null);
-  const uploadRef = useRef<HTMLInputElement>(null);
+  const cameraRef =
+    useRef<HTMLInputElement>(null);
+
+  const uploadRef =
+    useRef<HTMLInputElement>(null);
 
   const [patient, setPatient] = useState({
     name: "",
     gender: "",
     age: "",
+    blood: "",
     pregnant: "",
     image: "",
   });
@@ -412,7 +621,6 @@ export default function PatientForm({ onCreate }: any) {
 
     const hasImage = patient.image;
 
-    // Either details OR image required
     if (!hasDetails && !hasImage) {
       alert(
         "Enter patient details OR upload image"
@@ -461,14 +669,17 @@ export default function PatientForm({ onCreate }: any) {
               })
             }
           >
-            <option value="" disabled>
+            <option
+              value=""
+              disabled
+            >
               Select Gender
             </option>
             <option>Male</option>
             <option>Female</option>
           </select>
 
-          {/* Age Group */}
+          {/* Age */}
           <select
             defaultValue=""
             className="w-full border rounded p-3 mb-4"
@@ -479,7 +690,10 @@ export default function PatientForm({ onCreate }: any) {
               })
             }
           >
-            <option value="" disabled>
+            <option
+              value=""
+              disabled
+            >
               Select Age Group
             </option>
             <option>Child</option>
@@ -487,9 +701,37 @@ export default function PatientForm({ onCreate }: any) {
             <option>Elderly</option>
           </select>
 
+          {/* Blood Group Optional */}
+          <select
+            defaultValue=""
+            className="w-full border rounded p-3 mb-4"
+            onChange={(e) =>
+              setPatient({
+                ...patient,
+                blood:
+                  e.target.value,
+              })
+            }
+          >
+            <option value="">
+              Select Blood Group
+              (Optional)
+            </option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+            <option>O+</option>
+            <option>O-</option>
+          </select>
+
           {/* Pregnancy only Female Adult */}
-          {patient.gender === "Female" &&
-            patient.age === "Adult" && (
+          {patient.gender ===
+            "Female" &&
+            patient.age ===
+              "Adult" && (
               <select
                 defaultValue=""
                 className="w-full border rounded p-3 mb-4"
@@ -497,24 +739,33 @@ export default function PatientForm({ onCreate }: any) {
                   setPatient({
                     ...patient,
                     pregnant:
-                      e.target.value,
+                      e.target
+                        .value,
                   })
                 }
               >
-                <option value="" disabled>
+                <option
+                  value=""
+                  disabled
+                >
                   Pregnant?
                 </option>
-                <option>Yes</option>
-                <option>No</option>
+                <option>
+                  Yes
+                </option>
+                <option>
+                  No
+                </option>
               </select>
             )}
 
           {/* Divider */}
           <div className="text-center text-sm text-gray-500 mb-3">
-            OR Capture / Upload Patient Image
+            OR Capture / Upload
+            Patient Image
           </div>
 
-          {/* Camera Input */}
+          {/* Hidden Camera */}
           <input
             ref={cameraRef}
             type="file"
@@ -525,13 +776,15 @@ export default function PatientForm({ onCreate }: any) {
               setPatient({
                 ...patient,
                 image:
-                  e.target.files?.[0]
-                    ?.name || "",
+                  e.target
+                    .files?.[0]
+                    ?.name ||
+                  "",
               })
             }
           />
 
-          {/* Upload Input */}
+          {/* Hidden Upload */}
           <input
             ref={uploadRef}
             type="file"
@@ -541,8 +794,10 @@ export default function PatientForm({ onCreate }: any) {
               setPatient({
                 ...patient,
                 image:
-                  e.target.files?.[0]
-                    ?.name || "",
+                  e.target
+                    .files?.[0]
+                    ?.name ||
+                  "",
               })
             }
           />
@@ -572,7 +827,7 @@ export default function PatientForm({ onCreate }: any) {
 
           </div>
 
-          {/* Selected File */}
+          {/* Image Name */}
           {patient.image && (
             <p className="text-sm text-green-600 mb-4">
               Saved: {patient.image}
