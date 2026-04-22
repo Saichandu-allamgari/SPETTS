@@ -53,10 +53,6 @@ import Footer from "@/components/Footer";
 import PatientForm from "@/components/PatientList";
 import Triage from "@/components/Triage";
 import PatientTable from "@/components/PatientTable";
-import LiveBanner from "@/components/LiveBanner";
-import HowItWorks from "@/components/HowITWorks";
-import Stats from "@/components/Stats";
-import CTA from "@/components/CTA";
 
 export default function Home() {
   const [patient, setPatient] = useState<any>(null);
@@ -68,21 +64,14 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <LiveBanner/>
-      <Features />
-      <HowItWorks/>
-      <Stats/>
-      <CTA/>
-      <About />
 
-      {/* {!patient ? (
+      {!patient ? (
         <PatientForm onCreate={setPatient} />
       ) : (
         <Triage patient={patient} onNext={nextPatient} />
       )}
 
-      <PatientTable /> */}
+      <PatientTable />
 
       <Footer />
     </>

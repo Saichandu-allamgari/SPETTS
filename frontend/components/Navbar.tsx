@@ -67,10 +67,12 @@ export default function Navbar() {
         </h1>
 
         <div className="space-x-6 text-gray-600">
+          <a href="/" className="hover:text-blue-600">Home</a>
+              <a href="#about" className="hover:text-blue-600">About</a>
+                   <a href="#features" className="hover:text-blue-600">Features</a>
            <a href="" className="hover:text-blue-600">Guide</a>
-          <a href="#features" className="hover:text-blue-600">Features</a>
-          <a href="#about" className="hover:text-blue-600">About</a>
-          <a href="#logic" className="hover:text-blue-600">Triage</a>
+
+          <a href="/triage" className="hover:text-blue-600">Triage</a>
            <a href="" className="hover:text-blue-600">Login</a>
         </div>
       </div>
