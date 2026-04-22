@@ -22,7 +22,10 @@ export default function Footer() {
   return (
     <footer className="border-t py-6 mt-10">
       <div className="max-w-6xl mx-auto px-4 text-center text-gray-500 text-sm">
-        © 2026 SPETTS AI | Medical Project
+        {/* © 2026 SPETTS AI | Medical Project */}
+        Terms of Use | Privacy Policy |
+         © 2026 SPETTS AI |
+         All rights reserved.
       </div>
     </footer>
   );

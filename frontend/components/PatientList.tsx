@@ -980,7 +980,7 @@ export default function PatientForm({ onCreate }: any) {
           </select>
 
           {/* Blood Group */}
-          <select
+          {/* <select
             defaultValue=""
             className="w-full border rounded p-3 mb-4"
             onChange={(e) =>
@@ -1003,7 +1003,7 @@ export default function PatientForm({ onCreate }: any) {
             <option>AB-</option>
             <option>O+</option>
             <option>O-</option>
-          </select>
+          </select> */}
 
           {/* Pregnancy */}
           {patient.gender ===
@@ -1126,4 +1126,4 @@ export default function PatientForm({ onCreate }: any) {
       </div>
     </section>
   );
-}
+} 
