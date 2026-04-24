@@ -1,0 +1,21 @@
+# backend/.gitignore
+
+node_modules/
+.env
+.env.local
+package-lock.json
+
+logs/
+*.log
+npm-debug.log*
+
+dist/
+build/
+
+coverage/
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db

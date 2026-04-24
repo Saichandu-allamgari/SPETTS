@@ -37,7 +37,7 @@
 // // import "./globals.css";
 
 // // export const metadata = {
-// //   title: "SPETTS AI - Fire Triage System",
+// //   title: "SPETTS - Fire Triage System",
 // //   description:
 // //     "Smart Pre-hospital Emergency Evaluation, Triage & Transport System",
 // // };
@@ -60,7 +60,7 @@
 
 
 // export const metadata = {
-//   title: "SPETTS AI",
+//   title: "SPETTS",
 //   description: "Smart Emergency Triage System",
 // };
 
@@ -79,16 +79,33 @@
 // }
 
 
+// 
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <html lang="en">
+//       <body>{children}</body>
+//     </html>
+//   );
+// }
+
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+ children,
+}: any) {
+ return (
+   <html lang="en">
+     <body>
+       <AuthProvider>
+         {children}
+       </AuthProvider>
+     </body>
+   </html>
+ );
 }

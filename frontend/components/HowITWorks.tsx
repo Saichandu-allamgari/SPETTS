@@ -19,7 +19,7 @@ export default function HowItWorks() {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             🧠
             <h3 className="font-bold mt-3">
-              AI Triage
+              System generated Triage
             </h3>
           </div>
 

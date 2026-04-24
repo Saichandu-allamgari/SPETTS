@@ -71,8 +71,6 @@ export default function Home() {
         <Triage patient={patient} onNext={nextPatient} />
       )}
 
-      <PatientTable />
-
       <Footer />
     </>
   );

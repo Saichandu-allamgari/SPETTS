@@ -18,8 +18,8 @@ export default function Stats() {
         </div>
 
         <div className="border rounded-2xl p-8 shadow-sm">
-          <h3 className="text-5xl font-bold text-green-600 mb-2">
-            AI
+          <h3 className="text-3xl font-bold text-green-600 mb-2">
+           System
           </h3>
           <p>Decision Powered</p>
         </div>

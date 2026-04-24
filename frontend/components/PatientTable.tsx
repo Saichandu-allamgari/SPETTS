@@ -169,11 +169,11 @@ export default function PatientTable() {
                   <th className="p-3 text-left">
                     Result
                   </th>
-                  <th className="p-3 text-left">
+                  {/* <th className="p-3 text-left">
                     Reason
-                  </th>
+                  </th> */}
                   <th className="p-3 text-left">
-                    Alerts
+                    Date
                   </th>
                   <th className="p-3 text-left">
                     Time
@@ -294,13 +294,13 @@ export default function PatientTable() {
                           "N/A"}
                       </td>
 
-                      <td className="p-3">
+                      {/* <td className="p-3">
                         {p.reason ||
                           "N/A"}
-                      </td>
+                      </td> */}
 
                       <td className="p-3">
-                        {p.alerts ||
+                        {p.date ||
                           "N/A"}
                       </td>
 

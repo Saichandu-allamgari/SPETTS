@@ -70,12 +70,16 @@ export default function Home() {
       <Navbar />
       <Hero />
       <LiveBanner/>
-      <Features />
-      <HowItWorks/>
-      <Stats/>
-      <CTA/>
-      <About />
 
+      <Features />
+           
+           <CTA/>
+      <HowItWorks/>
+        
+      <Stats/>
+      <About />
+  
+  
       {/* {!patient ? (
         <PatientForm onCreate={setPatient} />
       ) : (
