@@ -5,7 +5,7 @@ export default function Stats() {
 
         <div className="border rounded-2xl p-8 shadow-sm">
           <h3 className="text-5xl font-bold text-red-600 mb-2">
-            60%
+            80%
           </h3>
           <p>Faster Triage</p>
         </div>

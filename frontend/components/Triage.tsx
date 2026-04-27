@@ -1,220 +1,4 @@
-// // // // // // // // "use client";
-// // // // // // // // import { useState } from "react";
-
-// // // // // // // // export default function Triage({ patient }: any) {
-
-// // // // // // // //   if (!patient) return null;
-
-// // // // // // // //   const [data, setData] = useState({
-// // // // // // // //     conscious: "",
-// // // // // // // //     breathing: "",
-// // // // // // // //     pulse: "",
-// // // // // // // //     injury: "",
-// // // // // // // //     pain: "",
-// // // // // // // //     neuro: "",
-// // // // // // // //     burn: "",
-// // // // // // // //     smokeInhalation: "",
-// // // // // // // //   });
-
-// // // // // // // //   const [result, setResult] = useState("");
-// // // // // // // //   const [alerts, setAlerts] = useState("");
-// // // // // // // //   const [reason, setReason] = useState("");
-// // // // // // // //   const [action, setAction] = useState("");
-
-// // // // // // // //   function triage() {
-// // // // // // // //     const {
-// // // // // // // //       conscious,
-// // // // // // // //       breathing,
-// // // // // // // //       pulse,
-// // // // // // // //       injury,
-// // // // // // // //       pain,
-// // // // // // // //       neuro,
-// // // // // // // //       burn,
-// // // // // // // //       smokeInhalation,
-// // // // // // // //     } = data;
-
-// // // // // // // //     if (
-// // // // // // // //       !conscious ||
-// // // // // // // //       !breathing ||
-// // // // // // // //       !pulse ||
-// // // // // // // //       !injury ||
-// // // // // // // //       !pain ||
-// // // // // // // //       !neuro ||
-// // // // // // // //       !burn ||
-// // // // // // // //       !smokeInhalation
-// // // // // // // //     ) {
-// // // // // // // //       alert("Please fill all fields");
-// // // // // // // //       return;
-// // // // // // // //     }
-
-// // // // // // // //     let res = "";
-// // // // // // // //     let alertText = "";
-// // // // // // // //     let act = "";
-// // // // // // // //     let reasons: string[] = [];
-
-// // // // // // // //     // 🔴 TRIAGE LOGIC
-// // // // // // // //     if (conscious === "No" && breathing === "Absent") {
-// // // // // // // //       res = "⚫ BLACK - No Survival";
-// // // // // // // //       act = "Focus on other patients";
-// // // // // // // //       reasons.push("No breathing", "Unconscious patient");
-
-// // // // // // // //     } else if (
-// // // // // // // //       conscious === "No" ||
-// // // // // // // //       breathing === "Irregular" ||
-// // // // // // // //       pulse === "Weak" ||
-// // // // // // // //       burn === ">30%" ||
-// // // // // // // //       smokeInhalation === "Yes"
-// // // // // // // //     ) {
-// // // // // // // //       res = "🔴 RED - Critical";
-// // // // // // // //       act = "Airway + Oxygen + IV + Rapid transport";
-
-// // // // // // // //       if (conscious === "No") reasons.push("Unconscious");
-// // // // // // // //       if (breathing === "Irregular") reasons.push("Irregular breathing");
-// // // // // // // //       if (pulse === "Weak") reasons.push("Weak pulse");
-// // // // // // // //       if (burn === ">30%") reasons.push("Severe burns");
-// // // // // // // //       if (smokeInhalation === "Yes") reasons.push("Smoke inhalation");
-
-// // // // // // // //     } else if (burn === "10-30%") {
-// // // // // // // //       res = "🟡 YELLOW - Urgent";
-// // // // // // // //       act = "Monitor + Fluids + Dressing";
-// // // // // // // //       reasons.push("Moderate burns");
-
-// // // // // // // //     } else {
-// // // // // // // //       res = "🟢 GREEN - Stable";
-// // // // // // // //       act = "Basic care";
-// // // // // // // //       reasons.push("Vitals stable");
-// // // // // // // //     }
-
-// // // // // // // //     // ⚠️ ALERTS
-// // // // // // // //     if (
-// // // // // // // //       ((injury === "High-speed accident" || injury === "Fall") &&
-// // // // // // // //         (pain === "Yes" || neuro !== "No")) ||
-// // // // // // // //       conscious === "No"
-// // // // // // // //     ) {
-// // // // // // // //       alertText += "⚠️ Spinal Injury – Immobilize spine\n";
-// // // // // // // //     }
-
-// // // // // // // //     if (breathing !== "Normal" || smokeInhalation === "Yes") {
-// // // // // // // //       alertText += "⚠️ Airway Alert – Provide oxygen\n";
-// // // // // // // //     }
-
-// // // // // // // //     if (pulse === "Weak" || burn === ">30%") {
-// // // // // // // //       alertText += "⚠️ Shock Alert – Start IV fluids\n";
-// // // // // // // //     }
-
-// // // // // // // //     // ⏱ ETA
-// // // // // // // //     const eta = Math.floor(Math.random() * 10) + 5;
-// // // // // // // //     act += `\n🚑 ETA: ${eta} mins`;
-
-// // // // // // // //     // 💾 SAVE
-// // // // // // // //     const newPatient = {
-// // // // // // // //       name: patient.name,
-// // // // // // // //       result: res,
-// // // // // // // //       time: new Date().toLocaleTimeString(),
-// // // // // // // //     };
-
-// // // // // // // //     const existing = JSON.parse(localStorage.getItem("patients") || "[]");
-// // // // // // // //     existing.push(newPatient);
-// // // // // // // //     localStorage.setItem("patients", JSON.stringify(existing));
-
-// // // // // // // //     // SET STATE
-// // // // // // // //     setResult(res);
-// // // // // // // //     setAlerts(alertText);
-// // // // // // // //     setReason(reasons.join("\n"));
-// // // // // // // //     setAction(act);
-// // // // // // // //   }
-
-// // // // // // // //   return (
-// // // // // // // //     <section className="bg-white py-16">
-// // // // // // // //       <div className="max-w-6xl mx-auto px-4">
-
-// // // // // // // //         <h2 className="text-2xl font-bold text-center mb-6">
-// // // // // // // //           🚑 Intelligent Triage System
-// // // // // // // //         </h2>
-
-// // // // // // // //         {/* PATIENT INFO */}
-// // // // // // // //         <div className="max-w-md mx-auto bg-blue-50 p-4 rounded mb-6">
-// // // // // // // //           <p><strong>Name:</strong> {patient.name}</p>
-// // // // // // // //           <p><strong>Gender:</strong> {patient.gender}</p>
-// // // // // // // //           <p><strong>Age:</strong> {patient.age}</p>
-// // // // // // // //         </div>
-
-// // // // // // // //         {/* FORM */}
-// // // // // // // //         <div className="max-w-md mx-auto border p-6 rounded">
-
-// // // // // // // //           {fields.map((f) => (
-// // // // // // // //             <div key={f.key} className="mb-3">
-// // // // // // // //               <label className="text-sm block mb-1">{f.label}</label>
-
-// // // // // // // //               <select
-// // // // // // // //                 defaultValue=""
-// // // // // // // //                 className="w-full border p-2 rounded"
-// // // // // // // //                 onChange={(e) =>
-// // // // // // // //                   setData({ ...data, [f.key]: e.target.value })
-// // // // // // // //                 }
-// // // // // // // //               >
-// // // // // // // //                 <option value="" disabled>Select</option>
-// // // // // // // //                 {f.options.map((o) => (
-// // // // // // // //                   <option key={o}>{o}</option>
-// // // // // // // //                 ))}
-// // // // // // // //               </select>
-// // // // // // // //             </div>
-// // // // // // // //           ))}
-
-// // // // // // // //           <button
-// // // // // // // //             onClick={triage}
-// // // // // // // //             className="w-full bg-red-600 text-white py-2 mt-4 rounded hover:bg-red-700"
-// // // // // // // //           >
-// // // // // // // //             🚑 TRIAGE NOW
-// // // // // // // //           </button>
-
-// // // // // // // //           {/* RESULT */}
-// // // // // // //           // {result && (
-// // // // // // //           //   <div className="mt-6 space-y-3">
-
-// // // // // // //           //     <h3 className="text-xl font-bold">{result}</h3>
-
-// // // // // // //           //     {/* ✅ FIXED REASON UI */}
-// // // // // // //           //     <div>
-// // // // // // //           //       <p className="text-blue-600 font-semibold">🧠 Reason:</p>
-// // // // // // //           //       <ul className="list-disc ml-5 text-blue-600">
-// // // // // // //           //         {reason.split("\n").map((r, i) => (
-// // // // // // //           //           <li key={i}>{r}</li>
-// // // // // // //           //         ))}
-// // // // // // //           //       </ul>
-// // // // // // //           //     </div>
-
-// // // // // // //           //     <p className="text-orange-600 whitespace-pre-line">
-// // // // // // //           //       {alerts}
-// // // // // // //           //     </p>
-
-// // // // // // //           //     <p className="text-gray-700 whitespace-pre-line">
-// // // // // // //           //       {action}
-// // // // // // //           //     </p>
-
-// // // // // // //           //   </div>
-// // // // // // //           // )}
-
-// // // // // // // //         </div>
-// // // // // // // //       </div>
-// // // // // // // //     </section>
-// // // // // // // //   );
-// // // // // // // // }
-
-// // // // // // // // const fields = [
-// // // // // // // //   { key: "conscious", label: "Conscious?", options: ["Yes", "No"] },
-// // // // // // // //   { key: "breathing", label: "Breathing", options: ["Normal", "Irregular", "Absent"] },
-// // // // // // // //   { key: "pulse", label: "Pulse", options: ["Normal", "Weak", "Absent"] },
-// // // // // // // //   { key: "injury", label: "Mechanism of Injury", options: ["Minor", "High-speed accident", "Fall", "Fire burn"] },
-// // // // // // // //   { key: "pain", label: "Neck/Back Pain", options: ["No", "Yes"] },
-// // // // // // // //   { key: "neuro", label: "Neurological Deficits", options: ["No", "Weakness", "Numbness", "Paralysis"] },
-// // // // // // // //   { key: "burn", label: "Burn %", options: ["<10%", "10-30%", ">30%"] },
-// // // // // // // //   { key: "smokeInhalation", label: "Smoke Inhalation", options: ["No", "Yes"] },
-// // // // // // // // ];
-
-
-
-// // // // // // // // src/components/Triage.tsx
+  
 // // // // // // // "use client";
 
 // // // // // // // import { useState } from "react";
@@ -222,99 +6,184 @@
 // // // // // // // export default function Triage({ patient, onNext }: any) {
 // // // // // // //   const [data, setData] = useState({
 // // // // // // //     conscious: "",
-// // // // // // //     breathing: "",
-// // // // // // //     pulse: "",
+// // // // // // //     orientation: "",
+// // // // // // //     mobility: "",
 // // // // // // //     injury: "",
-// // // // // // //     pain: "",
-// // // // // // //     neuro: "",
+// // // // // // //     otherInjury: "",
+// // // // // // //     bleeding: "",
 // // // // // // //     burn: "",
-// // // // // // //     smoke: "",
+// // // // // // //     injuryTime: "",
+
+// // // // // // //     // vitals
+// // // // // // //     bp: "",
+// // // // // // //     spo2: "",
+// // // // // // //     rr: "",
+// // // // // // //     temp: "",
+// // // // // // //     sugar: "",
+// // // // // // //     pulse: "",
 // // // // // // //   });
 
 // // // // // // //   const [result, setResult] = useState("");
-// // // // // // //   const [alerts, setAlerts] = useState("");
+// // // // // // //   const [reason, setReason] = useState("");
+// // // // // // //   const [alerts, setAlerts] = useState<string[]>([]);
 // // // // // // //   const [action, setAction] = useState("");
+
+// // // // // // //   const [showSpinal, setShowSpinal] =
+// // // // // // //     useState(false);
+// // // // // // //   const [showAirway, setShowAirway] =
+// // // // // // //     useState(false);
+// // // // // // //   const [showShock, setShowShock] =
+// // // // // // //     useState(false);
 
 // // // // // // //   function triage() {
 // // // // // // //     const {
 // // // // // // //       conscious,
-// // // // // // //       breathing,
-// // // // // // //       pulse,
+// // // // // // //       orientation,
+// // // // // // //       mobility,
 // // // // // // //       injury,
-// // // // // // //       pain,
-// // // // // // //       neuro,
+// // // // // // //       bleeding,
 // // // // // // //       burn,
-// // // // // // //       smoke,
+// // // // // // //       pulse,
 // // // // // // //     } = data;
 
 // // // // // // //     if (
 // // // // // // //       !conscious ||
-// // // // // // //       !breathing ||
-// // // // // // //       !pulse ||
+// // // // // // //       !orientation ||
+// // // // // // //       !mobility ||
 // // // // // // //       !injury ||
-// // // // // // //       !pain ||
-// // // // // // //       !neuro ||
-// // // // // // //       !burn ||
-// // // // // // //       !smoke
+// // // // // // //       !bleeding ||
+// // // // // // //       !pulse
 // // // // // // //     ) {
-// // // // // // //       alert("Please fill all fields");
+// // // // // // //       alert("Please fill required fields");
 // // // // // // //       return;
 // // // // // // //     }
 
 // // // // // // //     let res = "";
-// // // // // // //     let al = "";
+// // // // // // //     let why = "";
 // // // // // // //     let act = "";
+// // // // // // //     let alertList: string[] = [];
 
-// // // // // // //     if (conscious === "No" && breathing === "Absent") {
+// // // // // // //     // TRIAGE
+// // // // // // //     if (
+// // // // // // //       conscious === "No" &&
+// // // // // // //       mobility === "No"
+// // // // // // //     ) {
 // // // // // // //       res = "⚫ BLACK";
-// // // // // // //       act = "No survival";
+// // // // // // //       why =
+// // // // // // //         "Unconscious patient\nNo mobility";
+// // // // // // //       act = "No survival signs";
 // // // // // // //     } else if (
 // // // // // // //       conscious === "No" ||
-// // // // // // //       breathing === "Irregular" ||
-// // // // // // //       pulse === "Weak" ||
-// // // // // // //       burn === ">30%" ||
-// // // // // // //       smoke === "Yes"
+// // // // // // //       orientation ===
+// // // // // // //         "Not Oriented" ||
+// // // // // // //       mobility === "Paralysis" ||
+// // // // // // //       bleeding === "Major" ||
+// // // // // // //       burn === ">10%" ||
+// // // // // // //       pulse === "Weak"
 // // // // // // //     ) {
 // // // // // // //       res = "🔴 RED";
+
+// // // // // // //       if (conscious === "No")
+// // // // // // //         why += "Unconscious\n";
+
+// // // // // // //       if (
+// // // // // // //         orientation ===
+// // // // // // //         "Not Oriented"
+// // // // // // //       )
+// // // // // // //         why +=
+// // // // // // //           "Disoriented patient\n";
+
+// // // // // // //       if (
+// // // // // // //         mobility ===
+// // // // // // //         "Paralysis"
+// // // // // // //       )
+// // // // // // //         why += "Paralysis\n";
+
+// // // // // // //       if (
+// // // // // // //         bleeding === "Major"
+// // // // // // //       )
+// // // // // // //         why +=
+// // // // // // //           "Major bleeding\n";
+
+// // // // // // //       if (burn === ">10%")
+// // // // // // //         why +=
+// // // // // // //           "Significant burns\n";
+
+// // // // // // //       if (pulse === "Weak")
+// // // // // // //         why += "Weak pulse\n";
+
 // // // // // // //       act = "Immediate intervention";
-// // // // // // //     } else if (burn === "10-30%") {
+// // // // // // //     } else if (
+// // // // // // //       bleeding === "Minor" ||
+// // // // // // //       burn === "0-10%"
+// // // // // // //     ) {
 // // // // // // //       res = "🟡 YELLOW";
+// // // // // // //       why =
+// // // // // // //         "Moderate injury / minor bleeding";
 // // // // // // //       act = "Urgent treatment";
 // // // // // // //     } else {
 // // // // // // //       res = "🟢 GREEN";
+// // // // // // //       why = "Stable patient";
 // // // // // // //       act = "Basic care";
 // // // // // // //     }
 
+// // // // // // //     // ALERTS
 // // // // // // //     if (
-// // // // // // //       ((injury === "High-speed accident" ||
-// // // // // // //         injury === "Fall") &&
-// // // // // // //         (pain === "Yes" || neuro !== "No")) ||
+// // // // // // //       injury === "RTA" ||
+// // // // // // //       injury === "Fall/Collapse"
+// // // // // // //     ) {
+// // // // // // //       alertList.push(
+// // // // // // //         "Spinal Alert"
+// // // // // // //       );
+// // // // // // //     }
+
+// // // // // // //     if (
 // // // // // // //       conscious === "No"
 // // // // // // //     ) {
-// // // // // // //       al += "⚠️ Spinal Alert\n";
+// // // // // // //       alertList.push(
+// // // // // // //         "Airway Alert"
+// // // // // // //       );
 // // // // // // //     }
 
-// // // // // // //     if (breathing !== "Normal" || smoke === "Yes") {
-// // // // // // //       al += "⚠️ Airway Alert\n";
+// // // // // // //     if (
+// // // // // // //       bleeding === "Major"
+// // // // // // //     ) {
+// // // // // // //       alertList.push(
+// // // // // // //         "Shock Alert"
+// // // // // // //       );
 // // // // // // //     }
 
-// // // // // // //     if (pulse === "Weak") {
-// // // // // // //       al += "⚠️ Shock Alert\n";
-// // // // // // //     }
+// // // // // // //     const eta =
+// // // // // // //       Math.floor(
+// // // // // // //         Math.random() * 11
+// // // // // // //       ) + 5;
 
-// // // // // // //     const eta = Math.floor(Math.random() * 10) + 5;
 // // // // // // //     act += ` | ETA ${eta} mins`;
 
+// // // // // // //     // SAVE
 // // // // // // //     const old = JSON.parse(
-// // // // // // //       localStorage.getItem("patients") || "[]"
+// // // // // // //       localStorage.getItem(
+// // // // // // //         "patients"
+// // // // // // //       ) || "[]"
 // // // // // // //     );
 
 // // // // // // //     old.push({
 // // // // // // //       ...patient,
 // // // // // // //       ...data,
 // // // // // // //       result: res,
-// // // // // // //       alerts: al,
-// // // // // // //       time: new Date().toLocaleTimeString(),
+// // // // // // //       reason: why,
+// // // // // // //       alerts:
+// // // // // // //         alertList.join(", "),
+// // // // // // //       time:
+// // // // // // //         new Date().toLocaleTimeString(
+// // // // // // //           "en-IN",
+// // // // // // //           {
+// // // // // // //             hour: "2-digit",
+// // // // // // //             minute:
+// // // // // // //               "2-digit",
+// // // // // // //             hour12: true,
+// // // // // // //           }
+// // // // // // //         ) + " IST",
 // // // // // // //     });
 
 // // // // // // //     localStorage.setItem(
@@ -323,7 +192,8 @@
 // // // // // // //     );
 
 // // // // // // //     setResult(res);
-// // // // // // //     setAlerts(al);
+// // // // // // //     setReason(why);
+// // // // // // //     setAlerts(alertList);
 // // // // // // //     setAction(act);
 // // // // // // //   }
 
@@ -337,14 +207,36 @@
 
 // // // // // // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
+// // // // // // //           {/* PATIENT */}
 // // // // // // //           <div className="mb-5 text-sm bg-blue-50 p-4 rounded">
-// // // // // // //             <p><b>Name:</b> {patient.name}</p>
-// // // // // // //             <p><b>Gender:</b> {patient.gender}</p>
-// // // // // // //             <p><b>Age Group:</b> {patient.age}</p>
+// // // // // // //             <p>
+// // // // // // //               <b>Name:</b>{" "}
+// // // // // // //               {patient.name ||
+// // // // // // //                 "N/A"}
+// // // // // // //             </p>
+// // // // // // //             <p>
+// // // // // // //               <b>Gender:</b>{" "}
+// // // // // // //               {patient.gender ||
+// // // // // // //                 "N/A"}
+// // // // // // //             </p>
+// // // // // // //             <p>
+// // // // // // //               <b>Age:</b>{" "}
+// // // // // // //               {patient.age ||
+// // // // // // //                 "N/A"}
+// // // // // // //             </p>
+// // // // // // //             <p>
+// // // // // // //               <b>Blood:</b>{" "}
+// // // // // // //               {patient.blood ||
+// // // // // // //                 "N/A"}
+// // // // // // //             </p>
 // // // // // // //           </div>
 
+// // // // // // //           {/* DROPDOWNS */}
 // // // // // // //           {fields.map((item) => (
-// // // // // // //             <div key={item.key} className="mb-4">
+// // // // // // //             <div
+// // // // // // //               key={item.key}
+// // // // // // //               className="mb-4"
+// // // // // // //             >
 // // // // // // //               <label className="block mb-1 text-sm font-medium">
 // // // // // // //                 {item.label}
 // // // // // // //               </label>
@@ -355,16 +247,86 @@
 // // // // // // //                 onChange={(e) =>
 // // // // // // //                   setData({
 // // // // // // //                     ...data,
-// // // // // // //                     [item.key]: e.target.value,
+// // // // // // //                     [item.key]:
+// // // // // // //                       e.target
+// // // // // // //                         .value,
 // // // // // // //                   })
 // // // // // // //                 }
 // // // // // // //               >
-// // // // // // //                 <option value="" disabled>Select</option>
-// // // // // // //                 {item.options.map((op) => (
-// // // // // // //                   <option key={op}>{op}</option>
-// // // // // // //                 ))}
+// // // // // // //                 <option
+// // // // // // //                   value=""
+// // // // // // //                   disabled
+// // // // // // //                 >
+// // // // // // //                   Select
+// // // // // // //                 </option>
+
+// // // // // // //                 {item.options.map(
+// // // // // // //                   (op) => (
+// // // // // // //                     <option
+// // // // // // //                       key={op}
+// // // // // // //                     >
+// // // // // // //                       {op}
+// // // // // // //                     </option>
+// // // // // // //                   )
+// // // // // // //                 )}
 // // // // // // //               </select>
 // // // // // // //             </div>
+// // // // // // //           ))}
+
+// // // // // // //           {/* OTHER INJURY */}
+// // // // // // //           {data.injury ===
+// // // // // // //             "Other" && (
+// // // // // // //             <input
+// // // // // // //               type="text"
+// // // // // // //               placeholder="Describe Injury"
+// // // // // // //               className="w-full border rounded p-3 mb-4"
+// // // // // // //               onChange={(e) =>
+// // // // // // //                 setData({
+// // // // // // //                   ...data,
+// // // // // // //                   otherInjury:
+// // // // // // //                     e.target
+// // // // // // //                       .value,
+// // // // // // //                 })
+// // // // // // //               }
+// // // // // // //             />
+// // // // // // //           )}
+
+// // // // // // //           {/* TIME */}
+// // // // // // //           <input
+// // // // // // //             type="time"
+// // // // // // //             className="w-full border rounded p-3 mb-4"
+// // // // // // //             onChange={(e) =>
+// // // // // // //               setData({
+// // // // // // //                 ...data,
+// // // // // // //                 injuryTime:
+// // // // // // //                   e.target
+// // // // // // //                     .value,
+// // // // // // //               })
+// // // // // // //             }
+// // // // // // //           />
+
+// // // // // // //           {/* VITALS */}
+// // // // // // //           <h3 className="font-bold text-lg text-blue-700 mb-4">
+// // // // // // //             🩺 Vitals
+// // // // // // //           </h3>
+
+// // // // // // //           {vitals.map((v) => (
+// // // // // // //             <input
+// // // // // // //               key={v.key}
+// // // // // // //               type="text"
+// // // // // // //               placeholder={
+// // // // // // //                 v.label
+// // // // // // //               }
+// // // // // // //               className="w-full border rounded p-3 mb-4"
+// // // // // // //               onChange={(e) =>
+// // // // // // //                 setData({
+// // // // // // //                   ...data,
+// // // // // // //                   [v.key]:
+// // // // // // //                     e.target
+// // // // // // //                       .value,
+// // // // // // //                 })
+// // // // // // //               }
+// // // // // // //             />
 // // // // // // //           ))}
 
 // // // // // // //           <button
@@ -374,28 +336,149 @@
 // // // // // // //             TRIAGE NOW
 // // // // // // //           </button>
 
+// // // // // // //           {/* RESULT */}
 // // // // // // //           {result && (
-// // // // // // //             <div className="mt-6 border-t pt-5 space-y-2">
+// // // // // // //             <div className="mt-6 space-y-3">
 
 // // // // // // //               <h3 className="text-xl font-bold">
 // // // // // // //                 {result}
 // // // // // // //               </h3>
 
-// // // // // // //               <p className="whitespace-pre-line text-orange-600">
-// // // // // // //                 {alerts}
-// // // // // // //               </p>
+// // // // // // //               <div>
+// // // // // // //                 <p className="text-blue-600 font-semibold">
+// // // // // // //                   🧠 Reason:
+// // // // // // //                 </p>
+
+// // // // // // //                 <ul className="list-disc ml-5 text-blue-600">
+// // // // // // //                   {reason
+// // // // // // //                     .split(
+// // // // // // //                       "\n"
+// // // // // // //                     )
+// // // // // // //                     .filter(
+// // // // // // //                       Boolean
+// // // // // // //                     )
+// // // // // // //                     .map(
+// // // // // // //                       (
+// // // // // // //                         r,
+// // // // // // //                         i
+// // // // // // //                       ) => (
+// // // // // // //                         <li
+// // // // // // //                           key={
+// // // // // // //                             i
+// // // // // // //                           }
+// // // // // // //                         >
+// // // // // // //                           {r}
+// // // // // // //                         </li>
+// // // // // // //                       )
+// // // // // // //                     )}
+// // // // // // //                 </ul>
+// // // // // // //               </div>
+
+// // // // // // //               {/* ALERTS */}
+// // // // // // //               <div className="space-y-2">
+
+// // // // // // //                 {alerts.includes(
+// // // // // // //                   "Spinal Alert"
+// // // // // // //                 ) && (
+// // // // // // //                   <div className="bg-orange-50 p-3 rounded">
+// // // // // // //                     ⚠️ Spinal Alert
+
+// // // // // // //                     <button
+// // // // // // //                       className="ml-2 text-blue-600 underline"
+// // // // // // //                       onClick={() =>
+// // // // // // //                         setShowSpinal(
+// // // // // // //                           !showSpinal
+// // // // // // //                         )
+// // // // // // //                       }
+// // // // // // //                     >
+// // // // // // //                       Click Here
+// // // // // // //                     </button>
+
+// // // // // // //                     {showSpinal && (
+// // // // // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
+// // // // // // //                         <li>
+// // // // // // //                           Cervical collar
+// // // // // // //                         </li>
+// // // // // // //                         <li>
+// // // // // // //                           Avoid movement
+// // // // // // //                         </li>
+// // // // // // //                       </ul>
+// // // // // // //                     )}
+// // // // // // //                   </div>
+// // // // // // //                 )}
+
+// // // // // // //                 {alerts.includes(
+// // // // // // //                   "Airway Alert"
+// // // // // // //                 ) && (
+// // // // // // //                   <div className="bg-orange-50 p-3 rounded">
+// // // // // // //                     ⚠️ Airway Alert
+
+// // // // // // //                     <button
+// // // // // // //                       className="ml-2 text-blue-600 underline"
+// // // // // // //                       onClick={() =>
+// // // // // // //                         setShowAirway(
+// // // // // // //                           !showAirway
+// // // // // // //                         )
+// // // // // // //                       }
+// // // // // // //                     >
+// // // // // // //                       Click Here
+// // // // // // //                     </button>
+
+// // // // // // //                     {showAirway && (
+// // // // // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
+// // // // // // //                         <li>
+// // // // // // //                           Oxygen
+// // // // // // //                         </li>
+// // // // // // //                         <li>
+// // // // // // //                           Airway support
+// // // // // // //                         </li>
+// // // // // // //                       </ul>
+// // // // // // //                     )}
+// // // // // // //                   </div>
+// // // // // // //                 )}
+
+// // // // // // //                 {alerts.includes(
+// // // // // // //                   "Shock Alert"
+// // // // // // //                 ) && (
+// // // // // // //                   <div className="bg-orange-50 p-3 rounded">
+// // // // // // //                     ⚠️ Shock Alert
+
+// // // // // // //                     <button
+// // // // // // //                       className="ml-2 text-blue-600 underline"
+// // // // // // //                       onClick={() =>
+// // // // // // //                         setShowShock(
+// // // // // // //                           !showShock
+// // // // // // //                         )
+// // // // // // //                       }
+// // // // // // //                     >
+// // // // // // //                       Click Here
+// // // // // // //                     </button>
+
+// // // // // // //                     {showShock && (
+// // // // // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
+// // // // // // //                         <li>
+// // // // // // //                           IV fluids
+// // // // // // //                         </li>
+// // // // // // //                         <li>
+// // // // // // //                           Stop bleeding
+// // // // // // //                         </li>
+// // // // // // //                       </ul>
+// // // // // // //                     )}
+// // // // // // //                   </div>
+// // // // // // //                 )}
+// // // // // // //               </div>
 
 // // // // // // //               <p>{action}</p>
 
 // // // // // // //               <button
 // // // // // // //                 onClick={onNext}
-// // // // // // //                 className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
+// // // // // // //                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
 // // // // // // //               >
 // // // // // // //                 NEXT PATIENT →
 // // // // // // //               </button>
-
 // // // // // // //             </div>
 // // // // // // //           )}
+
 // // // // // // //         </div>
 // // // // // // //       </div>
 // // // // // // //     </section>
@@ -405,53 +488,93 @@
 // // // // // // // const fields = [
 // // // // // // //   {
 // // // // // // //     key: "conscious",
-// // // // // // //     label: "Conscious?",
-// // // // // // //     options: ["Yes", "No"],
-// // // // // // //   },
-// // // // // // //   {
-// // // // // // //     key: "breathing",
-// // // // // // //     label: "Breathing",
-// // // // // // //     options: ["Normal", "Irregular", "Absent"],
-// // // // // // //   },
-// // // // // // //   {
-// // // // // // //     key: "pulse",
-// // // // // // //     label: "Pulse",
-// // // // // // //     options: ["Normal", "Weak", "Absent"],
-// // // // // // //   },
-// // // // // // //   {
-// // // // // // //     key: "injury",
-// // // // // // //     label: "Mechanism of Injury",
+// // // // // // //     label: "Consciousness",
 // // // // // // //     options: [
-// // // // // // //       "Minor",
-// // // // // // //       "High-speed accident",
-// // // // // // //       "Fall",
-// // // // // // //       "Fire burn",
+// // // // // // //       "Yes",
+// // // // // // //       "No",
 // // // // // // //     ],
 // // // // // // //   },
 // // // // // // //   {
-// // // // // // //     key: "pain",
-// // // // // // //     label: "Neck / Back Pain",
-// // // // // // //     options: ["No", "Yes"],
+// // // // // // //     key: "orientation",
+// // // // // // //     label: "Orientation",
+// // // // // // //     options: [
+// // // // // // //       "Oriented",
+// // // // // // //       "Not Oriented",
+// // // // // // //     ],
 // // // // // // //   },
 // // // // // // //   {
-// // // // // // //     key: "neuro",
-// // // // // // //     label: "Neurological Signs",
+// // // // // // //     key: "mobility",
+// // // // // // //     label: "Mobility",
 // // // // // // //     options: [
+// // // // // // //       "Yes",
 // // // // // // //       "No",
-// // // // // // //       "Weakness",
-// // // // // // //       "Numbness",
 // // // // // // //       "Paralysis",
+// // // // // // //     ],
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "injury",
+// // // // // // //     label:
+// // // // // // //       "Mechanism of Injury",
+// // // // // // //     options: [
+// // // // // // //       "RTA",
+// // // // // // //       "Fire Burn",
+// // // // // // //       "Fall/Collapse",
+// // // // // // //       "Other",
+// // // // // // //     ],
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "bleeding",
+// // // // // // //     label: "Bleeding",
+// // // // // // //     options: [
+// // // // // // //       "None",
+// // // // // // //       "Minor",
+// // // // // // //       "Major",
 // // // // // // //     ],
 // // // // // // //   },
 // // // // // // //   {
 // // // // // // //     key: "burn",
 // // // // // // //     label: "Burn %",
-// // // // // // //     options: ["<10%", "10-30%", ">30%"],
+// // // // // // //     options: [
+// // // // // // //       "0%",
+// // // // // // //       "0-10%",
+// // // // // // //       ">10%",
+// // // // // // //     ],
 // // // // // // //   },
 // // // // // // //   {
-// // // // // // //     key: "smoke",
-// // // // // // //     label: "Smoke Inhalation",
-// // // // // // //     options: ["No", "Yes"],
+// // // // // // //     key: "pulse",
+// // // // // // //     label: "Pulse",
+// // // // // // //     options: [
+// // // // // // //       "Normal",
+// // // // // // //       "Weak",
+// // // // // // //       "Absent",
+// // // // // // //     ],
+// // // // // // //   },
+// // // // // // // ];
+
+// // // // // // // const vitals = [
+// // // // // // //   {
+// // // // // // //     key: "bp",
+// // // // // // //     label:
+// // // // // // //       "Blood Pressure",
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "spo2",
+// // // // // // //     label: "SpO2 %",
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "rr",
+// // // // // // //     label:
+// // // // // // //       "Respiratory Rate",
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "temp",
+// // // // // // //     label:
+// // // // // // //       "Temperature °C",
+// // // // // // //   },
+// // // // // // //   {
+// // // // // // //     key: "sugar",
+// // // // // // //     label:
+// // // // // // //       "Blood Sugar",
 // // // // // // //   },
 // // // // // // // ];
 
@@ -463,88 +586,93 @@
 // // // // // // export default function Triage({ patient, onNext }: any) {
 // // // // // //   const [data, setData] = useState({
 // // // // // //     conscious: "",
-// // // // // //     breathing: "",
-// // // // // //     pulse: "",
+// // // // // //     orientation: "",
+// // // // // //     mobility: "",
 // // // // // //     injury: "",
-// // // // // //     pain: "",
-// // // // // //     neuro: "",
+// // // // // //     otherInjury: "",
 // // // // // //     burn: "",
-// // // // // //     smoke: "",
+// // // // // //     bleeding: "",
+// // // // // //     pulse: "",
+// // // // // //     bp: "",
+// // // // // //     spo2: "",
+// // // // // //     rr: "",
+// // // // // //     temp: "",
+// // // // // //     sugar: "",
 // // // // // //   });
 
 // // // // // //   const [result, setResult] = useState("");
 // // // // // //   const [reason, setReason] = useState("");
-// // // // // //   const [alerts, setAlerts] = useState("");
+// // // // // //   const [alerts, setAlerts] = useState<string[]>([]);
 // // // // // //   const [action, setAction] = useState("");
 
 // // // // // //   function triage() {
-// // // // // //     const {
-// // // // // //       conscious,
-// // // // // //       breathing,
-// // // // // //       pulse,
-// // // // // //       injury,
-// // // // // //       pain,
-// // // // // //       neuro,
-// // // // // //       burn,
-// // // // // //       smoke,
-// // // // // //     } = data;
-
 // // // // // //     if (
-// // // // // //       !conscious ||
-// // // // // //       !breathing ||
-// // // // // //       !pulse ||
-// // // // // //       !injury ||
-// // // // // //       !pain ||
-// // // // // //       !neuro ||
-// // // // // //       !burn ||
-// // // // // //       !smoke
+// // // // // //       !data.conscious ||
+// // // // // //       !data.orientation ||
+// // // // // //       !data.mobility ||
+// // // // // //       !data.injury ||
+// // // // // //       !data.bleeding ||
+// // // // // //       !data.pulse
 // // // // // //     ) {
-// // // // // //       alert("Please fill all fields");
+// // // // // //       alert("Please fill required fields");
 // // // // // //       return;
 // // // // // //     }
 
 // // // // // //     let res = "";
 // // // // // //     let why = "";
-// // // // // //     let al = "";
 // // // // // //     let act = "";
+// // // // // //     let alertList: string[] = [];
 
-// // // // // //     // TRIAGE RESULT
 // // // // // //     if (
-// // // // // //       conscious === "No" &&
-// // // // // //       breathing === "Absent"
+// // // // // //       data.conscious === "No" &&
+// // // // // //       data.mobility === "No"
 // // // // // //     ) {
 // // // // // //       res = "⚫ BLACK";
-// // // // // //       why =
-// // // // // //         "Unconscious patient\nAbsent breathing";
+// // // // // //       why = "Unconscious\nNo mobility";
 // // // // // //       act = "No survival signs";
 // // // // // //     } else if (
-// // // // // //       conscious === "No" ||
-// // // // // //       breathing === "Irregular" ||
-// // // // // //       pulse === "Weak" ||
-// // // // // //       burn === ">30%" ||
-// // // // // //       smoke === "Yes"
+// // // // // //       data.conscious === "No" ||
+// // // // // //       data.orientation === "Not Oriented" ||
+// // // // // //       data.mobility === "Paralysis" ||
+// // // // // //       data.bleeding === "Major" ||
+// // // // // //       data.pulse === "Weak" ||
+// // // // // //       data.burn === ">10%"
 // // // // // //     ) {
 // // // // // //       res = "🔴 RED";
 
-// // // // // //       if (conscious === "No")
+// // // // // //       if (data.conscious === "No")
 // // // // // //         why += "Unconscious\n";
 
-// // // // // //       if (breathing === "Irregular")
-// // // // // //         why += "Irregular breathing\n";
+// // // // // //       if (
+// // // // // //         data.orientation ===
+// // // // // //         "Not Oriented"
+// // // // // //       )
+// // // // // //         why += "Disoriented\n";
 
-// // // // // //       if (pulse === "Weak")
+// // // // // //       if (
+// // // // // //         data.mobility ===
+// // // // // //         "Paralysis"
+// // // // // //       )
+// // // // // //         why += "Paralysis\n";
+
+// // // // // //       if (
+// // // // // //         data.bleeding === "Major"
+// // // // // //       )
+// // // // // //         why += "Major bleeding\n";
+
+// // // // // //       if (data.pulse === "Weak")
 // // // // // //         why += "Weak pulse\n";
 
-// // // // // //       if (burn === ">30%")
-// // // // // //         why += "Severe burns >30%\n";
-
-// // // // // //       if (smoke === "Yes")
-// // // // // //         why += "Smoke inhalation\n";
+// // // // // //       if (data.burn === ">10%")
+// // // // // //         why += "Severe burn\n";
 
 // // // // // //       act = "Immediate intervention";
-// // // // // //     } else if (burn === "10-30%") {
+// // // // // //     } else if (
+// // // // // //       data.bleeding === "Minor" ||
+// // // // // //       data.burn === "0-10%"
+// // // // // //     ) {
 // // // // // //       res = "🟡 YELLOW";
-// // // // // //       why = "Moderate burns 10-30%";
+// // // // // //       why = "Moderate injury";
 // // // // // //       act = "Urgent treatment";
 // // // // // //     } else {
 // // // // // //       res = "🟢 GREEN";
@@ -552,42 +680,36 @@
 // // // // // //       act = "Basic care";
 // // // // // //     }
 
-// // // // // //     // ALERTS
 // // // // // //     if (
-// // // // // //       ((injury === "High-speed accident" ||
-// // // // // //         injury === "Fall") &&
-// // // // // //         (pain === "Yes" ||
-// // // // // //           neuro !== "No")) ||
-// // // // // //       conscious === "No"
+// // // // // //       data.injury === "RTA" ||
+// // // // // //       data.injury === "Fall/Collapse"
 // // // // // //     ) {
-// // // // // //       al += "⚠️ Spinal Alert\n";
+// // // // // //       alertList.push("Spinal Alert");
 // // // // // //     }
 
 // // // // // //     if (
-// // // // // //       breathing === "Irregular" ||
-// // // // // //       breathing === "Absent" ||
-// // // // // //       smoke === "Yes"
+// // // // // //       data.conscious === "No"
 // // // // // //     ) {
-// // // // // //       al += "⚠️ Airway Alert\n";
+// // // // // //       alertList.push("Airway Alert");
 // // // // // //     }
 
 // // // // // //     if (
-// // // // // //       pulse === "Weak" ||
-// // // // // //       burn === ">30%"
+// // // // // //       data.bleeding === "Major"
 // // // // // //     ) {
-// // // // // //       al += "⚠️ Shock Alert\n";
+// // // // // //       alertList.push("Shock Alert");
 // // // // // //     }
 
-// // // // // //     // ETA
 // // // // // //     const eta =
-// // // // // //       Math.floor(Math.random() * 11) + 5;
+// // // // // //       Math.floor(
+// // // // // //         Math.random() * 10
+// // // // // //       ) + 5;
 
 // // // // // //     act += ` | ETA ${eta} mins`;
 
-// // // // // //     // SAVE
 // // // // // //     const old = JSON.parse(
-// // // // // //       localStorage.getItem("patients") ||
-// // // // // //         "[]"
+// // // // // //       localStorage.getItem(
+// // // // // //         "patients"
+// // // // // //       ) || "[]"
 // // // // // //     );
 
 // // // // // //     old.push({
@@ -595,8 +717,10 @@
 // // // // // //       ...data,
 // // // // // //       result: res,
 // // // // // //       reason: why,
-// // // // // //       alerts: al,
-// // // // // //       time: new Date().toLocaleTimeString(),
+// // // // // //       alerts:
+// // // // // //         alertList.join(", "),
+// // // // // //       time:
+// // // // // //         new Date().toLocaleTimeString(),
 // // // // // //     });
 
 // // // // // //     localStorage.setItem(
@@ -606,13 +730,13 @@
 
 // // // // // //     setResult(res);
 // // // // // //     setReason(why);
-// // // // // //     setAlerts(al);
+// // // // // //     setAlerts(alertList);
 // // // // // //     setAction(act);
 // // // // // //   }
 
 // // // // // //   return (
 // // // // // //     <section className="bg-slate-50 py-14">
-// // // // // //       <div className="max-w-6xl mx-auto px-4">
+// // // // // //       <div className="max-w-5xl mx-auto px-4">
 
 // // // // // //         <h2 className="text-3xl font-bold text-center mb-8">
 // // // // // //           🚑 Clinical Triage
@@ -621,65 +745,243 @@
 // // // // // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
 // // // // // //           {/* Patient Info */}
-// // // // // //           <div className="mb-5 text-sm bg-blue-50 p-4 rounded">
+// // // // // //           <div className="bg-blue-50 p-4 rounded mb-5 text-sm">
 // // // // // //             <p>
-// // // // // //               <b>Name:</b> {patient.name}
+// // // // // //               <b>Name:</b>{" "}
+// // // // // //               {patient.name ||
+// // // // // //                 "N/A"}
 // // // // // //             </p>
 // // // // // //             <p>
 // // // // // //               <b>Gender:</b>{" "}
-// // // // // //               {patient.gender}
+// // // // // //               {patient.gender ||
+// // // // // //                 "N/A"}
 // // // // // //             </p>
 // // // // // //             <p>
-// // // // // //               <b>Age Group:</b>{" "}
-// // // // // //               {patient.age}
+// // // // // //               <b>Age:</b>{" "}
+// // // // // //               {patient.age ||
+// // // // // //                 "N/A"}
+// // // // // //             </p>
+// // // // // //             <p>
+// // // // // //               <b>Blood:</b>{" "}
+// // // // // //               {patient.blood ||
+// // // // // //                 "N/A"}
 // // // // // //             </p>
 // // // // // //           </div>
 
-// // // // // //           {/* Fields */}
-// // // // // //           {fields.map((item) => (
-// // // // // //             <div
-// // // // // //               key={item.key}
-// // // // // //               className="mb-4"
+// // // // // //           {/* Conscious */}
+// // // // // //           <SelectField
+// // // // // //             label="Consciousness"
+// // // // // //             options={[
+// // // // // //               "Yes",
+// // // // // //               "No",
+// // // // // //             ]}
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 conscious: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           {/* Orientation */}
+// // // // // //           <SelectField
+// // // // // //             label="Orientation"
+// // // // // //             options={[
+// // // // // //               "Oriented",
+// // // // // //               "Not Oriented",
+// // // // // //             ]}
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 orientation:
+// // // // // //                   v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           {/* Mobility */}
+// // // // // //           <SelectField
+// // // // // //             label="Mobility"
+// // // // // //             options={[
+// // // // // //               "Yes",
+// // // // // //               "No",
+// // // // // //               "Paralysis",
+// // // // // //             ]}
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 mobility: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           {/* Mechanism */}
+// // // // // //           <div className="mb-4">
+// // // // // //             <label className="block mb-1 text-sm font-medium">
+// // // // // //               Mechanism of Injury
+// // // // // //             </label>
+
+// // // // // //             <select
+// // // // // //               defaultValue=""
+// // // // // //               className="w-full border rounded p-3"
+// // // // // //               onChange={(e) =>
+// // // // // //                 setData({
+// // // // // //                   ...data,
+// // // // // //                   injury:
+// // // // // //                     e.target
+// // // // // //                       .value,
+// // // // // //                   burn: "",
+// // // // // //                 })
+// // // // // //               }
 // // // // // //             >
-// // // // // //               <label className="block mb-1 text-sm font-medium">
-// // // // // //                 {item.label}
-// // // // // //               </label>
-
-// // // // // //               <select
-// // // // // //                 defaultValue=""
-// // // // // //                 className="w-full border rounded p-3"
-// // // // // //                 onChange={(e) =>
-// // // // // //                   setData({
-// // // // // //                     ...data,
-// // // // // //                     [item.key]:
-// // // // // //                       e.target.value,
-// // // // // //                   })
-// // // // // //                 }
+// // // // // //               <option
+// // // // // //                 value=""
+// // // // // //                 disabled
 // // // // // //               >
-// // // // // //                 <option
-// // // // // //                   value=""
-// // // // // //                   disabled
-// // // // // //                 >
-// // // // // //                   Select
-// // // // // //                 </option>
+// // // // // //                 Select
+// // // // // //               </option>
+// // // // // //               <option>
+// // // // // //                 RTA
+// // // // // //               </option>
+// // // // // //               <option>
+// // // // // //                 Fire Burn
+// // // // // //               </option>
+// // // // // //               <option>
+// // // // // //                 Fall/Collapse
+// // // // // //               </option>
+// // // // // //               <option>
+// // // // // //                 Other
+// // // // // //               </option>
+// // // // // //             </select>
+// // // // // //           </div>
 
-// // // // // //                 {item.options.map(
-// // // // // //                   (op) => (
-// // // // // //                     <option
-// // // // // //                       key={op}
-// // // // // //                     >
-// // // // // //                       {op}
-// // // // // //                     </option>
-// // // // // //                   )
-// // // // // //                 )}
-// // // // // //               </select>
-// // // // // //             </div>
-// // // // // //           ))}
+// // // // // //           {/* If Fire Burn */}
+// // // // // //           {data.injury ===
+// // // // // //             "Fire Burn" && (
+// // // // // //             <SelectField
+// // // // // //               label="Burn %"
+// // // // // //               options={[
+// // // // // //                 "0%",
+// // // // // //                 "0-10%",
+// // // // // //                 ">10%",
+// // // // // //               ]}
+// // // // // //               onChange={(v) =>
+// // // // // //                 setData({
+// // // // // //                   ...data,
+// // // // // //                   burn: v,
+// // // // // //                 })
+// // // // // //               }
+// // // // // //             />
+// // // // // //           )}
 
-// // // // // //           {/* Button */}
+// // // // // //           {/* If Other */}
+// // // // // //           {data.injury ===
+// // // // // //             "Other" && (
+// // // // // //             <input
+// // // // // //               type="text"
+// // // // // //               placeholder="Describe Injury"
+// // // // // //               className="w-full border rounded p-3 mb-4"
+// // // // // //               onChange={(e) =>
+// // // // // //                 setData({
+// // // // // //                   ...data,
+// // // // // //                   otherInjury:
+// // // // // //                     e.target
+// // // // // //                       .value,
+// // // // // //                 })
+// // // // // //               }
+// // // // // //             />
+// // // // // //           )}
+
+// // // // // //           {/* Bleeding */}
+// // // // // //           <SelectField
+// // // // // //             label="Bleeding"
+// // // // // //             options={[
+// // // // // //               "None",
+// // // // // //               "Minor",
+// // // // // //               "Major",
+// // // // // //             ]}
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 bleeding: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           {/* Pulse */}
+// // // // // //           <SelectField
+// // // // // //             label="Pulse"
+// // // // // //             options={[
+// // // // // //               "Normal",
+// // // // // //               "Weak",
+// // // // // //               "Absent",
+// // // // // //             ]}
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 pulse: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           {/* Vitals */}
+// // // // // //           <h3 className="font-bold text-blue-700 mt-6 mb-4">
+// // // // // //             🩺 Vitals
+// // // // // //           </h3>
+
+// // // // // //           <InputField
+// // // // // //             placeholder="Blood Pressure"
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 bp: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           <InputField
+// // // // // //             placeholder="SpO2 %"
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 spo2: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           <InputField
+// // // // // //             placeholder="Respiratory Rate"
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 rr: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           <InputField
+// // // // // //             placeholder="Temperature °C"
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 temp: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
+// // // // // //           <InputField
+// // // // // //             placeholder="Blood Sugar"
+// // // // // //             onChange={(v) =>
+// // // // // //               setData({
+// // // // // //                 ...data,
+// // // // // //                 sugar: v,
+// // // // // //               })
+// // // // // //             }
+// // // // // //           />
+
 // // // // // //           <button
 // // // // // //             onClick={triage}
-// // // // // //             className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl"
+// // // // // //             className="w-full bg-red-600 text-white py-3 rounded-xl mt-3"
 // // // // // //           >
 // // // // // //             TRIAGE NOW
 // // // // // //           </button>
@@ -692,44 +994,61 @@
 // // // // // //                 {result}
 // // // // // //               </h3>
 
-// // // // // //               {/* Reason */}
 // // // // // //               <div>
-// // // // // //                 <p className="text-blue-600 font-semibold">
+// // // // // //                 <p className="font-semibold text-blue-600">
 // // // // // //                   🧠 Reason:
 // // // // // //                 </p>
 
 // // // // // //                 <ul className="list-disc ml-5 text-blue-600">
 // // // // // //                   {reason
-// // // // // //                     .split("\n")
-// // // // // //                     .filter(Boolean)
+// // // // // //                     .split(
+// // // // // //                       "\n"
+// // // // // //                     )
+// // // // // //                     .filter(
+// // // // // //                       Boolean
+// // // // // //                     )
 // // // // // //                     .map(
-// // // // // //                       (r, i) => (
-// // // // // //                         <li key={i}>
-// // // // // //                           {r}
+// // // // // //                       (
+// // // // // //                         item,
+// // // // // //                         i
+// // // // // //                       ) => (
+// // // // // //                         <li
+// // // // // //                           key={
+// // // // // //                             i
+// // // // // //                           }
+// // // // // //                         >
+// // // // // //                           {item}
 // // // // // //                         </li>
 // // // // // //                       )
 // // // // // //                     )}
 // // // // // //                 </ul>
 // // // // // //               </div>
 
-// // // // // //               {/* Alerts */}
-// // // // // //               <p className="text-orange-600 whitespace-pre-line">
-// // // // // //                 {alerts}
-// // // // // //               </p>
+// // // // // //               {alerts.map(
+// // // // // //                 (
+// // // // // //                   item,
+// // // // // //                   i
+// // // // // //                 ) => (
+// // // // // //                   <div
+// // // // // //                     key={i}
+// // // // // //                     className="bg-orange-50 p-3 rounded"
+// // // // // //                   >
+// // // // // //                     ⚠️ {item}
+// // // // // //                     <span className="ml-2 text-blue-600 underline cursor-pointer">
+// // // // // //                       Click Here
+// // // // // //                     </span>
+// // // // // //                   </div>
+// // // // // //                 )
+// // // // // //               )}
 
-// // // // // //               {/* Action */}
-// // // // // //               <p className="text-gray-700 whitespace-pre-line">
-// // // // // //                 {action}
-// // // // // //               </p>
+// // // // // //               <p>{action}</p>
 
-// // // // // //               {/* Next */}
 // // // // // //               <button
 // // // // // //                 onClick={onNext}
-// // // // // //                 className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
+// // // // // //                 className="w-full bg-green-600 text-white py-3 rounded-xl"
 // // // // // //               >
 // // // // // //                 NEXT PATIENT →
 // // // // // //               </button>
-
 // // // // // //             </div>
 // // // // // //           )}
 
@@ -739,71 +1058,69 @@
 // // // // // //   );
 // // // // // // }
 
-// // // // // // const fields = [
-// // // // // //   {
-// // // // // //     key: "conscious",
-// // // // // //     label: "Conscious?",
-// // // // // //     options: ["Yes", "No"],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "breathing",
-// // // // // //     label: "Breathing",
-// // // // // //     options: [
-// // // // // //       "Normal",
-// // // // // //       "Irregular",
-// // // // // //       "Absent",
-// // // // // //     ],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "pulse",
-// // // // // //     label: "Pulse",
-// // // // // //     options: [
-// // // // // //       "Normal",
-// // // // // //       "Weak",
-// // // // // //       "Absent",
-// // // // // //     ],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "injury",
-// // // // // //     label: "Mechanism of Injury",
-// // // // // //     options: [
-// // // // // //       "Minor",
-// // // // // //       "High-speed accident",
-// // // // // //       "Fall",
-// // // // // //       "Fire burn",
-// // // // // //     ],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "pain",
-// // // // // //     label: "Neck / Back Pain",
-// // // // // //     options: ["No", "Yes"],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "neuro",
-// // // // // //     label: "Neurological Signs",
-// // // // // //     options: [
-// // // // // //       "No",
-// // // // // //       "Weakness",
-// // // // // //       "Numbness",
-// // // // // //       "Paralysis",
-// // // // // //     ],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "burn",
-// // // // // //     label: "Burn %",
-// // // // // //     options: [
-// // // // // //       "0%",
-// // // // // //       "<10%",
-// // // // // //       "10-30%",
-// // // // // //       ">30%",
-// // // // // //     ],
-// // // // // //   },
-// // // // // //   {
-// // // // // //     key: "smoke",
-// // // // // //     label: "Smoke Inhalation",
-// // // // // //     options: ["No", "Yes"],
-// // // // // //   },
-// // // // // // ];
+// // // // // // function SelectField({
+// // // // // //   label,
+// // // // // //   options,
+// // // // // //   onChange,
+// // // // // // }: any) {
+// // // // // //   return (
+// // // // // //     <div className="mb-4">
+// // // // // //       <label className="block mb-1 text-sm font-medium">
+// // // // // //         {label}
+// // // // // //       </label>
+
+// // // // // //       <select
+// // // // // //         defaultValue=""
+// // // // // //         className="w-full border rounded p-3"
+// // // // // //         onChange={(e) =>
+// // // // // //           onChange(
+// // // // // //             e.target.value
+// // // // // //           )
+// // // // // //         }
+// // // // // //       >
+// // // // // //         <option
+// // // // // //           value=""
+// // // // // //           disabled
+// // // // // //         >
+// // // // // //           Select
+// // // // // //         </option>
+
+// // // // // //         {options.map(
+// // // // // //           (
+// // // // // //             item: string
+// // // // // //           ) => (
+// // // // // //             <option
+// // // // // //               key={item}
+// // // // // //             >
+// // // // // //               {item}
+// // // // // //             </option>
+// // // // // //           )
+// // // // // //         )}
+// // // // // //       </select>
+// // // // // //     </div>
+// // // // // //   );
+// // // // // // }
+
+// // // // // // function InputField({
+// // // // // //   placeholder,
+// // // // // //   onChange,
+// // // // // // }: any) {
+// // // // // //   return (
+// // // // // //     <input
+// // // // // //       type="text"
+// // // // // //       placeholder={
+// // // // // //         placeholder
+// // // // // //       }
+// // // // // //       className="w-full border rounded p-3 mb-4"
+// // // // // //       onChange={(e) =>
+// // // // // //         onChange(
+// // // // // //           e.target.value
+// // // // // //         )
+// // // // // //       }
+// // // // // //     />
+// // // // // //   );
+// // // // // // }
+
 
 // // // // // "use client";
 
@@ -812,477 +1129,21 @@
 // // // // // export default function Triage({ patient, onNext }: any) {
 // // // // //   const [data, setData] = useState({
 // // // // //     conscious: "",
-// // // // //     breathing: "",
-// // // // //     pulse: "",
+// // // // //     orientation: "",
+// // // // //     mobility: "",
 // // // // //     injury: "",
-// // // // //     pain: "",
-// // // // //     neuro: "",
+// // // // //     otherInjury: "",
 // // // // //     burn: "",
-// // // // //     smoke: "",
-// // // // //   });
+// // // // //     bleeding: "",
+// // // // //     timeInjury: "",
 
-// // // // //   const [result, setResult] = useState("");
-// // // // //   const [reason, setReason] = useState("");
-// // // // //   const [alerts, setAlerts] = useState<string[]>([]);
-// // // // //   const [action, setAction] = useState("");
-
-// // // // //   const [showSpinal, setShowSpinal] =
-// // // // //     useState(false);
-// // // // //   const [showAirway, setShowAirway] =
-// // // // //     useState(false);
-// // // // //   const [showShock, setShowShock] =
-// // // // //     useState(false);
-
-// // // // //   function triage() {
-// // // // //     const {
-// // // // //       conscious,
-// // // // //       breathing,
-// // // // //       pulse,
-// // // // //       injury,
-// // // // //       pain,
-// // // // //       neuro,
-// // // // //       burn,
-// // // // //       smoke,
-// // // // //     } = data;
-
-// // // // //     if (
-// // // // //       !conscious ||
-// // // // //       !breathing ||
-// // // // //       !pulse ||
-// // // // //       !injury ||
-// // // // //       !pain ||
-// // // // //       !neuro ||
-// // // // //       !burn ||
-// // // // //       !smoke
-// // // // //     ) {
-// // // // //       alert("Please fill all fields");
-// // // // //       return;
-// // // // //     }
-
-// // // // //     let res = "";
-// // // // //     let why = "";
-// // // // //     let act = "";
-// // // // //     let alertList: string[] = [];
-
-// // // // //     // TRIAGE
-// // // // //     if (
-// // // // //       conscious === "No" &&
-// // // // //       breathing === "Absent"
-// // // // //     ) {
-// // // // //       res = "⚫ BLACK";
-// // // // //       why =
-// // // // //         "Unconscious patient\nAbsent breathing";
-// // // // //       act = "No survival signs";
-// // // // //     } else if (
-// // // // //       conscious === "No" ||
-// // // // //       breathing === "Irregular" ||
-// // // // //       pulse === "Weak" ||
-// // // // //       burn === ">30%" ||
-// // // // //       smoke === "Yes"
-// // // // //     ) {
-// // // // //       res = "🔴 RED";
-
-// // // // //       if (conscious === "No")
-// // // // //         why += "Unconscious\n";
-
-// // // // //       if (breathing === "Irregular")
-// // // // //         why += "Irregular breathing\n";
-
-// // // // //       if (pulse === "Weak")
-// // // // //         why += "Weak pulse\n";
-
-// // // // //       if (burn === ">30%")
-// // // // //         why += "Burns >30%\n";
-
-// // // // //       if (smoke === "Yes")
-// // // // //         why += "Smoke inhalation\n";
-
-// // // // //       act = "Immediate intervention";
-// // // // //     } else if (burn === "10-30%") {
-// // // // //       res = "🟡 YELLOW";
-// // // // //       why = "Moderate burns";
-// // // // //       act = "Urgent treatment";
-// // // // //     } else {
-// // // // //       res = "🟢 GREEN";
-// // // // //       why = "Stable vitals";
-// // // // //       act = "Basic care";
-// // // // //     }
-
-// // // // //     // ALERTS
-// // // // //     if (
-// // // // //       ((injury ===
-// // // // //         "High-speed accident" ||
-// // // // //         injury === "Fall") &&
-// // // // //         (pain === "Yes" ||
-// // // // //           neuro !== "No")) ||
-// // // // //       conscious === "No"
-// // // // //     ) {
-// // // // //       alertList.push("Spinal Alert");
-// // // // //     }
-
-// // // // //     if (
-// // // // //       breathing === "Irregular" ||
-// // // // //       breathing === "Absent" ||
-// // // // //       smoke === "Yes"
-// // // // //     ) {
-// // // // //       alertList.push("Airway Alert");
-// // // // //     }
-
-// // // // //     if (
-// // // // //       pulse === "Weak" ||
-// // // // //       burn === ">30%"
-// // // // //     ) {
-// // // // //       alertList.push("Shock Alert");
-// // // // //     }
-
-// // // // //     // ETA
-// // // // //     const eta =
-// // // // //       Math.floor(Math.random() * 11) + 5;
-
-// // // // //     act += ` | ETA ${eta} mins`;
-
-// // // // //     // SAVE TO LOCALSTORAGE
-// // // // //     const old = JSON.parse(
-// // // // //       localStorage.getItem("patients") ||
-// // // // //         "[]"
-// // // // //     );
-
-// // // // //     old.push({
-// // // // //       ...patient,
-// // // // //       ...data,
-// // // // //       result: res,
-// // // // //       reason: why,
-// // // // //       alerts: alertList.join(", "),
-// // // // //       time: new Date().toLocaleTimeString(),
-// // // // //     });
-
-// // // // //     localStorage.setItem(
-// // // // //       "patients",
-// // // // //       JSON.stringify(old)
-// // // // //     );
-
-// // // // //     setResult(res);
-// // // // //     setReason(why);
-// // // // //     setAlerts(alertList);
-// // // // //     setAction(act);
-// // // // //   }
-
-// // // // //   return (
-// // // // //     <section className="bg-slate-50 py-14">
-// // // // //       <div className="max-w-6xl mx-auto px-4">
-
-// // // // //         <h2 className="text-3xl font-bold text-center mb-8">
-// // // // //           🚑 Clinical Triage
-// // // // //         </h2>
-
-// // // // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
-
-// // // // //           {/* Patient Info */}
-// // // // //           <div className="mb-5 text-sm bg-blue-50 p-4 rounded">
-// // // // //             <p>
-// // // // //               <b>Name:</b> {patient.name}
-// // // // //             </p>
-// // // // //             <p>
-// // // // //               <b>Gender:</b>{" "}
-// // // // //               {patient.gender}
-// // // // //             </p>
-// // // // //             <p>
-// // // // //               <b>Age Group:</b>{" "}
-// // // // //               {patient.age}
-// // // // //             </p>
-// // // // //           </div>
-
-// // // // //           {/* Fields */}
-// // // // //           {fields.map((item) => (
-// // // // //             <div
-// // // // //               key={item.key}
-// // // // //               className="mb-4"
-// // // // //             >
-// // // // //               <label className="block mb-1 text-sm font-medium">
-// // // // //                 {item.label}
-// // // // //               </label>
-
-// // // // //               <select
-// // // // //                 defaultValue=""
-// // // // //                 className="w-full border rounded p-3"
-// // // // //                 onChange={(e) =>
-// // // // //                   setData({
-// // // // //                     ...data,
-// // // // //                     [item.key]:
-// // // // //                       e.target.value,
-// // // // //                   })
-// // // // //                 }
-// // // // //               >
-// // // // //                 <option
-// // // // //                   value=""
-// // // // //                   disabled
-// // // // //                 >
-// // // // //                   Select
-// // // // //                 </option>
-
-// // // // //                 {item.options.map(
-// // // // //                   (op) => (
-// // // // //                     <option
-// // // // //                       key={op}
-// // // // //                     >
-// // // // //                       {op}
-// // // // //                     </option>
-// // // // //                   )
-// // // // //                 )}
-// // // // //               </select>
-// // // // //             </div>
-// // // // //           ))}
-
-// // // // //           <button
-// // // // //             onClick={triage}
-// // // // //             className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl"
-// // // // //           >
-// // // // //             TRIAGE NOW
-// // // // //           </button>
-
-// // // // //           {/* Result */}
-// // // // //           {result && (
-// // // // //             <div className="mt-6 space-y-3">
-
-// // // // //               <h3 className="text-xl font-bold">
-// // // // //                 {result}
-// // // // //               </h3>
-
-// // // // //               {/* Reason */}
-// // // // //               <div>
-// // // // //                 <p className="text-blue-600 font-semibold">
-// // // // //                   🧠 Reason:
-// // // // //                 </p>
-
-// // // // //                 <ul className="list-disc ml-5 text-blue-600">
-// // // // //                   {reason
-// // // // //                     .split("\n")
-// // // // //                     .filter(Boolean)
-// // // // //                     .map(
-// // // // //                       (r, i) => (
-// // // // //                         <li key={i}>
-// // // // //                           {r}
-// // // // //                         </li>
-// // // // //                       )
-// // // // //                     )}
-// // // // //                 </ul>
-// // // // //               </div>
-
-// // // // //               {/* Alerts */}
-// // // // //               <div className="space-y-3">
-
-// // // // //                 {alerts.includes(
-// // // // //                   "Spinal Alert"
-// // // // //                 ) && (
-// // // // //                   <div className="bg-orange-50 p-3 rounded">
-// // // // //                     ⚠️ Spinal Alert
-
-// // // // //                     <button
-// // // // //                       className="ml-2 text-blue-600 underline"
-// // // // //                       onClick={() =>
-// // // // //                         setShowSpinal(
-// // // // //                           !showSpinal
-// // // // //                         )
-// // // // //                       }
-// // // // //                     >
-// // // // //                       Click Here
-// // // // //                     </button>
-
-// // // // //                     {showSpinal && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
-// // // // //                         <li>
-// // // // //                           Cervical collar
-// // // // //                         </li>
-// // // // //                         <li>
-// // // // //                           Spine board
-// // // // //                         </li>
-// // // // //                         <li>
-// // // // //                           Avoid movement
-// // // // //                         </li>
-// // // // //                       </ul>
-// // // // //                     )}
-// // // // //                   </div>
-// // // // //                 )}
-
-// // // // //                 {alerts.includes(
-// // // // //                   "Airway Alert"
-// // // // //                 ) && (
-// // // // //                   <div className="bg-orange-50 p-3 rounded">
-// // // // //                     ⚠️ Airway Alert
-
-// // // // //                     <button
-// // // // //                       className="ml-2 text-blue-600 underline"
-// // // // //                       onClick={() =>
-// // // // //                         setShowAirway(
-// // // // //                           !showAirway
-// // // // //                         )
-// // // // //                       }
-// // // // //                     >
-// // // // //                       Click Here
-// // // // //                     </button>
-
-// // // // //                     {showAirway && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
-// // // // //                         <li>Oxygen</li>
-// // // // //                         <li>
-// // // // //                           Airway
-// // // // //                           positioning
-// // // // //                         </li>
-// // // // //                         <li>
-// // // // //                           Ventilation if
-// // // // //                           needed
-// // // // //                         </li>
-// // // // //                       </ul>
-// // // // //                     )}
-// // // // //                   </div>
-// // // // //                 )}
-
-// // // // //                 {alerts.includes(
-// // // // //                   "Shock Alert"
-// // // // //                 ) && (
-// // // // //                   <div className="bg-orange-50 p-3 rounded">
-// // // // //                     ⚠️ Shock Alert
-
-// // // // //                     <button
-// // // // //                       className="ml-2 text-blue-600 underline"
-// // // // //                       onClick={() =>
-// // // // //                         setShowShock(
-// // // // //                           !showShock
-// // // // //                         )
-// // // // //                       }
-// // // // //                     >
-// // // // //                       Click Here
-// // // // //                     </button>
-
-// // // // //                     {showShock && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
-// // // // //                         <li>
-// // // // //                           IV fluids
-// // // // //                         </li>
-// // // // //                         <li>
-// // // // //                           Control
-// // // // //                           bleeding
-// // // // //                         </li>
-// // // // //                         <li>
-// // // // //                           Rapid
-// // // // //                           transport
-// // // // //                         </li>
-// // // // //                       </ul>
-// // // // //                     )}
-// // // // //                   </div>
-// // // // //                 )}
-
-// // // // //               </div>
-
-// // // // //               {/* Action */}
-// // // // //               <p className="text-gray-700">
-// // // // //                 {action}
-// // // // //               </p>
-
-// // // // //               {/* Next */}
-// // // // //               <button
-// // // // //                 onClick={onNext}
-// // // // //                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
-// // // // //               >
-// // // // //                 NEXT PATIENT →
-// // // // //               </button>
-
-// // // // //             </div>
-// // // // //           )}
-
-// // // // //         </div>
-// // // // //       </div>
-// // // // //     </section>
-// // // // //   );
-// // // // // }
-
-// // // // // const fields = [
-// // // // //   {
-// // // // //     key: "conscious",
-// // // // //     label: "Conscious?",
-// // // // //     options: ["Yes", "No"],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "breathing",
-// // // // //     label: "Breathing",
-// // // // //     options: [
-// // // // //       "Normal",
-// // // // //       "Irregular",
-// // // // //       "Absent",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "pulse",
-// // // // //     label: "Pulse",
-// // // // //     options: [
-// // // // //       "Normal",
-// // // // //       "Weak",
-// // // // //       "Absent",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "injury",
-// // // // //     label: "Mechanism of Injury",
-// // // // //     options: [
-// // // // //       "Minor",
-// // // // //       "High-speed accident",
-// // // // //       "Fall",
-// // // // //       "Fire burn",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "pain",
-// // // // //     label: "Neck / Back Pain",
-// // // // //     options: ["No", "Yes"],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "neuro",
-// // // // //     label: "Neurological Signs",
-// // // // //     options: [
-// // // // //       "No",
-// // // // //       "Weakness",
-// // // // //       "Numbness",
-// // // // //       "Paralysis",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "burn",
-// // // // //     label: "Burn %",
-// // // // //     options: [
-// // // // //       "0%",
-// // // // //       "<10%",
-// // // // //       "10-30%",
-// // // // //       ">30%",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "smoke",
-// // // // //     label: "Smoke Inhalation",
-// // // // //     options: ["No", "Yes"],
-// // // // //   },
-// // // // // ];
-
-// // // // // "use client";
-
-// // // // // import { useState } from "react";
-
-// // // // // export default function Triage({ patient, onNext }: any) {
-// // // // //   const [data, setData] = useState({
-// // // // //     conscious: "",
-// // // // //     breathing: "",
-// // // // //     pulse: "",
-// // // // //     injury: "",
-// // // // //     pain: "",
-// // // // //     neuro: "",
-// // // // //     burn: "",
-// // // // //     smoke: "",
-
-// // // // //     // NEW VITALS
 // // // // //     bp: "",
 // // // // //     spo2: "",
 // // // // //     rr: "",
 // // // // //     temp: "",
 // // // // //     sugar: "",
+// // // // //     pulse: "",
+// // // // //     breathing: "",
 // // // // //   });
 
 // // // // //   const [result, setResult] = useState("");
@@ -1290,96 +1151,120 @@
 // // // // //   const [alerts, setAlerts] = useState<string[]>([]);
 // // // // //   const [action, setAction] = useState("");
 
-// // // // //   const [showSpinal, setShowSpinal] =
-// // // // //     useState(false);
-// // // // //   const [showAirway, setShowAirway] =
-// // // // //     useState(false);
-// // // // //   const [showShock, setShowShock] =
-// // // // //     useState(false);
+// // // // //   const [showSpinal, setShowSpinal] = useState(false);
+// // // // //   const [showAirway, setShowAirway] = useState(false);
+// // // // //   const [showShock, setShowShock] = useState(false);
 
 // // // // //   function triage() {
-// // // // //     const {
-// // // // //       conscious,
-// // // // //       breathing,
-// // // // //       pulse,
-// // // // //       injury,
-// // // // //       pain,
-// // // // //       neuro,
-// // // // //       burn,
-// // // // //       smoke,
-// // // // //     } = data;
-
-// // // // //     if (
-// // // // //       !conscious ||
-// // // // //       !breathing ||
-// // // // //       !pulse ||
-// // // // //       !injury ||
-// // // // //       !pain ||
-// // // // //       !neuro ||
-// // // // //       !burn ||
-// // // // //       !smoke
-// // // // //     ) {
-// // // // //       alert("Please fill all fields");
-// // // // //       return;
-// // // // //     }
-
 // // // // //     let res = "";
 // // // // //     let why = "";
 // // // // //     let act = "";
 // // // // //     let alertList: string[] = [];
 
-// // // // //     // TRIAGE
+// // // // //     const {
+// // // // //       conscious,
+// // // // //       orientation,
+// // // // //       mobility,
+// // // // //       injury,
+// // // // //       burn,
+// // // // //       bleeding,
+// // // // //       pulse,
+// // // // //       breathing,
+// // // // //       spo2,
+// // // // //     } = data;
+
+// // // // //     /* RESET OLD RESULT EVERY CLICK */
+// // // // //     setResult("");
+// // // // //     setReason("");
+// // // // //     setAlerts([]);
+// // // // //     setAction("");
+
+// // // // //     /* TRIAGE DECISION */
+
 // // // // //     if (
 // // // // //       conscious === "No" &&
 // // // // //       breathing === "Absent"
 // // // // //     ) {
 // // // // //       res = "⚫ BLACK";
-// // // // //       why =
-// // // // //         "Unconscious patient\nAbsent breathing";
+// // // // //       why += "Patient unconscious\n";
+// // // // //       why += "Breathing absent\n";
 // // // // //       act = "No survival signs";
-// // // // //     } else if (
+// // // // //     }
+
+// // // // //     else if (
 // // // // //       conscious === "No" ||
-// // // // //       breathing === "Irregular" ||
+// // // // //       orientation === "Not Oriented" ||
+// // // // //       mobility === "Paralysis" ||
+// // // // //       bleeding === "Major" ||
 // // // // //       pulse === "Weak" ||
+// // // // //       breathing === "Irregular" ||
+// // // // //       breathing === "Absent" ||
 // // // // //       burn === ">30%" ||
-// // // // //       smoke === "Yes"
+// // // // //       Number(spo2) < 90
 // // // // //     ) {
 // // // // //       res = "🔴 RED";
 
 // // // // //       if (conscious === "No")
-// // // // //         why += "Unconscious\n";
+// // // // //         why += "Patient unconscious\n";
 
-// // // // //       if (breathing === "Irregular")
-// // // // //         why += "Irregular breathing\n";
+// // // // //       if (orientation === "Not Oriented")
+// // // // //         why += "Mental confusion\n";
+
+// // // // //       if (mobility === "Paralysis")
+// // // // //         why += "Paralysis present\n";
+
+// // // // //       if (bleeding === "Major")
+// // // // //         why += "Major bleeding\n";
 
 // // // // //       if (pulse === "Weak")
 // // // // //         why += "Weak pulse\n";
 
-// // // // //       if (burn === ">30%")
-// // // // //         why += "Burns >30%\n";
+// // // // //       if (breathing === "Irregular")
+// // // // //         why += "Irregular breathing\n";
 
-// // // // //       if (smoke === "Yes")
-// // // // //         why += "Smoke inhalation\n";
+// // // // //       if (breathing === "Absent")
+// // // // //         why += "Breathing absent\n";
+
+// // // // //       if (burn === ">30%")
+// // // // //         why += "Severe burns >30%\n";
+
+// // // // //       if (Number(spo2) < 90 && spo2)
+// // // // //         why += "Low oxygen saturation\n";
 
 // // // // //       act = "Immediate intervention";
-// // // // //     } else if (burn === "10-30%") {
+// // // // //     }
+
+// // // // //     else if (
+// // // // //       burn === "10-30%" ||
+// // // // //       bleeding === "Minor" ||
+// // // // //       mobility === "No"
+// // // // //     ) {
 // // // // //       res = "🟡 YELLOW";
-// // // // //       why = "Moderate burns";
+
+// // // // //       if (burn === "10-30%")
+// // // // //         why += "Moderate burns\n";
+
+// // // // //       if (bleeding === "Minor")
+// // // // //         why += "Minor bleeding\n";
+
+// // // // //       if (mobility === "No")
+// // // // //         why += "Unable to walk\n";
+
 // // // // //       act = "Urgent treatment";
-// // // // //     } else {
+// // // // //     }
+
+// // // // //     else {
 // // // // //       res = "🟢 GREEN";
-// // // // //       why = "Stable vitals";
+// // // // //       why += "Stable condition\n";
+// // // // //       why += "Vitals acceptable\n";
 // // // // //       act = "Basic care";
 // // // // //     }
 
-// // // // //     // ALERTS
+// // // // //     /* ALERTS */
+
 // // // // //     if (
-// // // // //       ((injury ===
-// // // // //         "High-speed accident" ||
-// // // // //         injury === "Fall") &&
-// // // // //         (pain === "Yes" ||
-// // // // //           neuro !== "No")) ||
-// // // // //       conscious === "No"
+// // // // //       injury === "RTA" ||
+// // // // //       injury === "Fall / Collapse"
 // // // // //     ) {
 // // // // //       alertList.push("Spinal Alert");
 // // // // //     }
@@ -1387,14 +1272,14 @@
 // // // // //     if (
 // // // // //       breathing === "Irregular" ||
 // // // // //       breathing === "Absent" ||
-// // // // //       smoke === "Yes"
+// // // // //       Number(spo2) < 92
 // // // // //     ) {
 // // // // //       alertList.push("Airway Alert");
 // // // // //     }
 
 // // // // //     if (
-// // // // //       pulse === "Weak" ||
-// // // // //       burn === ">30%"
+// // // // //       bleeding === "Major" ||
+// // // // //       pulse === "Weak"
 // // // // //     ) {
 // // // // //       alertList.push("Shock Alert");
 // // // // //     }
@@ -1404,10 +1289,9 @@
 
 // // // // //     act += ` | ETA ${eta} mins`;
 
-// // // // //     // SAVE
+// // // // //     /* SAVE UPDATED DATA */
 // // // // //     const old = JSON.parse(
-// // // // //       localStorage.getItem("patients") ||
-// // // // //         "[]"
+// // // // //       localStorage.getItem("patients") || "[]"
 // // // // //     );
 
 // // // // //     old.push({
@@ -1416,6 +1300,7 @@
 // // // // //       result: res,
 // // // // //       reason: why,
 // // // // //       alerts: alertList.join(", "),
+// // // // //       action: act,
 // // // // //       time: new Date().toLocaleTimeString(),
 // // // // //     });
 
@@ -1438,122 +1323,106 @@
 // // // // //           🚑 Clinical Triage
 // // // // //         </h2>
 
-// // // // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
+// // // // //         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-// // // // //           {/* Patient Info */}
-// // // // //           <div className="mb-5 text-sm bg-blue-50 p-4 rounded">
-// // // // //             <p><b>Name:</b> {patient.name}</p>
-// // // // //             <p><b>Gender:</b> {patient.gender}</p>
-// // // // //             <p><b>Age Group:</b> {patient.age}</p>
-// // // // //             <p><b>Blood Group:</b> {patient.blood || "N/A"}</p>
+// // // // //           {/* PATIENT DETAILS */}
+// // // // //           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
+// // // // //             <p><b>Name:</b> {patient.name || "N/A"}</p>
+// // // // //             <p><b>Gender:</b> {patient.gender || "N/A"}</p>
+// // // // //             <p><b>Age:</b> {patient.age || "N/A"}</p>
+// // // // //             <p><b>Blood:</b> {patient.blood || "N/A"}</p>
 // // // // //           </div>
 
-// // // // //           {/* TRIAGE FIELDS */}
+// // // // //           {/* FIELDS */}
 // // // // //           {fields.map((item) => (
-// // // // //             <div
-// // // // //               key={item.key}
-// // // // //               className="mb-4"
-// // // // //             >
-// // // // //               <label className="block mb-1 text-sm font-medium">
+// // // // //             <div key={item.key} className="mb-4">
+// // // // //               <label className="block mb-1 font-medium text-sm">
 // // // // //                 {item.label}
 // // // // //               </label>
 
 // // // // //               <select
-// // // // //                 defaultValue=""
+// // // // //                 value={(data as any)[item.key]}
 // // // // //                 className="w-full border rounded p-3"
 // // // // //                 onChange={(e) =>
 // // // // //                   setData({
 // // // // //                     ...data,
-// // // // //                     [item.key]:
-// // // // //                       e.target.value,
+// // // // //                     [item.key]: e.target.value,
 // // // // //                   })
 // // // // //                 }
 // // // // //               >
-// // // // //                 <option
-// // // // //                   value=""
-// // // // //                   disabled
-// // // // //                 >
-// // // // //                   Select
-// // // // //                 </option>
+// // // // //                 <option value="">Select</option>
 
-// // // // //                 {item.options.map(
-// // // // //                   (op) => (
-// // // // //                     <option key={op}>
-// // // // //                       {op}
-// // // // //                     </option>
-// // // // //                   )
-// // // // //                 )}
+// // // // //                 {item.options.map((op) => (
+// // // // //                   <option key={op}>
+// // // // //                     {op}
+// // // // //                   </option>
+// // // // //                 ))}
 // // // // //               </select>
 // // // // //             </div>
 // // // // //           ))}
 
-// // // // //           {/* NEW VITALS */}
-// // // // //           <h3 className="font-bold text-lg mt-6 mb-4 text-blue-700">
-// // // // //             🩺 Vitals (Optional)
+// // // // //           {/* CONDITIONAL INPUTS */}
+
+// // // // //           {data.injury === "Fire Burn" && (
+// // // // //             <div className="mb-4">
+// // // // //               <label className="block mb-1 text-sm font-medium">
+// // // // //                 Burn %
+// // // // //               </label>
+
+// // // // //               <select
+// // // // //                 value={data.burn}
+// // // // //                 className="w-full border rounded p-3"
+// // // // //                 onChange={(e) =>
+// // // // //                   setData({
+// // // // //                     ...data,
+// // // // //                     burn: e.target.value,
+// // // // //                   })
+// // // // //                 }
+// // // // //               >
+// // // // //                 <option value="">Select</option>
+// // // // //                 <option>0%</option>
+// // // // //                 <option>&lt;10%</option>
+// // // // //                 <option>10-30%</option>
+// // // // //                 <option>&gt;30%</option>
+// // // // //               </select>
+// // // // //             </div>
+// // // // //           )}
+
+// // // // //           {data.injury === "Other" && (
+// // // // //             <input
+// // // // //               type="text"
+// // // // //               placeholder="Describe Injury"
+// // // // //               className="w-full border rounded p-3 mb-4"
+// // // // //               value={data.otherInjury}
+// // // // //               onChange={(e) =>
+// // // // //                 setData({
+// // // // //                   ...data,
+// // // // //                   otherInjury: e.target.value,
+// // // // //                 })
+// // // // //               }
+// // // // //             />
+// // // // //           )}
+
+// // // // //           {/* VITALS */}
+// // // // //           <h3 className="font-bold text-blue-700 mt-6 mb-4">
+// // // // //             🩺 Vitals
 // // // // //           </h3>
 
-// // // // //           <input
-// // // // //             type="text"
-// // // // //             placeholder="Blood Pressure (120/80)"
-// // // // //             className="w-full border rounded p-3 mb-4"
-// // // // //             onChange={(e) =>
-// // // // //               setData({
-// // // // //                 ...data,
-// // // // //                 bp: e.target.value,
-// // // // //               })
-// // // // //             }
-// // // // //           />
-
-// // // // //           <input
-// // // // //             type="text"
-// // // // //             placeholder="SpO2 %"
-// // // // //             className="w-full border rounded p-3 mb-4"
-// // // // //             onChange={(e) =>
-// // // // //               setData({
-// // // // //                 ...data,
-// // // // //                 spo2:
-// // // // //                   e.target.value,
-// // // // //               })
-// // // // //             }
-// // // // //           />
-
-// // // // //           <input
-// // // // //             type="text"
-// // // // //             placeholder="Respiratory Rate"
-// // // // //             className="w-full border rounded p-3 mb-4"
-// // // // //             onChange={(e) =>
-// // // // //               setData({
-// // // // //                 ...data,
-// // // // //                 rr: e.target.value,
-// // // // //               })
-// // // // //             }
-// // // // //           />
-
-// // // // //           <input
-// // // // //             type="text"
-// // // // //             placeholder="Temperature °C"
-// // // // //             className="w-full border rounded p-3 mb-4"
-// // // // //             onChange={(e) =>
-// // // // //               setData({
-// // // // //                 ...data,
-// // // // //                 temp:
-// // // // //                   e.target.value,
-// // // // //               })
-// // // // //             }
-// // // // //           />
-
-// // // // //           <input
-// // // // //             type="text"
-// // // // //             placeholder="Blood Sugar"
-// // // // //             className="w-full border rounded p-3 mb-4"
-// // // // //             onChange={(e) =>
-// // // // //               setData({
-// // // // //                 ...data,
-// // // // //                 sugar:
-// // // // //                   e.target.value,
-// // // // //               })
-// // // // //             }
-// // // // //           />
+// // // // //           {vitals.map((v) => (
+// // // // //             <input
+// // // // //               key={v.key}
+// // // // //               type="text"
+// // // // //               placeholder={v.label}
+// // // // //               value={(data as any)[v.key]}
+// // // // //               className="w-full border rounded p-3 mb-4"
+// // // // //               onChange={(e) =>
+// // // // //                 setData({
+// // // // //                   ...data,
+// // // // //                   [v.key]: e.target.value,
+// // // // //                 })
+// // // // //               }
+// // // // //             />
+// // // // //           ))}
 
 // // // // //           <button
 // // // // //             onClick={triage}
@@ -1562,110 +1431,94 @@
 // // // // //             TRIAGE NOW
 // // // // //           </button>
 
-// // // // //           {/* Result */}
+// // // // //           {/* RESULT */}
 // // // // //           {result && (
-// // // // //             <div className="mt-6 space-y-3">
+// // // // //             <div className="mt-6 space-y-4">
 
-// // // // //               <h3 className="text-xl font-bold">
+// // // // //               <h3 className="text-2xl font-bold">
 // // // // //                 {result}
 // // // // //               </h3>
 
-// // // // //               {/* Reason */}
+// // // // //               {/* REASON */}
 // // // // //               <div>
-// // // // //                 <p className="text-blue-600 font-semibold">
+// // // // //                 <p className="text-blue-700 font-semibold">
 // // // // //                   🧠 Reason:
 // // // // //                 </p>
 
-// // // // //                 <ul className="list-disc ml-5 text-blue-600">
+// // // // //                 <ul className="list-disc ml-6 text-blue-700">
 // // // // //                   {reason
 // // // // //                     .split("\n")
 // // // // //                     .filter(Boolean)
-// // // // //                     .map(
-// // // // //                       (r, i) => (
-// // // // //                         <li key={i}>
-// // // // //                           {r}
-// // // // //                         </li>
-// // // // //                       )
-// // // // //                     )}
+// // // // //                     .map((r, i) => (
+// // // // //                       <li key={i}>{r}</li>
+// // // // //                     ))}
 // // // // //                 </ul>
 // // // // //               </div>
 
-// // // // //               {/* Alerts */}
+// // // // //               {/* ALERTS */}
 // // // // //               <div className="space-y-3">
 
-// // // // //                 {alerts.includes(
-// // // // //                   "Spinal Alert"
-// // // // //                 ) && (
+// // // // //                 {alerts.includes("Spinal Alert") && (
 // // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // // //                     ⚠️ Spinal Alert
 
 // // // // //                     <button
 // // // // //                       className="ml-2 text-blue-600 underline"
 // // // // //                       onClick={() =>
-// // // // //                         setShowSpinal(
-// // // // //                           !showSpinal
-// // // // //                         )
+// // // // //                         setShowSpinal(!showSpinal)
 // // // // //                       }
 // // // // //                     >
 // // // // //                       Click Here
 // // // // //                     </button>
 
 // // // // //                     {showSpinal && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
+// // // // //                       <ul className="list-disc ml-5 mt-2 text-sm">
 // // // // //                         <li>Cervical collar</li>
 // // // // //                         <li>Spine board</li>
-// // // // //                         <li>Avoid movement</li>
+// // // // //                         <li>Minimal movement</li>
 // // // // //                       </ul>
 // // // // //                     )}
 // // // // //                   </div>
 // // // // //                 )}
 
-// // // // //                 {alerts.includes(
-// // // // //                   "Airway Alert"
-// // // // //                 ) && (
+// // // // //                 {alerts.includes("Airway Alert") && (
 // // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // // //                     ⚠️ Airway Alert
 
 // // // // //                     <button
 // // // // //                       className="ml-2 text-blue-600 underline"
 // // // // //                       onClick={() =>
-// // // // //                         setShowAirway(
-// // // // //                           !showAirway
-// // // // //                         )
+// // // // //                         setShowAirway(!showAirway)
 // // // // //                       }
 // // // // //                     >
 // // // // //                       Click Here
 // // // // //                     </button>
 
 // // // // //                     {showAirway && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
-// // // // //                         <li>Oxygen</li>
-// // // // //                         <li>Airway positioning</li>
-// // // // //                         <li>Ventilation if needed</li>
+// // // // //                       <ul className="list-disc ml-5 mt-2 text-sm">
+// // // // //                         <li>Oxygen support</li>
+// // // // //                         <li>Position airway</li>
+// // // // //                         <li>Ventilate if needed</li>
 // // // // //                       </ul>
 // // // // //                     )}
 // // // // //                   </div>
 // // // // //                 )}
 
-// // // // //                 {alerts.includes(
-// // // // //                   "Shock Alert"
-// // // // //                 ) && (
+// // // // //                 {alerts.includes("Shock Alert") && (
 // // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // // //                     ⚠️ Shock Alert
 
 // // // // //                     <button
 // // // // //                       className="ml-2 text-blue-600 underline"
 // // // // //                       onClick={() =>
-// // // // //                         setShowShock(
-// // // // //                           !showShock
-// // // // //                         )
+// // // // //                         setShowShock(!showShock)
 // // // // //                       }
 // // // // //                     >
 // // // // //                       Click Here
 // // // // //                     </button>
 
 // // // // //                     {showShock && (
-// // // // //                       <ul className="ml-5 mt-2 list-disc text-sm">
+// // // // //                       <ul className="list-disc ml-5 mt-2 text-sm">
 // // // // //                         <li>IV fluids</li>
 // // // // //                         <li>Control bleeding</li>
 // // // // //                         <li>Rapid transport</li>
@@ -1676,12 +1529,10 @@
 
 // // // // //               </div>
 
-// // // // //               {/* Action */}
-// // // // //               <p className="text-gray-700">
+// // // // //               <p className="text-gray-700 font-medium">
 // // // // //                 {action}
 // // // // //               </p>
 
-// // // // //               {/* Next */}
 // // // // //               <button
 // // // // //                 onClick={onNext}
 // // // // //                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
@@ -1701,67 +1552,54 @@
 // // // // // const fields = [
 // // // // //   {
 // // // // //     key: "conscious",
-// // // // //     label: "Conscious?",
+// // // // //     label: "Consciousness",
 // // // // //     options: ["Yes", "No"],
 // // // // //   },
 // // // // //   {
-// // // // //     key: "breathing",
-// // // // //     label: "Breathing",
-// // // // //     options: [
-// // // // //       "Normal",
-// // // // //       "Irregular",
-// // // // //       "Absent",
-// // // // //     ],
+// // // // //     key: "orientation",
+// // // // //     label: "Orientation",
+// // // // //     options: ["Oriented", "Not Oriented"],
 // // // // //   },
 // // // // //   {
-// // // // //     key: "pulse",
-// // // // //     label: "Pulse",
-// // // // //     options: [
-// // // // //       "Normal",
-// // // // //       "Weak",
-// // // // //       "Absent",
-// // // // //     ],
+// // // // //     key: "mobility",
+// // // // //     label: "Mobility",
+// // // // //     options: ["Yes", "No", "Paralysis"],
 // // // // //   },
 // // // // //   {
 // // // // //     key: "injury",
 // // // // //     label: "Mechanism of Injury",
 // // // // //     options: [
-// // // // //       "Minor",
-// // // // //       "High-speed accident",
-// // // // //       "Fall",
-// // // // //       "Fire burn",
+// // // // //       "RTA",
+// // // // //       "Fire Burn",
+// // // // //       "Fall / Collapse",
+// // // // //       "Other",
 // // // // //     ],
 // // // // //   },
 // // // // //   {
-// // // // //     key: "pain",
-// // // // //     label: "Neck / Back Pain",
-// // // // //     options: ["No", "Yes"],
+// // // // //     key: "bleeding",
+// // // // //     label: "Bleeding",
+// // // // //     options: ["None", "Minor", "Major"],
 // // // // //   },
 // // // // //   {
-// // // // //     key: "neuro",
-// // // // //     label: "Neurological Signs",
+// // // // //     key: "timeInjury",
+// // // // //     label: "Time of Injury",
 // // // // //     options: [
-// // // // //       "No",
-// // // // //       "Weakness",
-// // // // //       "Numbness",
-// // // // //       "Paralysis",
+// // // // //       "12 AM","1 AM","2 AM","3 AM",
+// // // // //       "4 AM","5 AM","6 AM","7 AM",
+// // // // //       "8 AM","9 AM","10 AM","11 AM",
+// // // // //       "12 PM","1 PM","2 PM","3 PM",
+// // // // //       "4 PM","5 PM","6 PM","7 PM",
+// // // // //       "8 PM","9 PM","10 PM","11 PM",
 // // // // //     ],
 // // // // //   },
-// // // // //   {
-// // // // //     key: "burn",
-// // // // //     label: "Burn %",
-// // // // //     options: [
-// // // // //       "0%",
-// // // // //       "<10%",
-// // // // //       "10-30%",
-// // // // //       ">30%",
-// // // // //     ],
-// // // // //   },
-// // // // //   {
-// // // // //     key: "smoke",
-// // // // //     label: "Smoke Inhalation",
-// // // // //     options: ["No", "Yes"],
-// // // // //   },
+// // // // // ];
+
+// // // // // const vitals = [
+// // // // //   { key: "pulse", label: "Pulse" },
+// // // // //   { key: "rr", label: "Respiratory Rate" },
+// // // // //   { key: "bp", label: "Blood Pressure" },
+// // // // //   { key: "spo2", label: "SpO2 %" },
+// // // // //   { key: "sugar", label: "Blood Sugar" },
 // // // // // ];
 
 // // // // "use client";
@@ -1775,17 +1613,17 @@
 // // // //     mobility: "",
 // // // //     injury: "",
 // // // //     otherInjury: "",
-// // // //     bleeding: "",
 // // // //     burn: "",
-// // // //     injuryTime: "",
+// // // //     bleeding: "",
+// // // //     timeInjury: "",
 
-// // // //     // vitals
 // // // //     bp: "",
 // // // //     spo2: "",
 // // // //     rr: "",
 // // // //     temp: "",
 // // // //     sugar: "",
 // // // //     pulse: "",
+// // // //     breathing: "",
 // // // //   });
 
 // // // //   const [result, setResult] = useState("");
@@ -1793,143 +1631,171 @@
 // // // //   const [alerts, setAlerts] = useState<string[]>([]);
 // // // //   const [action, setAction] = useState("");
 
-// // // //   const [showSpinal, setShowSpinal] =
-// // // //     useState(false);
-// // // //   const [showAirway, setShowAirway] =
-// // // //     useState(false);
-// // // //   const [showShock, setShowShock] =
-// // // //     useState(false);
+// // // //   const [showSpinal, setShowSpinal] = useState(false);
+// // // //   const [showAirway, setShowAirway] = useState(false);
+// // // //   const [showShock, setShowShock] = useState(false);
 
 // // // //   function triage() {
-// // // //     const {
-// // // //       conscious,
-// // // //       orientation,
-// // // //       mobility,
-// // // //       injury,
-// // // //       bleeding,
-// // // //       burn,
-// // // //       pulse,
-// // // //     } = data;
-
-// // // //     if (
-// // // //       !conscious ||
-// // // //       !orientation ||
-// // // //       !mobility ||
-// // // //       !injury ||
-// // // //       !bleeding ||
-// // // //       !pulse
-// // // //     ) {
-// // // //       alert("Please fill required fields");
-// // // //       return;
-// // // //     }
-
 // // // //     let res = "";
 // // // //     let why = "";
 // // // //     let act = "";
 // // // //     let alertList: string[] = [];
 
-// // // //     // TRIAGE
+// // // //     const {
+// // // //       conscious,
+// // // //       orientation,
+// // // //       mobility,
+// // // //       injury,
+// // // //       burn,
+// // // //       bleeding,
+// // // //       pulse,
+// // // //       breathing,
+// // // //       spo2,
+// // // //       rr,
+// // // //       bp,
+// // // //     } = data;
+
+// // // //     const pulseNum = Number(pulse);
+// // // //     const spo2Num = Number(spo2);
+// // // //     const rrNum = Number(rr);
+
+// // // //     /* RESET */
+// // // //     setResult("");
+// // // //     setReason("");
+// // // //     setAlerts([]);
+// // // //     setAction("");
+
+// // // //     /* ⚫ BLACK = DEAD / NO SIGNS */
 // // // //     if (
 // // // //       conscious === "No" &&
-// // // //       mobility === "No"
+// // // //       breathing === "Absent" &&
+// // // //       (pulse === "0" ||
+// // // //         pulse === "Absent" ||
+// // // //         pulseNum === 0) &&
+// // // //       (spo2 === "0" || spo2Num === 0)
 // // // //     ) {
 // // // //       res = "⚫ BLACK";
-// // // //       why =
-// // // //         "Unconscious patient\nNo mobility";
-// // // //       act = "No survival signs";
-// // // //     } else if (
+
+// // // //       why += "Unconscious patient\n";
+// // // //       why += "No breathing\n";
+// // // //       why += "No pulse detected\n";
+// // // //       why += "SpO2 zero\n";
+
+// // // //       act = "No survival signs / Confirm CPR protocol";
+// // // //     }
+
+// // // //     /* 🔴 RED */
+// // // //     else if (
 // // // //       conscious === "No" ||
-// // // //       orientation ===
-// // // //         "Not Oriented" ||
+// // // //       orientation === "Not Oriented" ||
 // // // //       mobility === "Paralysis" ||
 // // // //       bleeding === "Major" ||
-// // // //       burn === ">10%" ||
-// // // //       pulse === "Weak"
+// // // //       breathing === "Irregular" ||
+// // // //       breathing === "Absent" ||
+// // // //       burn === ">30%" ||
+// // // //       spo2Num < 90 ||
+// // // //       rrNum > 30 ||
+// // // //       rrNum < 10 ||
+// // // //       pulseNum > 130 ||
+// // // //       pulseNum < 40
 // // // //     ) {
 // // // //       res = "🔴 RED";
 
 // // // //       if (conscious === "No")
-// // // //         why += "Unconscious\n";
+// // // //         why += "Patient unconscious\n";
 
-// // // //       if (
-// // // //         orientation ===
-// // // //         "Not Oriented"
-// // // //       )
-// // // //         why +=
-// // // //           "Disoriented patient\n";
+// // // //       if (orientation === "Not Oriented")
+// // // //         why += "Mental confusion\n";
 
-// // // //       if (
-// // // //         mobility ===
-// // // //         "Paralysis"
-// // // //       )
-// // // //         why += "Paralysis\n";
+// // // //       if (mobility === "Paralysis")
+// // // //         why += "Paralysis present\n";
 
-// // // //       if (
-// // // //         bleeding === "Major"
-// // // //       )
-// // // //         why +=
-// // // //           "Major bleeding\n";
+// // // //       if (bleeding === "Major")
+// // // //         why += "Major bleeding\n";
 
-// // // //       if (burn === ">10%")
-// // // //         why +=
-// // // //           "Significant burns\n";
+// // // //       if (breathing === "Irregular")
+// // // //         why += "Irregular breathing\n";
 
-// // // //       if (pulse === "Weak")
-// // // //         why += "Weak pulse\n";
+// // // //       if (breathing === "Absent")
+// // // //         why += "Breathing absent\n";
+
+// // // //       if (burn === ">30%")
+// // // //         why += "Severe burns >30%\n";
+
+// // // //       if (spo2Num < 90 && spo2)
+// // // //         why += "Low oxygen saturation\n";
+
+// // // //       if (rrNum > 30 || rrNum < 10)
+// // // //         why += "Abnormal respiratory rate\n";
+
+// // // //       if (pulseNum > 130 || pulseNum < 40)
+// // // //         why += "Critical pulse rate\n";
 
 // // // //       act = "Immediate intervention";
-// // // //     } else if (
+// // // //     }
+
+// // // //     /* 🟡 YELLOW */
+// // // //     else if (
+// // // //       burn === "10-30%" ||
 // // // //       bleeding === "Minor" ||
-// // // //       burn === "0-10%"
+// // // //       mobility === "No"
 // // // //     ) {
 // // // //       res = "🟡 YELLOW";
-// // // //       why =
-// // // //         "Moderate injury / minor bleeding";
+
+// // // //       if (burn === "10-30%")
+// // // //         why += "Moderate burns\n";
+
+// // // //       if (bleeding === "Minor")
+// // // //         why += "Minor bleeding\n";
+
+// // // //       if (mobility === "No")
+// // // //         why += "Unable to walk\n";
+
 // // // //       act = "Urgent treatment";
-// // // //     } else {
+// // // //     }
+
+// // // //     /* 🟢 GREEN */
+// // // //     else {
 // // // //       res = "🟢 GREEN";
-// // // //       why = "Stable patient";
+
+// // // //       why += "Stable condition\n";
+// // // //       why += "Vitals acceptable\n";
+
 // // // //       act = "Basic care";
 // // // //     }
 
-// // // //     // ALERTS
+// // // //     /* ALERTS */
 // // // //     if (
 // // // //       injury === "RTA" ||
-// // // //       injury === "Fall/Collapse"
+// // // //       injury === "Fall / Collapse"
 // // // //     ) {
-// // // //       alertList.push(
-// // // //         "Spinal Alert"
-// // // //       );
+// // // //       alertList.push("Spinal Alert");
 // // // //     }
 
 // // // //     if (
-// // // //       conscious === "No"
+// // // //       breathing === "Irregular" ||
+// // // //       breathing === "Absent" ||
+// // // //       spo2Num < 92
 // // // //     ) {
-// // // //       alertList.push(
-// // // //         "Airway Alert"
-// // // //       );
+// // // //       alertList.push("Airway Alert");
 // // // //     }
 
 // // // //     if (
-// // // //       bleeding === "Major"
+// // // //       bleeding === "Major" ||
+// // // //       pulseNum > 130 ||
+// // // //       pulseNum < 40
 // // // //     ) {
-// // // //       alertList.push(
-// // // //         "Shock Alert"
-// // // //       );
+// // // //       alertList.push("Shock Alert");
 // // // //     }
 
 // // // //     const eta =
-// // // //       Math.floor(
-// // // //         Math.random() * 11
-// // // //       ) + 5;
+// // // //       Math.floor(Math.random() * 11) + 5;
 
 // // // //     act += ` | ETA ${eta} mins`;
 
-// // // //     // SAVE
+// // // //     /* SAVE */
 // // // //     const old = JSON.parse(
-// // // //       localStorage.getItem(
-// // // //         "patients"
-// // // //       ) || "[]"
+// // // //       localStorage.getItem("patients") || "[]"
 // // // //     );
 
 // // // //     old.push({
@@ -1937,18 +1803,9 @@
 // // // //       ...data,
 // // // //       result: res,
 // // // //       reason: why,
-// // // //       alerts:
-// // // //         alertList.join(", "),
-// // // //       time:
-// // // //         new Date().toLocaleTimeString(
-// // // //           "en-IN",
-// // // //           {
-// // // //             hour: "2-digit",
-// // // //             minute:
-// // // //               "2-digit",
-// // // //             hour12: true,
-// // // //           }
-// // // //         ) + " IST",
+// // // //       alerts: alertList.join(", "),
+// // // //       action: act,
+// // // //       time: new Date().toLocaleTimeString(),
 // // // //     });
 
 // // // //     localStorage.setItem(
@@ -1970,108 +1827,88 @@
 // // // //           🚑 Clinical Triage
 // // // //         </h2>
 
-// // // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
+// // // //         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-// // // //           {/* PATIENT */}
-// // // //           <div className="mb-5 text-sm bg-blue-50 p-4 rounded">
-// // // //             <p>
-// // // //               <b>Name:</b>{" "}
-// // // //               {patient.name ||
-// // // //                 "N/A"}
-// // // //             </p>
-// // // //             <p>
-// // // //               <b>Gender:</b>{" "}
-// // // //               {patient.gender ||
-// // // //                 "N/A"}
-// // // //             </p>
-// // // //             <p>
-// // // //               <b>Age:</b>{" "}
-// // // //               {patient.age ||
-// // // //                 "N/A"}
-// // // //             </p>
-// // // //             <p>
-// // // //               <b>Blood:</b>{" "}
-// // // //               {patient.blood ||
-// // // //                 "N/A"}
-// // // //             </p>
+// // // //           {/* Patient */}
+// // // //           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
+// // // //             <p><b>Name:</b> {patient.name || "N/A"}</p>
+// // // //             <p><b>Gender:</b> {patient.gender || "N/A"}</p>
+// // // //             <p><b>Age:</b> {patient.age || "N/A"}</p>
+// // // //             <p><b>Blood:</b> {patient.blood || "N/A"}</p>
 // // // //           </div>
 
-// // // //           {/* DROPDOWNS */}
+// // // //           {/* Fields */}
 // // // //           {fields.map((item) => (
-// // // //             <div
-// // // //               key={item.key}
-// // // //               className="mb-4"
-// // // //             >
+// // // //             <div key={item.key} className="mb-4">
 // // // //               <label className="block mb-1 text-sm font-medium">
 // // // //                 {item.label}
 // // // //               </label>
 
 // // // //               <select
-// // // //                 defaultValue=""
+// // // //                 value={(data as any)[item.key]}
 // // // //                 className="w-full border rounded p-3"
 // // // //                 onChange={(e) =>
 // // // //                   setData({
 // // // //                     ...data,
-// // // //                     [item.key]:
-// // // //                       e.target
-// // // //                         .value,
+// // // //                     [item.key]: e.target.value,
 // // // //                   })
 // // // //                 }
 // // // //               >
-// // // //                 <option
-// // // //                   value=""
-// // // //                   disabled
-// // // //                 >
-// // // //                   Select
-// // // //                 </option>
+// // // //                 <option value="">Select</option>
 
-// // // //                 {item.options.map(
-// // // //                   (op) => (
-// // // //                     <option
-// // // //                       key={op}
-// // // //                     >
-// // // //                       {op}
-// // // //                     </option>
-// // // //                   )
-// // // //                 )}
+// // // //                 {item.options.map((op) => (
+// // // //                   <option key={op}>
+// // // //                     {op}
+// // // //                   </option>
+// // // //                 ))}
 // // // //               </select>
 // // // //             </div>
 // // // //           ))}
 
-// // // //           {/* OTHER INJURY */}
-// // // //           {data.injury ===
-// // // //             "Other" && (
+// // // //           {/* Fire Burn Only */}
+// // // //           {data.injury === "Fire Burn" && (
+// // // //             <div className="mb-4">
+// // // //               <label className="block mb-1 text-sm font-medium">
+// // // //                 Burn %
+// // // //               </label>
+
+// // // //               <select
+// // // //                 value={data.burn}
+// // // //                 className="w-full border rounded p-3"
+// // // //                 onChange={(e) =>
+// // // //                   setData({
+// // // //                     ...data,
+// // // //                     burn: e.target.value,
+// // // //                   })
+// // // //                 }
+// // // //               >
+// // // //                 <option value="">Select</option>
+// // // //                 <option>0%</option>
+// // // //                 <option>&lt;10%</option>
+// // // //                 <option>10-30%</option>
+// // // //                 <option>&gt;30%</option>
+// // // //               </select>
+// // // //             </div>
+// // // //           )}
+
+// // // //           {/* Other Injury */}
+// // // //           {data.injury === "Other" && (
 // // // //             <input
 // // // //               type="text"
-// // // //               placeholder="Describe Injury"
+// // // //               placeholder="Describe injury"
 // // // //               className="w-full border rounded p-3 mb-4"
+// // // //               value={data.otherInjury}
 // // // //               onChange={(e) =>
 // // // //                 setData({
 // // // //                   ...data,
-// // // //                   otherInjury:
-// // // //                     e.target
-// // // //                       .value,
+// // // //                   otherInjury: e.target.value,
 // // // //                 })
 // // // //               }
 // // // //             />
 // // // //           )}
 
-// // // //           {/* TIME */}
-// // // //           <input
-// // // //             type="time"
-// // // //             className="w-full border rounded p-3 mb-4"
-// // // //             onChange={(e) =>
-// // // //               setData({
-// // // //                 ...data,
-// // // //                 injuryTime:
-// // // //                   e.target
-// // // //                     .value,
-// // // //               })
-// // // //             }
-// // // //           />
-
-// // // //           {/* VITALS */}
-// // // //           <h3 className="font-bold text-lg text-blue-700 mb-4">
+// // // //           {/* Vitals */}
+// // // //           <h3 className="font-bold text-blue-700 mt-6 mb-4">
 // // // //             🩺 Vitals
 // // // //           </h3>
 
@@ -2079,16 +1916,13 @@
 // // // //             <input
 // // // //               key={v.key}
 // // // //               type="text"
-// // // //               placeholder={
-// // // //                 v.label
-// // // //               }
+// // // //               placeholder={v.label}
+// // // //               value={(data as any)[v.key]}
 // // // //               className="w-full border rounded p-3 mb-4"
 // // // //               onChange={(e) =>
 // // // //                 setData({
 // // // //                   ...data,
-// // // //                   [v.key]:
-// // // //                     e.target
-// // // //                       .value,
+// // // //                   [v.key]: e.target.value,
 // // // //                 })
 // // // //               }
 // // // //             />
@@ -2103,137 +1937,52 @@
 
 // // // //           {/* RESULT */}
 // // // //           {result && (
-// // // //             <div className="mt-6 space-y-3">
+// // // //             <div className="mt-6 space-y-4">
 
-// // // //               <h3 className="text-xl font-bold">
+// // // //               <h3 className="text-2xl font-bold">
 // // // //                 {result}
 // // // //               </h3>
 
 // // // //               <div>
-// // // //                 <p className="text-blue-600 font-semibold">
+// // // //                 <p className="text-blue-700 font-semibold">
 // // // //                   🧠 Reason:
 // // // //                 </p>
 
-// // // //                 <ul className="list-disc ml-5 text-blue-600">
+// // // //                 <ul className="list-disc ml-6 text-blue-700">
 // // // //                   {reason
-// // // //                     .split(
-// // // //                       "\n"
-// // // //                     )
-// // // //                     .filter(
-// // // //                       Boolean
-// // // //                     )
-// // // //                     .map(
-// // // //                       (
-// // // //                         r,
-// // // //                         i
-// // // //                       ) => (
-// // // //                         <li
-// // // //                           key={
-// // // //                             i
-// // // //                           }
-// // // //                         >
-// // // //                           {r}
-// // // //                         </li>
-// // // //                       )
-// // // //                     )}
+// // // //                     .split("\n")
+// // // //                     .filter(Boolean)
+// // // //                     .map((r, i) => (
+// // // //                       <li key={i}>{r}</li>
+// // // //                     ))}
 // // // //                 </ul>
 // // // //               </div>
 
-// // // //               {/* ALERTS */}
-// // // //               <div className="space-y-2">
+// // // //               {/* Alerts */}
+// // // //               <div className="space-y-3">
 
-// // // //                 {alerts.includes(
-// // // //                   "Spinal Alert"
-// // // //                 ) && (
+// // // //                 {alerts.includes("Spinal Alert") && (
 // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // //                     ⚠️ Spinal Alert
-
-// // // //                     <button
-// // // //                       className="ml-2 text-blue-600 underline"
-// // // //                       onClick={() =>
-// // // //                         setShowSpinal(
-// // // //                           !showSpinal
-// // // //                         )
-// // // //                       }
-// // // //                     >
-// // // //                       Click Here
-// // // //                     </button>
-
-// // // //                     {showSpinal && (
-// // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
-// // // //                         <li>
-// // // //                           Cervical collar
-// // // //                         </li>
-// // // //                         <li>
-// // // //                           Avoid movement
-// // // //                         </li>
-// // // //                       </ul>
-// // // //                     )}
 // // // //                   </div>
 // // // //                 )}
 
-// // // //                 {alerts.includes(
-// // // //                   "Airway Alert"
-// // // //                 ) && (
+// // // //                 {alerts.includes("Airway Alert") && (
 // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // //                     ⚠️ Airway Alert
-
-// // // //                     <button
-// // // //                       className="ml-2 text-blue-600 underline"
-// // // //                       onClick={() =>
-// // // //                         setShowAirway(
-// // // //                           !showAirway
-// // // //                         )
-// // // //                       }
-// // // //                     >
-// // // //                       Click Here
-// // // //                     </button>
-
-// // // //                     {showAirway && (
-// // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
-// // // //                         <li>
-// // // //                           Oxygen
-// // // //                         </li>
-// // // //                         <li>
-// // // //                           Airway support
-// // // //                         </li>
-// // // //                       </ul>
-// // // //                     )}
 // // // //                   </div>
 // // // //                 )}
 
-// // // //                 {alerts.includes(
-// // // //                   "Shock Alert"
-// // // //                 ) && (
+// // // //                 {alerts.includes("Shock Alert") && (
 // // // //                   <div className="bg-orange-50 p-3 rounded">
 // // // //                     ⚠️ Shock Alert
-
-// // // //                     <button
-// // // //                       className="ml-2 text-blue-600 underline"
-// // // //                       onClick={() =>
-// // // //                         setShowShock(
-// // // //                           !showShock
-// // // //                         )
-// // // //                       }
-// // // //                     >
-// // // //                       Click Here
-// // // //                     </button>
-
-// // // //                     {showShock && (
-// // // //                       <ul className="ml-5 mt-2 text-sm list-disc">
-// // // //                         <li>
-// // // //                           IV fluids
-// // // //                         </li>
-// // // //                         <li>
-// // // //                           Stop bleeding
-// // // //                         </li>
-// // // //                       </ul>
-// // // //                     )}
 // // // //                   </div>
 // // // //                 )}
 // // // //               </div>
 
-// // // //               <p>{action}</p>
+// // // //               <p className="text-gray-700 font-medium">
+// // // //                 {action}
+// // // //               </p>
 
 // // // //               <button
 // // // //                 onClick={onNext}
@@ -2241,6 +1990,7 @@
 // // // //               >
 // // // //                 NEXT PATIENT →
 // // // //               </button>
+
 // // // //             </div>
 // // // //           )}
 
@@ -2254,93 +2004,59 @@
 // // // //   {
 // // // //     key: "conscious",
 // // // //     label: "Consciousness",
-// // // //     options: [
-// // // //       "Yes",
-// // // //       "No",
-// // // //     ],
+// // // //     options: ["Yes", "No"],
 // // // //   },
 // // // //   {
 // // // //     key: "orientation",
 // // // //     label: "Orientation",
-// // // //     options: [
-// // // //       "Oriented",
-// // // //       "Not Oriented",
-// // // //     ],
+// // // //     options: ["Oriented", "Not Oriented"],
 // // // //   },
 // // // //   {
 // // // //     key: "mobility",
 // // // //     label: "Mobility",
-// // // //     options: [
-// // // //       "Yes",
-// // // //       "No",
-// // // //       "Paralysis",
-// // // //     ],
+// // // //     options: ["Yes", "No", "Paralysis"],
 // // // //   },
 // // // //   {
 // // // //     key: "injury",
-// // // //     label:
-// // // //       "Mechanism of Injury",
+// // // //     label: "Mechanism of Injury",
 // // // //     options: [
 // // // //       "RTA",
 // // // //       "Fire Burn",
-// // // //       "Fall/Collapse",
+// // // //       "Fall / Collapse",
 // // // //       "Other",
 // // // //     ],
 // // // //   },
 // // // //   {
 // // // //     key: "bleeding",
 // // // //     label: "Bleeding",
+// // // //     options: ["None", "Minor", "Major"],
+// // // //   },
+// // // //   {
+// // // //     key: "timeInjury",
+// // // //     label: "Time of Injury",
 // // // //     options: [
-// // // //       "None",
-// // // //       "Minor",
-// // // //       "Major",
+// // // //       "12 AM","1 AM","2 AM","3 AM",
+// // // //       "4 AM","5 AM","6 AM","7 AM",
+// // // //       "8 AM","9 AM","10 AM","11 AM",
+// // // //       "12 PM","1 PM","2 PM","3 PM",
+// // // //       "4 PM","5 PM","6 PM","7 PM",
+// // // //       "8 PM","9 PM","10 PM","11 PM",
 // // // //     ],
 // // // //   },
 // // // //   {
-// // // //     key: "burn",
-// // // //     label: "Burn %",
-// // // //     options: [
-// // // //       "0%",
-// // // //       "0-10%",
-// // // //       ">10%",
-// // // //     ],
-// // // //   },
-// // // //   {
-// // // //     key: "pulse",
-// // // //     label: "Pulse",
-// // // //     options: [
-// // // //       "Normal",
-// // // //       "Weak",
-// // // //       "Absent",
-// // // //     ],
+// // // //     key: "breathing",
+// // // //     label: "Breathing",
+// // // //     options: ["Normal", "Irregular", "Absent"],
 // // // //   },
 // // // // ];
 
 // // // // const vitals = [
-// // // //   {
-// // // //     key: "bp",
-// // // //     label:
-// // // //       "Blood Pressure",
-// // // //   },
-// // // //   {
-// // // //     key: "spo2",
-// // // //     label: "SpO2 %",
-// // // //   },
-// // // //   {
-// // // //     key: "rr",
-// // // //     label:
-// // // //       "Respiratory Rate",
-// // // //   },
-// // // //   {
-// // // //     key: "temp",
-// // // //     label:
-// // // //       "Temperature °C",
-// // // //   },
-// // // //   {
-// // // //     key: "sugar",
-// // // //     label:
-// // // //       "Blood Sugar",
-// // // //   },
+// // // //   { key: "pulse", label: "Pulse Rate" },
+// // // //   { key: "rr", label: "Respiratory Rate" },
+// // // //   { key: "bp", label: "Blood Pressure" },
+// // // //   { key: "spo2", label: "SpO2 %" },
+// // // //   { key: "temp", label: "Temperature °C" },
+// // // //   { key: "sugar", label: "Blood Sugar" },
 // // // // ];
 
 
@@ -2357,12 +2073,15 @@
 // // //     otherInjury: "",
 // // //     burn: "",
 // // //     bleeding: "",
-// // //     pulse: "",
+// // //     timeInjury: "",
+
 // // //     bp: "",
 // // //     spo2: "",
 // // //     rr: "",
 // // //     temp: "",
 // // //     sugar: "",
+// // //     pulse: "",
+// // //     breathing: "",
 // // //   });
 
 // // //   const [result, setResult] = useState("");
@@ -2371,121 +2090,161 @@
 // // //   const [action, setAction] = useState("");
 
 // // //   function triage() {
-// // //     if (
-// // //       !data.conscious ||
-// // //       !data.orientation ||
-// // //       !data.mobility ||
-// // //       !data.injury ||
-// // //       !data.bleeding ||
-// // //       !data.pulse
-// // //     ) {
-// // //       alert("Please fill required fields");
-// // //       return;
-// // //     }
-
 // // //     let res = "";
-// // //     let why = "";
+// // //     let why: string[] = [];
 // // //     let act = "";
 // // //     let alertList: string[] = [];
 
+// // //     const {
+// // //       conscious,
+// // //       orientation,
+// // //       mobility,
+// // //       injury,
+// // //       burn,
+// // //       bleeding,
+// // //       pulse,
+// // //       breathing,
+// // //       spo2,
+// // //       rr,
+// // //     } = data;
+
+// // //     const pulseNum = Number(pulse);
+// // //     const spo2Num = Number(spo2);
+// // //     const rrNum = Number(rr);
+
+// // //     /* RESET */
+// // //     setResult("");
+// // //     setReason("");
+// // //     setAlerts([]);
+// // //     setAction("");
+
+// // //     /* ⚫ BLACK */
 // // //     if (
-// // //       data.conscious === "No" &&
-// // //       data.mobility === "No"
+// // //       conscious === "No" &&
+// // //       breathing === "Absent" &&
+// // //       pulseNum === 0 &&
+// // //       spo2Num === 0
 // // //     ) {
 // // //       res = "⚫ BLACK";
-// // //       why = "Unconscious\nNo mobility";
-// // //       act = "No survival signs";
-// // //     } else if (
-// // //       data.conscious === "No" ||
-// // //       data.orientation === "Not Oriented" ||
-// // //       data.mobility === "Paralysis" ||
-// // //       data.bleeding === "Major" ||
-// // //       data.pulse === "Weak" ||
-// // //       data.burn === ">10%"
+
+// // //       why.push("Patient unconscious");
+// // //       why.push("No breathing");
+// // //       why.push("No pulse detected");
+// // //       why.push("SpO2 is zero");
+
+// // //       act = "No survival signs / CPR protocol";
+// // //     }
+
+// // //     /* 🔴 RED */
+// // //     else if (
+// // //       conscious === "No" ||
+// // //       orientation === "Not Oriented" ||
+// // //       mobility === "Paralysis" ||
+// // //       bleeding === "Major" ||
+// // //       breathing === "Irregular" ||
+// // //       breathing === "Absent" ||
+// // //       burn === ">30%" ||
+// // //       spo2Num < 90 ||
+// // //       rrNum > 30 ||
+// // //       rrNum < 10 ||
+// // //       pulseNum > 130 ||
+// // //       pulseNum < 40
 // // //     ) {
 // // //       res = "🔴 RED";
 
-// // //       if (data.conscious === "No")
-// // //         why += "Unconscious\n";
+// // //       if (conscious === "No") why.push("Patient unconscious");
+// // //       if (orientation === "Not Oriented")
+// // //         why.push("Mental confusion / disorientation");
+// // //       if (mobility === "Paralysis")
+// // //         why.push("Paralysis present");
+// // //       if (bleeding === "Major")
+// // //         why.push("Major bleeding");
+// // //       if (breathing === "Irregular")
+// // //         why.push("Irregular breathing");
+// // //       if (breathing === "Absent")
+// // //         why.push("Breathing absent");
+// // //       if (burn === ">30%")
+// // //         why.push("Severe burns >30%");
+// // //       if (spo2Num < 90 && spo2)
+// // //         why.push("Low oxygen saturation");
+// // //       if (rrNum > 30 || rrNum < 10)
+// // //         why.push("Abnormal respiratory rate");
+// // //       if (pulseNum > 130 || pulseNum < 40)
+// // //         why.push("Critical pulse rate");
 
-// // //       if (
-// // //         data.orientation ===
-// // //         "Not Oriented"
-// // //       )
-// // //         why += "Disoriented\n";
-
-// // //       if (
-// // //         data.mobility ===
-// // //         "Paralysis"
-// // //       )
-// // //         why += "Paralysis\n";
-
-// // //       if (
-// // //         data.bleeding === "Major"
-// // //       )
-// // //         why += "Major bleeding\n";
-
-// // //       if (data.pulse === "Weak")
-// // //         why += "Weak pulse\n";
-
-// // //       if (data.burn === ">10%")
-// // //         why += "Severe burn\n";
-
-// // //       act = "Immediate intervention";
-// // //     } else if (
-// // //       data.bleeding === "Minor" ||
-// // //       data.burn === "0-10%"
-// // //     ) {
-// // //       res = "🟡 YELLOW";
-// // //       why = "Moderate injury";
-// // //       act = "Urgent treatment";
-// // //     } else {
-// // //       res = "🟢 GREEN";
-// // //       why = "Stable vitals";
-// // //       act = "Basic care";
+// // //       act = "Immediate intervention required";
 // // //     }
 
+// // //     /* 🟡 YELLOW */
+// // //     else if (
+// // //       burn === "10-30%" ||
+// // //       bleeding === "Minor" ||
+// // //       mobility === "No"
+// // //     ) {
+// // //       res = "🟡 YELLOW";
+
+// // //       if (burn === "10-30%")
+// // //         why.push("Moderate burns");
+// // //       if (bleeding === "Minor")
+// // //         why.push("Minor bleeding");
+// // //       if (mobility === "No")
+// // //         why.push("Unable to walk");
+
+// // //       act = "Urgent treatment required";
+// // //     }
+
+// // //     /* 🟢 GREEN */
+// // //     else {
+// // //       res = "🟢 GREEN";
+
+// // //       why.push("Stable condition");
+// // //       why.push("Vitals acceptable");
+
+// // //       act = "Basic care / outpatient care";
+// // //     }
+
+// // //     /* ALERTS */
 // // //     if (
-// // //       data.injury === "RTA" ||
-// // //       data.injury === "Fall/Collapse"
+// // //       injury === "RTA" ||
+// // //       injury === "Fall / Collapse"
 // // //     ) {
 // // //       alertList.push("Spinal Alert");
 // // //     }
 
 // // //     if (
-// // //       data.conscious === "No"
+// // //       breathing === "Irregular" ||
+// // //       breathing === "Absent" ||
+// // //       spo2Num < 92
 // // //     ) {
 // // //       alertList.push("Airway Alert");
 // // //     }
 
 // // //     if (
-// // //       data.bleeding === "Major"
+// // //       bleeding === "Major" ||
+// // //       pulseNum > 130 ||
+// // //       pulseNum < 40
 // // //     ) {
 // // //       alertList.push("Shock Alert");
 // // //     }
 
 // // //     const eta =
-// // //       Math.floor(
-// // //         Math.random() * 10
-// // //       ) + 5;
+// // //       Math.floor(Math.random() * 11) + 5;
 
 // // //     act += ` | ETA ${eta} mins`;
 
+// // //     /* SAVE */
 // // //     const old = JSON.parse(
-// // //       localStorage.getItem(
-// // //         "patients"
-// // //       ) || "[]"
+// // //       localStorage.getItem("patients") || "[]"
 // // //     );
 
 // // //     old.push({
 // // //       ...patient,
 // // //       ...data,
 // // //       result: res,
-// // //       reason: why,
-// // //       alerts:
-// // //         alertList.join(", "),
-// // //       time:
-// // //         new Date().toLocaleTimeString(),
+// // //       reason: why.join(", "),
+// // //       alerts: alertList.join(", "),
+// // //       action: act,
+// // //       createdAt: new Date().toLocaleString(),
 // // //     });
 
 // // //     localStorage.setItem(
@@ -2494,295 +2253,209 @@
 // // //     );
 
 // // //     setResult(res);
-// // //     setReason(why);
+// // //     setReason(why.join("\n"));
 // // //     setAlerts(alertList);
 // // //     setAction(act);
 // // //   }
 
 // // //   return (
 // // //     <section className="bg-slate-50 py-14">
-// // //       <div className="max-w-5xl mx-auto px-4">
+// // //       <div className="max-w-6xl mx-auto px-4">
 
 // // //         <h2 className="text-3xl font-bold text-center mb-8">
 // // //           🚑 Clinical Triage
 // // //         </h2>
 
-// // //         <div className="max-w-xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
+// // //         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-// // //           {/* Patient Info */}
-// // //           <div className="bg-blue-50 p-4 rounded mb-5 text-sm">
+// // //           {/* PATIENT DETAILS */}
+// // //           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
 // // //             <p>
 // // //               <b>Name:</b>{" "}
-// // //               {patient.name ||
-// // //                 "N/A"}
+// // //               {patient?.name || "N/A"}
 // // //             </p>
+
 // // //             <p>
 // // //               <b>Gender:</b>{" "}
-// // //               {patient.gender ||
-// // //                 "N/A"}
+// // //               {patient?.gender || "N/A"}
 // // //             </p>
+
 // // //             <p>
 // // //               <b>Age:</b>{" "}
-// // //               {patient.age ||
+// // //               {patient?.ageInput ||
+// // //                 patient?.ageGroup ||
 // // //                 "N/A"}
 // // //             </p>
-// // //             <p>
-// // //               <b>Blood:</b>{" "}
-// // //               {patient.blood ||
-// // //                 "N/A"}
-// // //             </p>
+
+// // //             {patient?.pregnant && (
+// // //               <p>
+// // //                 <b>Pregnant:</b>{" "}
+// // //                 {patient.pregnant}
+// // //               </p>
+// // //             )}
 // // //           </div>
 
-// // //           {/* Conscious */}
-// // //           <SelectField
-// // //             label="Consciousness"
-// // //             options={[
-// // //               "Yes",
-// // //               "No",
-// // //             ]}
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 conscious: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           {/* Orientation */}
-// // //           <SelectField
-// // //             label="Orientation"
-// // //             options={[
-// // //               "Oriented",
-// // //               "Not Oriented",
-// // //             ]}
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 orientation:
-// // //                   v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           {/* Mobility */}
-// // //           <SelectField
-// // //             label="Mobility"
-// // //             options={[
-// // //               "Yes",
-// // //               "No",
-// // //               "Paralysis",
-// // //             ]}
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 mobility: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           {/* Mechanism */}
-// // //           <div className="mb-4">
-// // //             <label className="block mb-1 text-sm font-medium">
-// // //               Mechanism of Injury
-// // //             </label>
-
-// // //             <select
-// // //               defaultValue=""
-// // //               className="w-full border rounded p-3"
-// // //               onChange={(e) =>
-// // //                 setData({
-// // //                   ...data,
-// // //                   injury:
-// // //                     e.target
-// // //                       .value,
-// // //                   burn: "",
-// // //                 })
-// // //               }
+// // //           {/* SELECT FIELDS */}
+// // //           {fields.map((item) => (
+// // //             <div
+// // //               key={item.key}
+// // //               className="mb-4"
 // // //             >
-// // //               <option
-// // //                 value=""
-// // //                 disabled
-// // //               >
-// // //                 Select
-// // //               </option>
-// // //               <option>
-// // //                 RTA
-// // //               </option>
-// // //               <option>
-// // //                 Fire Burn
-// // //               </option>
-// // //               <option>
-// // //                 Fall/Collapse
-// // //               </option>
-// // //               <option>
-// // //                 Other
-// // //               </option>
-// // //             </select>
-// // //           </div>
+// // //               <label className="block mb-1 text-sm font-medium">
+// // //                 {item.label}
+// // //               </label>
 
-// // //           {/* If Fire Burn */}
+// // //               <select
+// // //                 value={(data as any)[item.key]}
+// // //                 className="w-full border rounded p-3"
+// // //                 onChange={(e) =>
+// // //                   setData({
+// // //                     ...data,
+// // //                     [item.key]:
+// // //                       e.target.value,
+// // //                   })
+// // //                 }
+// // //               >
+// // //                 <option value="">
+// // //                   Select
+// // //                 </option>
+
+// // //                 {item.options.map(
+// // //                   (op) => (
+// // //                     <option key={op}>
+// // //                       {op}
+// // //                     </option>
+// // //                   )
+// // //                 )}
+// // //               </select>
+// // //             </div>
+// // //           ))}
+
+// // //           {/* FIRE BURN */}
 // // //           {data.injury ===
 // // //             "Fire Burn" && (
-// // //             <SelectField
-// // //               label="Burn %"
-// // //               options={[
-// // //                 "0%",
-// // //                 "0-10%",
-// // //                 ">10%",
-// // //               ]}
-// // //               onChange={(v) =>
-// // //                 setData({
-// // //                   ...data,
-// // //                   burn: v,
-// // //                 })
-// // //               }
-// // //             />
+// // //             <div className="mb-4">
+// // //               <label className="block mb-1 text-sm font-medium">
+// // //                 Burn %
+// // //               </label>
+
+// // //               <select
+// // //                 value={data.burn}
+// // //                 className="w-full border rounded p-3"
+// // //                 onChange={(e) =>
+// // //                   setData({
+// // //                     ...data,
+// // //                     burn:
+// // //                       e.target.value,
+// // //                   })
+// // //                 }
+// // //               >
+// // //                 <option value="">
+// // //                   Select
+// // //                 </option>
+// // //                 <option>0%</option>
+// // //                 <option>
+// // //                   &lt;10%
+// // //                 </option>
+// // //                 <option>
+// // //                   10-30%
+// // //                 </option>
+// // //                 <option>
+// // //                   &gt;30%
+// // //                 </option>
+// // //               </select>
+// // //             </div>
 // // //           )}
 
-// // //           {/* If Other */}
+// // //           {/* OTHER INJURY */}
 // // //           {data.injury ===
 // // //             "Other" && (
 // // //             <input
 // // //               type="text"
-// // //               placeholder="Describe Injury"
+// // //               placeholder="Describe injury"
 // // //               className="w-full border rounded p-3 mb-4"
+// // //               value={
+// // //                 data.otherInjury
+// // //               }
 // // //               onChange={(e) =>
 // // //                 setData({
 // // //                   ...data,
 // // //                   otherInjury:
-// // //                     e.target
-// // //                       .value,
+// // //                     e.target.value,
 // // //                 })
 // // //               }
 // // //             />
 // // //           )}
 
-// // //           {/* Bleeding */}
-// // //           <SelectField
-// // //             label="Bleeding"
-// // //             options={[
-// // //               "None",
-// // //               "Minor",
-// // //               "Major",
-// // //             ]}
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 bleeding: v,
-// // //               })
-// // //             }
-// // //           />
+// // //           {/* DATE TIME */}
+// // //           <div className="mb-4">
+// // //             <label className="block mb-1 text-sm font-medium">
+// // //               Time of Injury
+// // //             </label>
 
-// // //           {/* Pulse */}
-// // //           <SelectField
-// // //             label="Pulse"
-// // //             options={[
-// // //               "Normal",
-// // //               "Weak",
-// // //               "Absent",
-// // //             ]}
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 pulse: v,
-// // //               })
-// // //             }
-// // //           />
+// // //             <input
+// // //               type="datetime-local"
+// // //               className="w-full border rounded p-3"
+// // //               value={data.timeInjury}
+// // //               onChange={(e) =>
+// // //                 setData({
+// // //                   ...data,
+// // //                   timeInjury:
+// // //                     e.target.value,
+// // //                 })
+// // //               }
+// // //             />
+// // //           </div>
 
-// // //           {/* Vitals */}
+// // //           {/* VITALS */}
 // // //           <h3 className="font-bold text-blue-700 mt-6 mb-4">
 // // //             🩺 Vitals
 // // //           </h3>
 
-// // //           <InputField
-// // //             placeholder="Blood Pressure"
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 bp: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           <InputField
-// // //             placeholder="SpO2 %"
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 spo2: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           <InputField
-// // //             placeholder="Respiratory Rate"
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 rr: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           <InputField
-// // //             placeholder="Temperature °C"
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 temp: v,
-// // //               })
-// // //             }
-// // //           />
-
-// // //           <InputField
-// // //             placeholder="Blood Sugar"
-// // //             onChange={(v) =>
-// // //               setData({
-// // //                 ...data,
-// // //                 sugar: v,
-// // //               })
-// // //             }
-// // //           />
+// // //           {vitals.map((v) => (
+// // //             <input
+// // //               key={v.key}
+// // //               type="number"
+// // //               placeholder={v.label}
+// // //               value={(data as any)[v.key]}
+// // //               className="w-full border rounded p-3 mb-4"
+// // //               onChange={(e) =>
+// // //                 setData({
+// // //                   ...data,
+// // //                   [v.key]:
+// // //                     e.target.value,
+// // //                 })
+// // //               }
+// // //             />
+// // //           ))}
 
 // // //           <button
 // // //             onClick={triage}
-// // //             className="w-full bg-red-600 text-white py-3 rounded-xl mt-3"
+// // //             className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl"
 // // //           >
 // // //             TRIAGE NOW
 // // //           </button>
 
-// // //           {/* Result */}
+// // //           {/* RESULT */}
 // // //           {result && (
-// // //             <div className="mt-6 space-y-3">
+// // //             <div className="mt-6 space-y-4">
 
-// // //               <h3 className="text-xl font-bold">
+// // //               <h3 className="text-2xl font-bold">
 // // //                 {result}
 // // //               </h3>
 
 // // //               <div>
-// // //                 <p className="font-semibold text-blue-600">
+// // //                 <p className="text-blue-700 font-semibold">
 // // //                   🧠 Reason:
 // // //                 </p>
 
-// // //                 <ul className="list-disc ml-5 text-blue-600">
+// // //                 <ul className="list-disc ml-6 text-blue-700">
 // // //                   {reason
-// // //                     .split(
-// // //                       "\n"
-// // //                     )
-// // //                     .filter(
-// // //                       Boolean
-// // //                     )
+// // //                     .split("\n")
 // // //                     .map(
-// // //                       (
-// // //                         item,
-// // //                         i
-// // //                       ) => (
-// // //                         <li
-// // //                           key={
-// // //                             i
-// // //                           }
-// // //                         >
-// // //                           {item}
+// // //                       (r, i) => (
+// // //                         <li key={i}>
+// // //                           {r}
 // // //                         </li>
 // // //                       )
 // // //                     )}
@@ -2790,30 +2463,27 @@
 // // //               </div>
 
 // // //               {alerts.map(
-// // //                 (
-// // //                   item,
-// // //                   i
-// // //                 ) => (
+// // //                 (a, i) => (
 // // //                   <div
 // // //                     key={i}
 // // //                     className="bg-orange-50 p-3 rounded"
 // // //                   >
-// // //                     ⚠️ {item}
-// // //                     <span className="ml-2 text-blue-600 underline cursor-pointer">
-// // //                       Click Here
-// // //                     </span>
+// // //                     ⚠️ {a}
 // // //                   </div>
 // // //                 )
 // // //               )}
 
-// // //               <p>{action}</p>
+// // //               <p className="text-gray-700 font-medium">
+// // //                 {action}
+// // //               </p>
 
 // // //               <button
 // // //                 onClick={onNext}
-// // //                 className="w-full bg-green-600 text-white py-3 rounded-xl"
+// // //                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
 // // //               >
 // // //                 NEXT PATIENT →
 // // //               </button>
+
 // // //             </div>
 // // //           )}
 
@@ -2823,75 +2493,96 @@
 // // //   );
 // // // }
 
-// // // function SelectField({
-// // //   label,
-// // //   options,
-// // //   onChange,
-// // // }: any) {
-// // //   return (
-// // //     <div className="mb-4">
-// // //       <label className="block mb-1 text-sm font-medium">
-// // //         {label}
-// // //       </label>
+// // // const fields = [
+// // //   {
+// // //     key: "conscious",
+// // //     label: "Consciousness",
+// // //     options: ["Yes", "No"],
+// // //   },
+// // //   {
+// // //     key: "orientation",
+// // //     label: "Orientation",
+// // //     options: [
+// // //       "Oriented",
+// // //       "Not Oriented",
+// // //     ],
+// // //   },
+// // //   {
+// // //     key: "mobility",
+// // //     label: "Mobility",
+// // //     options: [
+// // //       "Yes",
+// // //       "No",
+// // //       "Paralysis",
+// // //     ],
+// // //   },
+// // //   {
+// // //     key: "injury",
+// // //     label: "Mechanism of Injury",
+// // //     options: [
+// // //       "RTA",
+// // //       "Fire Burn",
+// // //       "Fall / Collapse",
+// // //       "Other",
+// // //     ],
+// // //   },
+// // //   {
+// // //     key: "bleeding",
+// // //     label: "External Bleeding",
+// // //     options: [
+// // //       "None",
+// // //       "Minor",
+// // //       "Major",
+// // //     ],
+// // //   },
+// // //   {
+// // //     key: "breathing",
+// // //     label: "Breathing",
+// // //     options: [
+// // //       "Normal",
+// // //       "Irregular",
+// // //       "Absent",
+// // //     ],
+// // //   },
+// // // ];
 
-// // //       <select
-// // //         defaultValue=""
-// // //         className="w-full border rounded p-3"
-// // //         onChange={(e) =>
-// // //           onChange(
-// // //             e.target.value
-// // //           )
-// // //         }
-// // //       >
-// // //         <option
-// // //           value=""
-// // //           disabled
-// // //         >
-// // //           Select
-// // //         </option>
-
-// // //         {options.map(
-// // //           (
-// // //             item: string
-// // //           ) => (
-// // //             <option
-// // //               key={item}
-// // //             >
-// // //               {item}
-// // //             </option>
-// // //           )
-// // //         )}
-// // //       </select>
-// // //     </div>
-// // //   );
-// // // }
-
-// // // function InputField({
-// // //   placeholder,
-// // //   onChange,
-// // // }: any) {
-// // //   return (
-// // //     <input
-// // //       type="text"
-// // //       placeholder={
-// // //         placeholder
-// // //       }
-// // //       className="w-full border rounded p-3 mb-4"
-// // //       onChange={(e) =>
-// // //         onChange(
-// // //           e.target.value
-// // //         )
-// // //       }
-// // //     />
-// // //   );
-// // // }
+// // // const vitals = [
+// // //   {
+// // //     key: "pulse",
+// // //     label: "Pulse Rate",
+// // //   },
+// // //   {
+// // //     key: "rr",
+// // //     label: "Respiratory Rate",
+// // //   },
+// // //   {
+// // //     key: "bp",
+// // //     label: "Blood Pressure",
+// // //   },
+// // //   {
+// // //     key: "spo2",
+// // //     label: "SpO2 %",
+// // //   },
+// // //   // {
+// // //   //   key: "temp",
+// // //   //   label: "Temperature °C",
+// // //   // },
+// // //   {
+// // //     key: "sugar",
+// // //     label: "Blood Sugar",
+// // //   },
+// // // ];
 
 
 // // "use client";
 
 // // import { useState } from "react";
+// // import Link from "next/link";
 
-// // export default function Triage({ patient, onNext }: any) {
+// // export default function Triage({
+// //   patient,
+// //   onNext,
+// // }: any) {
 // //   const [data, setData] = useState({
 // //     conscious: "",
 // //     orientation: "",
@@ -2905,24 +2596,23 @@
 // //     bp: "",
 // //     spo2: "",
 // //     rr: "",
-// //     temp: "",
 // //     sugar: "",
 // //     pulse: "",
 // //     breathing: "",
 // //   });
 
-// //   const [result, setResult] = useState("");
-// //   const [reason, setReason] = useState("");
-// //   const [alerts, setAlerts] = useState<string[]>([]);
-// //   const [action, setAction] = useState("");
-
-// //   const [showSpinal, setShowSpinal] = useState(false);
-// //   const [showAirway, setShowAirway] = useState(false);
-// //   const [showShock, setShowShock] = useState(false);
+// //   const [result, setResult] =
+// //     useState("");
+// //   const [reason, setReason] =
+// //     useState("");
+// //   const [alerts, setAlerts] =
+// //     useState<string[]>([]);
+// //   const [action, setAction] =
+// //     useState("");
 
 // //   function triage() {
 // //     let res = "";
-// //     let why = "";
+// //     let why: string[] = [];
 // //     let act = "";
 // //     let alertList: string[] = [];
 
@@ -2936,69 +2626,144 @@
 // //       pulse,
 // //       breathing,
 // //       spo2,
+// //       rr,
+// //       bp,
 // //     } = data;
 
-// //     /* RESET OLD RESULT EVERY CLICK */
-// //     setResult("");
-// //     setReason("");
-// //     setAlerts([]);
-// //     setAction("");
+// //     const pulseNum = Number(pulse);
+// //     const spo2Num = Number(spo2);
+// //     const rrNum = Number(rr);
 
-// //     /* TRIAGE DECISION */
+// //     /* BP parse 120/80 */
+// //     let sys = 0;
+// //     let dia = 0;
 
-// //     if (
-// //       conscious === "No" &&
-// //       breathing === "Absent"
-// //     ) {
-// //       res = "⚫ BLACK";
-// //       why += "Patient unconscious\n";
-// //       why += "Breathing absent\n";
-// //       act = "No survival signs";
+// //     if (bp.includes("/")) {
+// //       const parts = bp.split("/");
+// //       sys = Number(parts[0]);
+// //       dia = Number(parts[1]);
 // //     }
 
+// //     /* BLACK */
+// //     if (
+// //       conscious === "No" &&
+// //       breathing === "Absent" &&
+// //       pulseNum === 0 &&
+// //       spo2Num === 0
+// //     ) {
+// //       res = "⚫ BLACK";
+
+// //       why.push("Patient unconscious");
+// //       why.push("No breathing");
+// //       why.push("No pulse");
+// //       why.push("SpO2 zero");
+
+// //       act =
+// //         "No survival signs / CPR protocol";
+// //     }
+
+// //     /* RED */
 // //     else if (
 // //       conscious === "No" ||
-// //       orientation === "Not Oriented" ||
-// //       mobility === "Paralysis" ||
+// //       orientation ===
+// //         "Not Oriented" ||
+// //       mobility ===
+// //         "Paralysis" ||
 // //       bleeding === "Major" ||
-// //       pulse === "Weak" ||
-// //       breathing === "Irregular" ||
+// //       breathing ===
+// //         "Irregular" ||
 // //       breathing === "Absent" ||
 // //       burn === ">30%" ||
-// //       Number(spo2) < 90
+// //       spo2Num < 90 ||
+// //       rrNum > 30 ||
+// //       rrNum < 10 ||
+// //       pulseNum > 130 ||
+// //       pulseNum < 40 ||
+// //       sys < 90 ||
+// //       dia < 60
 // //     ) {
 // //       res = "🔴 RED";
 
 // //       if (conscious === "No")
-// //         why += "Patient unconscious\n";
+// //         why.push(
+// //           "Patient unconscious"
+// //         );
 
-// //       if (orientation === "Not Oriented")
-// //         why += "Mental confusion\n";
+// //       if (
+// //         orientation ===
+// //         "Not Oriented"
+// //       )
+// //         why.push(
+// //           "Disorientation present"
+// //         );
 
-// //       if (mobility === "Paralysis")
-// //         why += "Paralysis present\n";
+// //       if (
+// //         mobility ===
+// //         "Paralysis"
+// //       )
+// //         why.push(
+// //           "Paralysis present"
+// //         );
 
 // //       if (bleeding === "Major")
-// //         why += "Major bleeding\n";
+// //         why.push(
+// //           "Major bleeding"
+// //         );
 
-// //       if (pulse === "Weak")
-// //         why += "Weak pulse\n";
+// //       if (
+// //         breathing ===
+// //         "Irregular"
+// //       )
+// //         why.push(
+// //           "Irregular breathing"
+// //         );
 
-// //       if (breathing === "Irregular")
-// //         why += "Irregular breathing\n";
-
-// //       if (breathing === "Absent")
-// //         why += "Breathing absent\n";
+// //       if (
+// //         breathing === "Absent"
+// //       )
+// //         why.push(
+// //           "No breathing"
+// //         );
 
 // //       if (burn === ">30%")
-// //         why += "Severe burns >30%\n";
+// //         why.push(
+// //           "Severe burns"
+// //         );
 
-// //       if (Number(spo2) < 90 && spo2)
-// //         why += "Low oxygen saturation\n";
+// //       if (spo2Num < 90)
+// //         why.push(
+// //           "Critical oxygen saturation"
+// //         );
 
-// //       act = "Immediate intervention";
+// //       if (
+// //         rrNum > 30 ||
+// //         rrNum < 10
+// //       )
+// //         why.push(
+// //           "Abnormal respiratory rate"
+// //         );
+
+// //       if (
+// //         pulseNum > 130 ||
+// //         pulseNum < 40
+// //       )
+// //         why.push(
+// //           "Critical pulse rate"
+// //         );
+
+// //       if (
+// //         sys < 90 ||
+// //         dia < 60
+// //       )
+// //         why.push(
+// //           "Low blood pressure"
+// //         );
+
+// //       act =
+// //         "Immediate intervention required";
 // //     }
 
+// //     /* YELLOW */
 // //     else if (
 // //       burn === "10-30%" ||
 // //       bleeding === "Minor" ||
@@ -3007,66 +2772,96 @@
 // //       res = "🟡 YELLOW";
 
 // //       if (burn === "10-30%")
-// //         why += "Moderate burns\n";
+// //         why.push(
+// //           "Moderate burns"
+// //         );
 
 // //       if (bleeding === "Minor")
-// //         why += "Minor bleeding\n";
+// //         why.push(
+// //           "Minor bleeding"
+// //         );
 
 // //       if (mobility === "No")
-// //         why += "Unable to walk\n";
+// //         why.push(
+// //           "Unable to walk"
+// //         );
 
-// //       act = "Urgent treatment";
+// //       act =
+// //         "Urgent treatment required";
 // //     }
 
+// //     /* GREEN */
 // //     else {
 // //       res = "🟢 GREEN";
-// //       why += "Stable condition\n";
-// //       why += "Vitals acceptable\n";
-// //       act = "Basic care";
+
+// //       why.push(
+// //         "Stable condition"
+// //       );
+// //       why.push(
+// //         "Vitals acceptable"
+// //       );
+
+// //       act =
+// //         "Basic care / Observation";
 // //     }
 
-// //     /* ALERTS */
-
+// //     /* ALERTS / PRECAUTIONS */
 // //     if (
 // //       injury === "RTA" ||
-// //       injury === "Fall / Collapse"
+// //       injury ===
+// //         "Fall / Collapse"
 // //     ) {
-// //       alertList.push("Spinal Alert");
+// //       alertList.push(
+// //         "⚠️ Spinal Precaution: Neck stabilization required"
+// //       );
 // //     }
 
 // //     if (
-// //       breathing === "Irregular" ||
-// //       breathing === "Absent" ||
-// //       Number(spo2) < 92
+// //       breathing ===
+// //         "Irregular" ||
+// //       breathing ===
+// //         "Absent" ||
+// //       spo2Num < 92
 // //     ) {
-// //       alertList.push("Airway Alert");
+// //       alertList.push(
+// //         "⚠️ Airway Precaution: Oxygen / Airway support"
+// //       );
 // //     }
 
 // //     if (
 // //       bleeding === "Major" ||
-// //       pulse === "Weak"
+// //       pulseNum > 130 ||
+// //       pulseNum < 40 ||
+// //       sys < 90
 // //     ) {
-// //       alertList.push("Shock Alert");
+// //       alertList.push(
+// //         "⚠️ Shock Precaution: IV fluids / urgent review"
+// //       );
 // //     }
 
 // //     const eta =
-// //       Math.floor(Math.random() * 11) + 5;
+// //       Math.floor(
+// //         Math.random() * 10
+// //       ) + 5;
 
 // //     act += ` | ETA ${eta} mins`;
 
-// //     /* SAVE UPDATED DATA */
 // //     const old = JSON.parse(
-// //       localStorage.getItem("patients") || "[]"
+// //       localStorage.getItem(
+// //         "patients"
+// //       ) || "[]"
 // //     );
 
 // //     old.push({
 // //       ...patient,
 // //       ...data,
 // //       result: res,
-// //       reason: why,
-// //       alerts: alertList.join(", "),
+// //       reason: why.join(", "),
+// //       alerts:
+// //         alertList.join(", "),
 // //       action: act,
-// //       time: new Date().toLocaleTimeString(),
+// //       createdAt:
+// //         new Date().toLocaleString(),
 // //     });
 
 // //     localStorage.setItem(
@@ -3075,7 +2870,7 @@
 // //     );
 
 // //     setResult(res);
-// //     setReason(why);
+// //     setReason(why.join("\n"));
 // //     setAlerts(alertList);
 // //     setAction(act);
 // //   }
@@ -3084,51 +2879,103 @@
 // //     <section className="bg-slate-50 py-14">
 // //       <div className="max-w-6xl mx-auto px-4">
 
-// //         <h2 className="text-3xl font-bold text-center mb-8">
-// //           🚑 Clinical Triage
-// //         </h2>
+// //         {/* TOP BAR */}
+// //         <div className="flex justify-between items-center mb-8 gap-4 flex-wrap">
+
+// //           <h2 className="text-3xl font-bold">
+// //             🚑 Clinical Triage
+// //           </h2>
+
+// //           <Link
+// //             href="/guide"
+// //             className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl"
+// //           >
+// //             📘 Go to Guide
+// //           </Link>
+
+// //         </div>
 
 // //         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-// //           {/* PATIENT DETAILS */}
+// //           {/* Patient */}
 // //           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
-// //             <p><b>Name:</b> {patient.name || "N/A"}</p>
-// //             <p><b>Gender:</b> {patient.gender || "N/A"}</p>
-// //             <p><b>Age:</b> {patient.age || "N/A"}</p>
-// //             <p><b>Blood:</b> {patient.blood || "N/A"}</p>
+
+// //             <p>
+// //               <b>Name:</b>{" "}
+// //               {patient?.name ||
+// //                 "N/A"}
+// //             </p>
+
+// //             <p>
+// //               <b>Gender:</b>{" "}
+// //               {patient?.gender ||
+// //                 "N/A"}
+// //             </p>
+
+// //             <p>
+// //               <b>Age:</b>{" "}
+// //               {patient?.ageInput ||
+// //                 patient?.ageGroup ||
+// //                 "N/A"}
+// //             </p>
+
+// //             {patient?.pregnant && (
+// //               <p>
+// //                 <b>Pregnant:</b>{" "}
+// //                 {
+// //                   patient.pregnant
+// //                 }
+// //               </p>
+// //             )}
+
 // //           </div>
 
-// //           {/* FIELDS */}
+// //           {/* Fields */}
 // //           {fields.map((item) => (
-// //             <div key={item.key} className="mb-4">
-// //               <label className="block mb-1 font-medium text-sm">
+// //             <div
+// //               key={item.key}
+// //               className="mb-4"
+// //             >
+// //               <label className="block mb-1 text-sm font-medium">
 // //                 {item.label}
 // //               </label>
 
 // //               <select
-// //                 value={(data as any)[item.key]}
+// //                 value={
+// //                   (data as any)[
+// //                     item.key
+// //                   ]
+// //                 }
 // //                 className="w-full border rounded p-3"
 // //                 onChange={(e) =>
 // //                   setData({
 // //                     ...data,
-// //                     [item.key]: e.target.value,
+// //                     [item.key]:
+// //                       e.target
+// //                         .value,
 // //                   })
 // //                 }
 // //               >
-// //                 <option value="">Select</option>
+// //                 <option value="">
+// //                   Select
+// //                 </option>
 
-// //                 {item.options.map((op) => (
-// //                   <option key={op}>
-// //                     {op}
-// //                   </option>
-// //                 ))}
+// //                 {item.options.map(
+// //                   (op) => (
+// //                     <option
+// //                       key={op}
+// //                     >
+// //                       {op}
+// //                     </option>
+// //                   )
+// //                 )}
 // //               </select>
 // //             </div>
 // //           ))}
 
-// //           {/* CONDITIONAL INPUTS */}
-
-// //           {data.injury === "Fire Burn" && (
+// //           {/* Burn */}
+// //           {data.injury ===
+// //             "Fire Burn" && (
 // //             <div className="mb-4">
 // //               <label className="block mb-1 text-sm font-medium">
 // //                 Burn %
@@ -3140,54 +2987,146 @@
 // //                 onChange={(e) =>
 // //                   setData({
 // //                     ...data,
-// //                     burn: e.target.value,
+// //                     burn:
+// //                       e.target
+// //                         .value,
 // //                   })
 // //                 }
 // //               >
-// //                 <option value="">Select</option>
-// //                 <option>0%</option>
-// //                 <option>&lt;10%</option>
-// //                 <option>10-30%</option>
-// //                 <option>&gt;30%</option>
+// //                 <option value="">
+// //                   Select
+// //                 </option>
+// //                 <option>
+// //                   &lt;10%
+// //                 </option>
+// //                 <option>
+// //                   10-30%
+// //                 </option>
+// //                 <option>
+// //                   &gt;30%
+// //                 </option>
 // //               </select>
 // //             </div>
 // //           )}
 
-// //           {data.injury === "Other" && (
+// //           {/* Other */}
+// //           {data.injury ===
+// //             "Other" && (
 // //             <input
 // //               type="text"
-// //               placeholder="Describe Injury"
+// //               placeholder="Describe injury"
 // //               className="w-full border rounded p-3 mb-4"
-// //               value={data.otherInjury}
+// //               value={
+// //                 data.otherInjury
+// //               }
 // //               onChange={(e) =>
 // //                 setData({
 // //                   ...data,
-// //                   otherInjury: e.target.value,
+// //                   otherInjury:
+// //                     e.target
+// //                       .value,
 // //                 })
 // //               }
 // //             />
 // //           )}
 
-// //           {/* VITALS */}
+// //           {/* Time */}
+// //           <div className="mb-4">
+// //             <label className="block mb-1 text-sm font-medium">
+// //               Time of Injury
+// //             </label>
+
+// //             <input
+// //               type="datetime-local"
+// //               className="w-full border rounded p-3"
+// //               value={
+// //                 data.timeInjury
+// //               }
+// //               onChange={(e) =>
+// //                 setData({
+// //                   ...data,
+// //                   timeInjury:
+// //                     e.target
+// //                       .value,
+// //                 })
+// //               }
+// //             />
+// //           </div>
+
+// //           {/* Vitals */}
 // //           <h3 className="font-bold text-blue-700 mt-6 mb-4">
 // //             🩺 Vitals
 // //           </h3>
 
-// //           {vitals.map((v) => (
-// //             <input
-// //               key={v.key}
-// //               type="text"
-// //               placeholder={v.label}
-// //               value={(data as any)[v.key]}
-// //               className="w-full border rounded p-3 mb-4"
-// //               onChange={(e) =>
-// //                 setData({
-// //                   ...data,
-// //                   [v.key]: e.target.value,
-// //                 })
-// //               }
-// //             />
-// //           ))}
+// //           <input
+// //             type="number"
+// //             placeholder="Pulse Rate"
+// //             className="w-full border rounded p-3 mb-4"
+// //             value={data.pulse}
+// //             onChange={(e) =>
+// //               setData({
+// //                 ...data,
+// //                 pulse:
+// //                   e.target.value,
+// //               })
+// //             }
+// //           />
+
+// //           <input
+// //             type="number"
+// //             placeholder="Respiratory Rate"
+// //             className="w-full border rounded p-3 mb-4"
+// //             value={data.rr}
+// //             onChange={(e) =>
+// //               setData({
+// //                 ...data,
+// //                 rr:
+// //                   e.target.value,
+// //               })
+// //             }
+// //           />
+
+// //           <input
+// //             type="text"
+// //             placeholder="Blood Pressure (120/80)"
+// //             className="w-full border rounded p-3 mb-4"
+// //             value={data.bp}
+// //             onChange={(e) =>
+// //               setData({
+// //                 ...data,
+// //                 bp:
+// //                   e.target.value,
+// //               })
+// //             }
+// //           />
+
+// //           <input
+// //             type="number"
+// //             placeholder="SpO2 %"
+// //             className="w-full border rounded p-3 mb-4"
+// //             value={data.spo2}
+// //             onChange={(e) =>
+// //               setData({
+// //                 ...data,
+// //                 spo2:
+// //                   e.target.value,
+// //               })
+// //             }
+// //           />
+
+// //           <input
+// //             type="number"
+// //             placeholder="Blood Sugar"
+// //             className="w-full border rounded p-3 mb-4"
+// //             value={data.sugar}
+// //             onChange={(e) =>
+// //               setData({
+// //                 ...data,
+// //                 sugar:
+// //                   e.target.value,
+// //               })
+// //             }
+// //           />
 
 // //           <button
 // //             onClick={triage}
@@ -3196,7 +3135,7 @@
 // //             TRIAGE NOW
 // //           </button>
 
-// //           {/* RESULT */}
+// //           {/* Result */}
 // //           {result && (
 // //             <div className="mt-6 space-y-4">
 
@@ -3204,97 +3143,48 @@
 // //                 {result}
 // //               </h3>
 
-// //               {/* REASON */}
 // //               <div>
-// //                 <p className="text-blue-700 font-semibold">
-// //                   🧠 Reason:
+// //                 <p className="font-semibold text-blue-700">
+// //                   🧠 Reasons:
 // //                 </p>
 
 // //                 <ul className="list-disc ml-6 text-blue-700">
 // //                   {reason
 // //                     .split("\n")
-// //                     .filter(Boolean)
-// //                     .map((r, i) => (
-// //                       <li key={i}>{r}</li>
-// //                     ))}
+// //                     .map(
+// //                       (
+// //                         r,
+// //                         i
+// //                       ) => (
+// //                         <li
+// //                           key={
+// //                             i
+// //                           }
+// //                         >
+// //                           {r}
+// //                         </li>
+// //                       )
+// //                     )}
 // //                 </ul>
 // //               </div>
 
-// //               {/* ALERTS */}
-// //               <div className="space-y-3">
-
-// //                 {alerts.includes("Spinal Alert") && (
-// //                   <div className="bg-orange-50 p-3 rounded">
-// //                     ⚠️ Spinal Alert
-
-// //                     <button
-// //                       className="ml-2 text-blue-600 underline"
-// //                       onClick={() =>
-// //                         setShowSpinal(!showSpinal)
-// //                       }
+// //               <div className="space-y-2">
+// //                 {alerts.map(
+// //                   (
+// //                     a,
+// //                     i
+// //                   ) => (
+// //                     <div
+// //                       key={i}
+// //                       className="bg-orange-50 p-3 rounded"
 // //                     >
-// //                       Click Here
-// //                     </button>
-
-// //                     {showSpinal && (
-// //                       <ul className="list-disc ml-5 mt-2 text-sm">
-// //                         <li>Cervical collar</li>
-// //                         <li>Spine board</li>
-// //                         <li>Minimal movement</li>
-// //                       </ul>
-// //                     )}
-// //                   </div>
+// //                       {a}
+// //                     </div>
+// //                   )
 // //                 )}
-
-// //                 {alerts.includes("Airway Alert") && (
-// //                   <div className="bg-orange-50 p-3 rounded">
-// //                     ⚠️ Airway Alert
-
-// //                     <button
-// //                       className="ml-2 text-blue-600 underline"
-// //                       onClick={() =>
-// //                         setShowAirway(!showAirway)
-// //                       }
-// //                     >
-// //                       Click Here
-// //                     </button>
-
-// //                     {showAirway && (
-// //                       <ul className="list-disc ml-5 mt-2 text-sm">
-// //                         <li>Oxygen support</li>
-// //                         <li>Position airway</li>
-// //                         <li>Ventilate if needed</li>
-// //                       </ul>
-// //                     )}
-// //                   </div>
-// //                 )}
-
-// //                 {alerts.includes("Shock Alert") && (
-// //                   <div className="bg-orange-50 p-3 rounded">
-// //                     ⚠️ Shock Alert
-
-// //                     <button
-// //                       className="ml-2 text-blue-600 underline"
-// //                       onClick={() =>
-// //                         setShowShock(!showShock)
-// //                       }
-// //                     >
-// //                       Click Here
-// //                     </button>
-
-// //                     {showShock && (
-// //                       <ul className="list-disc ml-5 mt-2 text-sm">
-// //                         <li>IV fluids</li>
-// //                         <li>Control bleeding</li>
-// //                         <li>Rapid transport</li>
-// //                       </ul>
-// //                     )}
-// //                   </div>
-// //                 )}
-
 // //               </div>
 
-// //               <p className="text-gray-700 font-medium">
+// //               <p className="font-medium text-gray-700">
 // //                 {action}
 // //               </p>
 
@@ -3323,16 +3213,24 @@
 // //   {
 // //     key: "orientation",
 // //     label: "Orientation",
-// //     options: ["Oriented", "Not Oriented"],
+// //     options: [
+// //       "Oriented",
+// //       "Not Oriented",
+// //     ],
 // //   },
 // //   {
 // //     key: "mobility",
 // //     label: "Mobility",
-// //     options: ["Yes", "No", "Paralysis"],
+// //     options: [
+// //       "Yes",
+// //       "No",
+// //       "Paralysis",
+// //     ],
 // //   },
 // //   {
 // //     key: "injury",
-// //     label: "Mechanism of Injury",
+// //     label:
+// //       "Mechanism of Injury",
 // //     options: [
 // //       "RTA",
 // //       "Fire Burn",
@@ -3342,36 +3240,34 @@
 // //   },
 // //   {
 // //     key: "bleeding",
-// //     label: "Bleeding",
-// //     options: ["None", "Minor", "Major"],
-// //   },
-// //   {
-// //     key: "timeInjury",
-// //     label: "Time of Injury",
+// //     label:
+// //       "External Bleeding",
 // //     options: [
-// //       "12 AM","1 AM","2 AM","3 AM",
-// //       "4 AM","5 AM","6 AM","7 AM",
-// //       "8 AM","9 AM","10 AM","11 AM",
-// //       "12 PM","1 PM","2 PM","3 PM",
-// //       "4 PM","5 PM","6 PM","7 PM",
-// //       "8 PM","9 PM","10 PM","11 PM",
+// //       "None",
+// //       "Minor",
+// //       "Major",
 // //     ],
 // //   },
-// // ];
-
-// // const vitals = [
-// //   { key: "pulse", label: "Pulse" },
-// //   { key: "rr", label: "Respiratory Rate" },
-// //   { key: "bp", label: "Blood Pressure" },
-// //   { key: "spo2", label: "SpO2 %" },
-// //   { key: "sugar", label: "Blood Sugar" },
+// //   {
+// //     key: "breathing",
+// //     label: "Breathing",
+// //     options: [
+// //       "Normal",
+// //       "Irregular",
+// //       "Absent",
+// //     ],
+// //   },
 // // ];
 
 // "use client";
 
 // import { useState } from "react";
+// import Link from "next/link";
 
-// export default function Triage({ patient, onNext }: any) {
+// export default function Triage({
+//   patient,
+//   onNext,
+// }: any) {
 //   const [data, setData] = useState({
 //     conscious: "",
 //     orientation: "",
@@ -3385,24 +3281,23 @@
 //     bp: "",
 //     spo2: "",
 //     rr: "",
-//     temp: "",
 //     sugar: "",
 //     pulse: "",
 //     breathing: "",
 //   });
 
-//   const [result, setResult] = useState("");
-//   const [reason, setReason] = useState("");
-//   const [alerts, setAlerts] = useState<string[]>([]);
-//   const [action, setAction] = useState("");
-
-//   const [showSpinal, setShowSpinal] = useState(false);
-//   const [showAirway, setShowAirway] = useState(false);
-//   const [showShock, setShowShock] = useState(false);
+//   const [result, setResult] =
+//     useState("");
+//   const [reason, setReason] =
+//     useState("");
+//   const [alerts, setAlerts] =
+//     useState<string[]>([]);
+//   const [action, setAction] =
+//     useState("");
 
 //   function triage() {
 //     let res = "";
-//     let why = "";
+//     let why: string[] = [];
 //     let act = "";
 //     let alertList: string[] = [];
 
@@ -3424,82 +3319,135 @@
 //     const spo2Num = Number(spo2);
 //     const rrNum = Number(rr);
 
-//     /* RESET */
-//     setResult("");
-//     setReason("");
-//     setAlerts([]);
-//     setAction("");
+//     let sys = 0;
+//     let dia = 0;
 
-//     /* ⚫ BLACK = DEAD / NO SIGNS */
+//     if (bp.includes("/")) {
+//       const parts = bp.split("/");
+//       sys = Number(parts[0]);
+//       dia = Number(parts[1]);
+//     }
+
+//     /* BLACK */
 //     if (
 //       conscious === "No" &&
 //       breathing === "Absent" &&
-//       (pulse === "0" ||
-//         pulse === "Absent" ||
-//         pulseNum === 0) &&
-//       (spo2 === "0" || spo2Num === 0)
+//       pulseNum === 0 &&
+//       spo2Num === 0
 //     ) {
 //       res = "⚫ BLACK";
 
-//       why += "Unconscious patient\n";
-//       why += "No breathing\n";
-//       why += "No pulse detected\n";
-//       why += "SpO2 zero\n";
+//       why.push("Patient unconscious");
+//       why.push("No breathing");
+//       why.push("No pulse");
+//       why.push("SpO2 zero");
 
-//       act = "No survival signs / Confirm CPR protocol";
+//       act =
+//         "No survival signs / CPR protocol";
 //     }
 
-//     /* 🔴 RED */
+//     /* RED */
 //     else if (
 //       conscious === "No" ||
-//       orientation === "Not Oriented" ||
-//       mobility === "Paralysis" ||
+//       orientation ===
+//         "Not Oriented" ||
+//       mobility ===
+//         "Paralysis" ||
 //       bleeding === "Major" ||
-//       breathing === "Irregular" ||
+//       breathing ===
+//         "Irregular" ||
 //       breathing === "Absent" ||
 //       burn === ">30%" ||
 //       spo2Num < 90 ||
 //       rrNum > 30 ||
 //       rrNum < 10 ||
 //       pulseNum > 130 ||
-//       pulseNum < 40
+//       pulseNum < 40 ||
+//       sys < 90 ||
+//       dia < 60
 //     ) {
 //       res = "🔴 RED";
 
 //       if (conscious === "No")
-//         why += "Patient unconscious\n";
+//         why.push(
+//           "Patient unconscious"
+//         );
 
-//       if (orientation === "Not Oriented")
-//         why += "Mental confusion\n";
+//       if (
+//         orientation ===
+//         "Not Oriented"
+//       )
+//         why.push(
+//           "Disorientation present"
+//         );
 
-//       if (mobility === "Paralysis")
-//         why += "Paralysis present\n";
+//       if (
+//         mobility ===
+//         "Paralysis"
+//       )
+//         why.push(
+//           "Paralysis present"
+//         );
 
 //       if (bleeding === "Major")
-//         why += "Major bleeding\n";
+//         why.push(
+//           "Major bleeding"
+//         );
 
-//       if (breathing === "Irregular")
-//         why += "Irregular breathing\n";
+//       if (
+//         breathing ===
+//         "Irregular"
+//       )
+//         why.push(
+//           "Irregular breathing"
+//         );
 
-//       if (breathing === "Absent")
-//         why += "Breathing absent\n";
+//       if (
+//         breathing === "Absent"
+//       )
+//         why.push(
+//           "No breathing"
+//         );
 
 //       if (burn === ">30%")
-//         why += "Severe burns >30%\n";
+//         why.push(
+//           "Severe burns"
+//         );
 
-//       if (spo2Num < 90 && spo2)
-//         why += "Low oxygen saturation\n";
+//       if (spo2Num < 90)
+//         why.push(
+//           "Critical oxygen saturation"
+//         );
 
-//       if (rrNum > 30 || rrNum < 10)
-//         why += "Abnormal respiratory rate\n";
+//       if (
+//         rrNum > 30 ||
+//         rrNum < 10
+//       )
+//         why.push(
+//           "Abnormal respiratory rate"
+//         );
 
-//       if (pulseNum > 130 || pulseNum < 40)
-//         why += "Critical pulse rate\n";
+//       if (
+//         pulseNum > 130 ||
+//         pulseNum < 40
+//       )
+//         why.push(
+//           "Critical pulse rate"
+//         );
 
-//       act = "Immediate intervention";
+//       if (
+//         sys < 90 ||
+//         dia < 60
+//       )
+//         why.push(
+//           "Low blood pressure"
+//         );
+
+//       act =
+//         "Immediate intervention required";
 //     }
 
-//     /* 🟡 YELLOW */
+//     /* YELLOW */
 //     else if (
 //       burn === "10-30%" ||
 //       bleeding === "Minor" ||
@@ -3508,69 +3456,97 @@
 //       res = "🟡 YELLOW";
 
 //       if (burn === "10-30%")
-//         why += "Moderate burns\n";
+//         why.push(
+//           "Moderate burns"
+//         );
 
 //       if (bleeding === "Minor")
-//         why += "Minor bleeding\n";
+//         why.push(
+//           "Minor bleeding"
+//         );
 
 //       if (mobility === "No")
-//         why += "Unable to walk\n";
+//         why.push(
+//           "Unable to walk"
+//         );
 
-//       act = "Urgent treatment";
+//       act =
+//         "Urgent treatment required";
 //     }
 
-//     /* 🟢 GREEN */
+//     /* GREEN */
 //     else {
 //       res = "🟢 GREEN";
 
-//       why += "Stable condition\n";
-//       why += "Vitals acceptable\n";
+//       why.push(
+//         "Stable condition"
+//       );
+//       why.push(
+//         "Vitals acceptable"
+//       );
 
-//       act = "Basic care";
+//       act =
+//         "Basic care / Observation";
 //     }
 
-//     /* ALERTS */
+//     /* ONLY ONE GUIDE LINK */
 //     if (
 //       injury === "RTA" ||
-//       injury === "Fall / Collapse"
+//       injury ===
+//         "Fall / Collapse"
 //     ) {
-//       alertList.push("Spinal Alert");
-//     }
-
-//     if (
-//       breathing === "Irregular" ||
-//       breathing === "Absent" ||
+//       alertList = [
+//         "Spinal Immobilization",
+//       ];
+//     } else if (
+//       breathing ===
+//         "Irregular" ||
+//       breathing ===
+//         "Absent" ||
 //       spo2Num < 92
 //     ) {
-//       alertList.push("Airway Alert");
-//     }
-
-//     if (
+//       alertList = [
+//         "Airway Alert",
+//       ];
+//     } else if (
 //       bleeding === "Major" ||
 //       pulseNum > 130 ||
-//       pulseNum < 40
+//       pulseNum < 40 ||
+//       sys < 90
 //     ) {
-//       alertList.push("Shock Alert");
+//       alertList = [
+//         "IV Fluid",
+//       ];
+//     } else if (
+//       conscious === "No" &&
+//       breathing === "Absent"
+//     ) {
+//       alertList = ["CPR"];
 //     }
 
 //     const eta =
-//       Math.floor(Math.random() * 11) + 5;
+//       Math.floor(
+//         Math.random() * 10
+//       ) + 5;
 
 //     act += ` | ETA ${eta} mins`;
 
-//     /* SAVE */
 //     const old = JSON.parse(
-//       localStorage.getItem("patients") || "[]"
+//       localStorage.getItem(
+//         "patients"
+//       ) || "[]"
 //     );
 
 //     old.push({
 //       ...patient,
 //       ...data,
 //       result: res,
-//       reason: why,
-//       alerts: alertList.join(", "),
+//       reason: why.join(", "),
+//       alerts:
+//         alertList.join(", "),
 //       action: act,
-//       time: new Date().toLocaleTimeString(),
+//       createdAt:
+//         new Date().toLocaleString(),
 //     });
 
 //     localStorage.setItem(
@@ -3579,7 +3555,7 @@
 //     );
 
 //     setResult(res);
-//     setReason(why);
+//     setReason(why.join("\n"));
 //     setAlerts(alertList);
 //     setAction(act);
 //   }
@@ -3588,110 +3564,22 @@
 //     <section className="bg-slate-50 py-14">
 //       <div className="max-w-6xl mx-auto px-4">
 
-//         <h2 className="text-3xl font-bold text-center mb-8">
-//           🚑 Clinical Triage
-//         </h2>
+//         <div className="flex justify-between items-center mb-8 gap-4 flex-wrap">
+//           <h2 className="text-3xl font-bold">
+//             🚑 Clinical Triage
+//           </h2>
+
+//           <Link
+//             href="/guide"
+//             className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl"
+//           >
+//             📘 Go to Guide
+//           </Link>
+//         </div>
 
 //         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-//           {/* Patient */}
-//           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
-//             <p><b>Name:</b> {patient.name || "N/A"}</p>
-//             <p><b>Gender:</b> {patient.gender || "N/A"}</p>
-//             <p><b>Age:</b> {patient.age || "N/A"}</p>
-//             <p><b>Blood:</b> {patient.blood || "N/A"}</p>
-//           </div>
-
-//           {/* Fields */}
-//           {fields.map((item) => (
-//             <div key={item.key} className="mb-4">
-//               <label className="block mb-1 text-sm font-medium">
-//                 {item.label}
-//               </label>
-
-//               <select
-//                 value={(data as any)[item.key]}
-//                 className="w-full border rounded p-3"
-//                 onChange={(e) =>
-//                   setData({
-//                     ...data,
-//                     [item.key]: e.target.value,
-//                   })
-//                 }
-//               >
-//                 <option value="">Select</option>
-
-//                 {item.options.map((op) => (
-//                   <option key={op}>
-//                     {op}
-//                   </option>
-//                 ))}
-//               </select>
-//             </div>
-//           ))}
-
-//           {/* Fire Burn Only */}
-//           {data.injury === "Fire Burn" && (
-//             <div className="mb-4">
-//               <label className="block mb-1 text-sm font-medium">
-//                 Burn %
-//               </label>
-
-//               <select
-//                 value={data.burn}
-//                 className="w-full border rounded p-3"
-//                 onChange={(e) =>
-//                   setData({
-//                     ...data,
-//                     burn: e.target.value,
-//                   })
-//                 }
-//               >
-//                 <option value="">Select</option>
-//                 <option>0%</option>
-//                 <option>&lt;10%</option>
-//                 <option>10-30%</option>
-//                 <option>&gt;30%</option>
-//               </select>
-//             </div>
-//           )}
-
-//           {/* Other Injury */}
-//           {data.injury === "Other" && (
-//             <input
-//               type="text"
-//               placeholder="Describe injury"
-//               className="w-full border rounded p-3 mb-4"
-//               value={data.otherInjury}
-//               onChange={(e) =>
-//                 setData({
-//                   ...data,
-//                   otherInjury: e.target.value,
-//                 })
-//               }
-//             />
-//           )}
-
-//           {/* Vitals */}
-//           <h3 className="font-bold text-blue-700 mt-6 mb-4">
-//             🩺 Vitals
-//           </h3>
-
-//           {vitals.map((v) => (
-//             <input
-//               key={v.key}
-//               type="text"
-//               placeholder={v.label}
-//               value={(data as any)[v.key]}
-//               className="w-full border rounded p-3 mb-4"
-//               onChange={(e) =>
-//                 setData({
-//                   ...data,
-//                   [v.key]: e.target.value,
-//                 })
-//               }
-//             />
-//           ))}
+//           {/* all your existing form stays same */}
 
 //           <button
 //             onClick={triage}
@@ -3700,7 +3588,6 @@
 //             TRIAGE NOW
 //           </button>
 
-//           {/* RESULT */}
 //           {result && (
 //             <div className="mt-6 space-y-4">
 
@@ -3709,43 +3596,51 @@
 //               </h3>
 
 //               <div>
-//                 <p className="text-blue-700 font-semibold">
-//                   🧠 Reason:
+//                 <p className="font-semibold text-blue-700">
+//                   🧠 Reasons:
 //                 </p>
 
 //                 <ul className="list-disc ml-6 text-blue-700">
 //                   {reason
 //                     .split("\n")
-//                     .filter(Boolean)
-//                     .map((r, i) => (
-//                       <li key={i}>{r}</li>
-//                     ))}
+//                     .map(
+//                       (
+//                         r,
+//                         i
+//                       ) => (
+//                         <li
+//                           key={
+//                             i
+//                           }
+//                         >
+//                           {r}
+//                         </li>
+//                       )
+//                     )}
 //                 </ul>
 //               </div>
 
-//               {/* Alerts */}
-//               <div className="space-y-3">
+//               {/* ONLY ONE GUIDE */}
+//               {alerts.length >
+//                 0 && (
+//                 <Link
+//                   href={`/guide?tab=${alerts[0]
+//                     .toLowerCase()
+//                     .replaceAll(
+//                       " ",
+//                       ""
+//                     )}`}
+//                   className="block bg-orange-50 border border-orange-200 p-4 rounded-xl font-semibold hover:bg-orange-100"
+//                 >
+//                   📘 Open Guide:
+//                   {" "}
+//                   {
+//                     alerts[0]
+//                   }
+//                 </Link>
+//               )}
 
-//                 {alerts.includes("Spinal Alert") && (
-//                   <div className="bg-orange-50 p-3 rounded">
-//                     ⚠️ Spinal Alert
-//                   </div>
-//                 )}
-
-//                 {alerts.includes("Airway Alert") && (
-//                   <div className="bg-orange-50 p-3 rounded">
-//                     ⚠️ Airway Alert
-//                   </div>
-//                 )}
-
-//                 {alerts.includes("Shock Alert") && (
-//                   <div className="bg-orange-50 p-3 rounded">
-//                     ⚠️ Shock Alert
-//                   </div>
-//                 )}
-//               </div>
-
-//               <p className="text-gray-700 font-medium">
+//               <p className="font-medium text-gray-700">
 //                 {action}
 //               </p>
 
@@ -3774,16 +3669,24 @@
 //   {
 //     key: "orientation",
 //     label: "Orientation",
-//     options: ["Oriented", "Not Oriented"],
+//     options: [
+//       "Oriented",
+//       "Not Oriented",
+//     ],
 //   },
 //   {
 //     key: "mobility",
 //     label: "Mobility",
-//     options: ["Yes", "No", "Paralysis"],
+//     options: [
+//       "Yes",
+//       "No",
+//       "Paralysis",
+//     ],
 //   },
 //   {
 //     key: "injury",
-//     label: "Mechanism of Injury",
+//     label:
+//       "Mechanism of Injury",
 //     options: [
 //       "RTA",
 //       "Fire Burn",
@@ -3793,43 +3696,34 @@
 //   },
 //   {
 //     key: "bleeding",
-//     label: "Bleeding",
-//     options: ["None", "Minor", "Major"],
-//   },
-//   {
-//     key: "timeInjury",
-//     label: "Time of Injury",
+//     label:
+//       "External Bleeding",
 //     options: [
-//       "12 AM","1 AM","2 AM","3 AM",
-//       "4 AM","5 AM","6 AM","7 AM",
-//       "8 AM","9 AM","10 AM","11 AM",
-//       "12 PM","1 PM","2 PM","3 PM",
-//       "4 PM","5 PM","6 PM","7 PM",
-//       "8 PM","9 PM","10 PM","11 PM",
+//       "None",
+//       "Minor",
+//       "Major",
 //     ],
 //   },
 //   {
 //     key: "breathing",
 //     label: "Breathing",
-//     options: ["Normal", "Irregular", "Absent"],
+//     options: [
+//       "Normal",
+//       "Irregular",
+//       "Absent",
+//     ],
 //   },
 // ];
-
-// const vitals = [
-//   { key: "pulse", label: "Pulse Rate" },
-//   { key: "rr", label: "Respiratory Rate" },
-//   { key: "bp", label: "Blood Pressure" },
-//   { key: "spo2", label: "SpO2 %" },
-//   { key: "temp", label: "Temperature °C" },
-//   { key: "sugar", label: "Blood Sugar" },
-// ];
-
 
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
-export default function Triage({ patient, onNext }: any) {
+export default function Triage({
+  patient,
+  onNext,
+}: any) {
   const [data, setData] = useState({
     conscious: "",
     orientation: "",
@@ -3843,16 +3737,22 @@ export default function Triage({ patient, onNext }: any) {
     bp: "",
     spo2: "",
     rr: "",
-    temp: "",
     sugar: "",
     pulse: "",
     breathing: "",
   });
 
-  const [result, setResult] = useState("");
-  const [reason, setReason] = useState("");
-  const [alerts, setAlerts] = useState<string[]>([]);
-  const [action, setAction] = useState("");
+  const [result, setResult] =
+    useState("");
+
+  const [reason, setReason] =
+    useState("");
+
+  const [alerts, setAlerts] =
+    useState<string[]>([]);
+
+  const [action, setAction] =
+    useState("");
 
   function triage() {
     let res = "";
@@ -3871,19 +3771,24 @@ export default function Triage({ patient, onNext }: any) {
       breathing,
       spo2,
       rr,
+      bp,
     } = data;
 
     const pulseNum = Number(pulse);
     const spo2Num = Number(spo2);
     const rrNum = Number(rr);
 
-    /* RESET */
-    setResult("");
-    setReason("");
-    setAlerts([]);
-    setAction("");
+    /* BP Parse */
+    let sys = 0;
+    let dia = 0;
 
-    /* ⚫ BLACK */
+    if (bp.includes("/")) {
+      const parts = bp.split("/");
+      sys = Number(parts[0]);
+      dia = Number(parts[1]);
+    }
+
+    /* BLACK */
     if (
       conscious === "No" &&
       breathing === "Absent" &&
@@ -3894,53 +3799,115 @@ export default function Triage({ patient, onNext }: any) {
 
       why.push("Patient unconscious");
       why.push("No breathing");
-      why.push("No pulse detected");
-      why.push("SpO2 is zero");
+      why.push("No pulse");
+      why.push("SpO2 zero");
 
-      act = "No survival signs / CPR protocol";
+      act =
+        "No survival signs / CPR protocol";
     }
 
-    /* 🔴 RED */
+    /* RED */
     else if (
       conscious === "No" ||
-      orientation === "Not Oriented" ||
-      mobility === "Paralysis" ||
+      orientation ===
+        "Not Oriented" ||
+      mobility ===
+        "Paralysis" ||
       bleeding === "Major" ||
-      breathing === "Irregular" ||
+      breathing ===
+        "Irregular" ||
       breathing === "Absent" ||
       burn === ">30%" ||
       spo2Num < 90 ||
       rrNum > 30 ||
       rrNum < 10 ||
       pulseNum > 130 ||
-      pulseNum < 40
+      pulseNum < 40 ||
+      sys < 90 ||
+      dia < 60
     ) {
       res = "🔴 RED";
 
-      if (conscious === "No") why.push("Patient unconscious");
-      if (orientation === "Not Oriented")
-        why.push("Mental confusion / disorientation");
-      if (mobility === "Paralysis")
-        why.push("Paralysis present");
-      if (bleeding === "Major")
-        why.push("Major bleeding");
-      if (breathing === "Irregular")
-        why.push("Irregular breathing");
-      if (breathing === "Absent")
-        why.push("Breathing absent");
-      if (burn === ">30%")
-        why.push("Severe burns >30%");
-      if (spo2Num < 90 && spo2)
-        why.push("Low oxygen saturation");
-      if (rrNum > 30 || rrNum < 10)
-        why.push("Abnormal respiratory rate");
-      if (pulseNum > 130 || pulseNum < 40)
-        why.push("Critical pulse rate");
+      if (conscious === "No")
+        why.push(
+          "Patient unconscious"
+        );
 
-      act = "Immediate intervention required";
+      if (
+        orientation ===
+        "Not Oriented"
+      )
+        why.push(
+          "Disorientation present"
+        );
+
+      if (
+        mobility ===
+        "Paralysis"
+      )
+        why.push(
+          "Paralysis present"
+        );
+
+      if (bleeding === "Major")
+        why.push(
+          "Major bleeding"
+        );
+
+      if (
+        breathing ===
+        "Irregular"
+      )
+        why.push(
+          "Irregular breathing"
+        );
+
+      if (
+        breathing === "Absent"
+      )
+        why.push(
+          "No breathing"
+        );
+
+      if (burn === ">30%")
+        why.push(
+          "Severe burns"
+        );
+
+      if (spo2Num < 90)
+        why.push(
+          "Critical oxygen saturation"
+        );
+
+      if (
+        rrNum > 30 ||
+        rrNum < 10
+      )
+        why.push(
+          "Abnormal respiratory rate"
+        );
+
+      if (
+        pulseNum > 130 ||
+        pulseNum < 40
+      )
+        why.push(
+          "Critical pulse rate"
+        );
+
+      if (
+        sys < 90 ||
+        dia < 60
+      )
+        why.push(
+          "Low blood pressure"
+        );
+
+      act =
+        "Immediate intervention required";
     }
 
-    /* 🟡 YELLOW */
+    /* YELLOW */
     else if (
       burn === "10-30%" ||
       bleeding === "Minor" ||
@@ -3949,57 +3916,85 @@ export default function Triage({ patient, onNext }: any) {
       res = "🟡 YELLOW";
 
       if (burn === "10-30%")
-        why.push("Moderate burns");
-      if (bleeding === "Minor")
-        why.push("Minor bleeding");
-      if (mobility === "No")
-        why.push("Unable to walk");
+        why.push(
+          "Moderate burns"
+        );
 
-      act = "Urgent treatment required";
+      if (bleeding === "Minor")
+        why.push(
+          "Minor bleeding"
+        );
+
+      if (mobility === "No")
+        why.push(
+          "Unable to walk"
+        );
+
+      act =
+        "Urgent treatment required";
     }
 
-    /* 🟢 GREEN */
+    /* GREEN */
     else {
       res = "🟢 GREEN";
 
-      why.push("Stable condition");
-      why.push("Vitals acceptable");
+      why.push(
+        "Stable condition"
+      );
 
-      act = "Basic care / outpatient care";
+      why.push(
+        "Vitals acceptable"
+      );
+
+      act =
+        "Basic care / Observation";
     }
 
     /* ALERTS */
     if (
       injury === "RTA" ||
-      injury === "Fall / Collapse"
+      injury ===
+        "Fall / Collapse"
     ) {
-      alertList.push("Spinal Alert");
+      alertList.push(
+        "Spinal Precaution"
+      );
     }
 
     if (
-      breathing === "Irregular" ||
-      breathing === "Absent" ||
+      breathing ===
+        "Irregular" ||
+      breathing ===
+        "Absent" ||
       spo2Num < 92
     ) {
-      alertList.push("Airway Alert");
+      alertList.push(
+        "Airway Precaution"
+      );
     }
 
     if (
       bleeding === "Major" ||
       pulseNum > 130 ||
-      pulseNum < 40
+      pulseNum < 40 ||
+      sys < 90
     ) {
-      alertList.push("Shock Alert");
+      alertList.push(
+        "Shock Precaution"
+      );
     }
 
     const eta =
-      Math.floor(Math.random() * 11) + 5;
+      Math.floor(
+        Math.random() * 10
+      ) + 5;
 
     act += ` | ETA ${eta} mins`;
 
-    /* SAVE */
     const old = JSON.parse(
-      localStorage.getItem("patients") || "[]"
+      localStorage.getItem(
+        "patients"
+      ) || "[]"
     );
 
     old.push({
@@ -4007,9 +4002,11 @@ export default function Triage({ patient, onNext }: any) {
       ...data,
       result: res,
       reason: why.join(", "),
-      alerts: alertList.join(", "),
+      alerts:
+        alertList.join(", "),
       action: act,
-      createdAt: new Date().toLocaleString(),
+      createdAt:
+        new Date().toLocaleString(),
     });
 
     localStorage.setItem(
@@ -4023,26 +4020,62 @@ export default function Triage({ patient, onNext }: any) {
     setAction(act);
   }
 
+  function getGuideLink(
+    alert: string
+  ) {
+    if (
+      alert.includes("Airway")
+    )
+      return "/guide?tab=airway";
+
+    if (
+      alert.includes("Shock")
+    )
+      return "/guide?tab=ivfluid";
+
+    if (
+      alert.includes("Spinal")
+    )
+      return "/guide?tab=spinal";
+
+    return "/guide";
+  }
+
   return (
     <section className="bg-slate-50 py-14">
       <div className="max-w-6xl mx-auto px-4">
 
-        <h2 className="text-3xl font-bold text-center mb-8">
-          🚑 Clinical Triage
-        </h2>
+        {/* TOP BAR */}
+        <div className="flex justify-between items-center mb-8 gap-4 flex-wrap">
+
+          <h2 className="text-3xl font-bold">
+            🚑 Clinical Triage
+          </h2>
+
+          <Link
+            href="/guide"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl"
+          >
+            📘 Go to Guide
+          </Link>
+
+        </div>
 
         <div className="max-w-3xl mx-auto bg-white border rounded-2xl p-6 shadow-sm">
 
-          {/* PATIENT DETAILS */}
+          {/* PATIENT */}
           <div className="bg-blue-50 rounded p-4 mb-6 text-sm grid md:grid-cols-2 gap-2">
+
             <p>
               <b>Name:</b>{" "}
-              {patient?.name || "N/A"}
+              {patient?.name ||
+                "N/A"}
             </p>
 
             <p>
               <b>Gender:</b>{" "}
-              {patient?.gender || "N/A"}
+              {patient?.gender ||
+                "N/A"}
             </p>
 
             <p>
@@ -4052,15 +4085,9 @@ export default function Triage({ patient, onNext }: any) {
                 "N/A"}
             </p>
 
-            {patient?.pregnant && (
-              <p>
-                <b>Pregnant:</b>{" "}
-                {patient.pregnant}
-              </p>
-            )}
           </div>
 
-          {/* SELECT FIELDS */}
+          {/* FIELDS */}
           {fields.map((item) => (
             <div
               key={item.key}
@@ -4071,13 +4098,18 @@ export default function Triage({ patient, onNext }: any) {
               </label>
 
               <select
-                value={(data as any)[item.key]}
+                value={
+                  (data as any)[
+                    item.key
+                  ]
+                }
                 className="w-full border rounded p-3"
                 onChange={(e) =>
                   setData({
                     ...data,
                     [item.key]:
-                      e.target.value,
+                      e.target
+                        .value,
                   })
                 }
               >
@@ -4087,7 +4119,9 @@ export default function Triage({ patient, onNext }: any) {
 
                 {item.options.map(
                   (op) => (
-                    <option key={op}>
+                    <option
+                      key={op}
+                    >
                       {op}
                     </option>
                   )
@@ -4096,103 +4130,92 @@ export default function Triage({ patient, onNext }: any) {
             </div>
           ))}
 
-          {/* FIRE BURN */}
+          {/* BURN */}
           {data.injury ===
             "Fire Burn" && (
-            <div className="mb-4">
-              <label className="block mb-1 text-sm font-medium">
-                Burn %
-              </label>
-
-              <select
-                value={data.burn}
-                className="w-full border rounded p-3"
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    burn:
-                      e.target.value,
-                  })
-                }
-              >
-                <option value="">
-                  Select
-                </option>
-                <option>0%</option>
-                <option>
-                  &lt;10%
-                </option>
-                <option>
-                  10-30%
-                </option>
-                <option>
-                  &gt;30%
-                </option>
-              </select>
-            </div>
-          )}
-
-          {/* OTHER INJURY */}
-          {data.injury ===
-            "Other" && (
-            <input
-              type="text"
-              placeholder="Describe injury"
+            <select
+              value={data.burn}
               className="w-full border rounded p-3 mb-4"
-              value={
-                data.otherInjury
-              }
               onChange={(e) =>
                 setData({
                   ...data,
-                  otherInjury:
-                    e.target.value,
+                  burn:
+                    e.target
+                      .value,
                 })
               }
-            />
+            >
+              <option value="">
+                Select Burn %
+              </option>
+              <option>
+                &lt;10%
+              </option>
+              <option>
+                10-30%
+              </option>
+              <option>
+                &gt;30%
+              </option>
+            </select>
           )}
-
-          {/* DATE TIME */}
-          <div className="mb-4">
-            <label className="block mb-1 text-sm font-medium">
-              Time of Injury
-            </label>
-
-            <input
-              type="datetime-local"
-              className="w-full border rounded p-3"
-              value={data.timeInjury}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  timeInjury:
-                    e.target.value,
-                })
-              }
-            />
-          </div>
 
           {/* VITALS */}
-          <h3 className="font-bold text-blue-700 mt-6 mb-4">
-            🩺 Vitals
-          </h3>
+          <input
+            type="number"
+            placeholder="Pulse Rate"
+            className="w-full border rounded p-3 mb-4"
+            value={data.pulse}
+            onChange={(e) =>
+              setData({
+                ...data,
+                pulse:
+                  e.target.value,
+              })
+            }
+          />
 
-          {vitals.map((v) => (
-            <input
-              key={v.key}
-              type="number"
-              placeholder={v.label}
-              value={(data as any)[v.key]}
-              className="w-full border rounded p-3 mb-4"
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  [v.key]:
-                    e.target.value,
-                })
-              }
-            />
-          ))}
+          <input
+            type="number"
+            placeholder="Respiratory Rate"
+            className="w-full border rounded p-3 mb-4"
+            value={data.rr}
+            onChange={(e) =>
+              setData({
+                ...data,
+                rr:
+                  e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Blood Pressure (120/80)"
+            className="w-full border rounded p-3 mb-4"
+            value={data.bp}
+            onChange={(e) =>
+              setData({
+                ...data,
+                bp:
+                  e.target.value,
+              })
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="SpO2 %"
+            className="w-full border rounded p-3 mb-4"
+            value={data.spo2}
+            onChange={(e) =>
+              setData({
+                ...data,
+                spo2:
+                  e.target.value,
+              })
+            }
+          />
 
           <button
             onClick={triage}
@@ -4209,17 +4232,25 @@ export default function Triage({ patient, onNext }: any) {
                 {result}
               </h3>
 
+              {/* REASONS */}
               <div>
-                <p className="text-blue-700 font-semibold">
-                  🧠 Reason:
+                <p className="font-semibold text-blue-700">
+                  🧠 Reasons:
                 </p>
 
                 <ul className="list-disc ml-6 text-blue-700">
                   {reason
                     .split("\n")
                     .map(
-                      (r, i) => (
-                        <li key={i}>
+                      (
+                        r,
+                        i
+                      ) => (
+                        <li
+                          key={
+                            i
+                          }
+                        >
                           {r}
                         </li>
                       )
@@ -4227,18 +4258,23 @@ export default function Triage({ patient, onNext }: any) {
                 </ul>
               </div>
 
-              {alerts.map(
-                (a, i) => (
-                  <div
-                    key={i}
-                    className="bg-orange-50 p-3 rounded"
-                  >
-                    ⚠️ {a}
-                  </div>
-                )
+              {/* ONLY ONE ALERT LINK */}
+              {alerts.length >
+                0 && (
+                <Link
+                  href={getGuideLink(
+                    alerts[0]
+                  )}
+                  className="block bg-orange-50 border border-orange-200 p-4 rounded-xl text-orange-700 font-semibold hover:bg-orange-100"
+                >
+                  ⚠️ {
+                    alerts[0]
+                  } →
+                  Open Guide
+                </Link>
               )}
 
-              <p className="text-gray-700 font-medium">
+              <p className="font-medium text-gray-700">
                 {action}
               </p>
 
@@ -4283,7 +4319,8 @@ const fields = [
   },
   {
     key: "injury",
-    label: "Mechanism of Injury",
+    label:
+      "Mechanism of Injury",
     options: [
       "RTA",
       "Fire Burn",
@@ -4293,7 +4330,8 @@ const fields = [
   },
   {
     key: "bleeding",
-    label: "External Bleeding",
+    label:
+      "External Bleeding",
     options: [
       "None",
       "Minor",
@@ -4308,32 +4346,5 @@ const fields = [
       "Irregular",
       "Absent",
     ],
-  },
-];
-
-const vitals = [
-  {
-    key: "pulse",
-    label: "Pulse Rate",
-  },
-  {
-    key: "rr",
-    label: "Respiratory Rate",
-  },
-  {
-    key: "bp",
-    label: "Blood Pressure",
-  },
-  {
-    key: "spo2",
-    label: "SpO2 %",
-  },
-  // {
-  //   key: "temp",
-  //   label: "Temperature °C",
-  // },
-  {
-    key: "sugar",
-    label: "Blood Sugar",
   },
 ];

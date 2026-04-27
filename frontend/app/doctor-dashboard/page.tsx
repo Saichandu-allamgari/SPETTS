@@ -12,11 +12,11 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+
 
       <PatientTable />
 
-      <Footer />
+  
     </>
   );
 }

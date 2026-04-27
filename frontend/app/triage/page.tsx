@@ -63,7 +63,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+  
 
       {!patient ? (
         <PatientForm onCreate={setPatient} />
@@ -71,7 +71,6 @@ export default function Home() {
         <Triage patient={patient} onNext={nextPatient} />
       )}
 
-      <Footer />
     </>
   );
 }

@@ -3,9 +3,9 @@
 // //   return (
 // //     <footer className="border-t py-6 mt-10">
 // //       <div className="max-w-6xl mx-auto px-4 text-center text-gray-500 text-sm">
-// //         {/* © 2026 SPETTS | Medical Project */}
+// //         {/* © 2026 SPETTS AI | Medical Project */}
 // //         Terms of Use | Privacy Policy |
-// //          © 2026 SPETTS |
+// //          © 2026 SPETTS AI |
 // //          All rights reserved.
 // //       </div>
 // //     </footer>
@@ -33,7 +33,7 @@
 //         {/* BRAND */}
 //         <div>
 //           <h2 className="text-2xl font-bold text-red-400">
-//             SPETTS AI
+//             SPETTS AI AI
 //           </h2>
 
 //           <p className="mt-2 text-sm text-slate-300 leading-6">
@@ -146,7 +146,7 @@
 
 //             <li className="flex gap-2">
 //               <Mail size={16} className="mt-0.5" />
-//               <span>spettsindia@gmail.com</span>
+//               <span>SPETTS AIindia@gmail.com</span>
 //             </li>
 
 //             <li className="flex gap-2">
@@ -181,7 +181,7 @@
 //           </div>
 
 //           <span>
-//             © {new Date().getFullYear()} SPETTS AI |
+//             © {new Date().getFullYear()} SPETTS AI AI |
 //             All rights reserved.
 //           </span>
 
@@ -207,7 +207,7 @@ export default function Footer() {
         {/* BRAND */}
         <div>
           <h2 className="text-2xl font-bold text-red-400">
-            SPETTS AI
+            SPETTS AI AI
           </h2>
 
           <p className="mt-2 text-sm text-slate-300 leading-6">
@@ -317,7 +317,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-4 text-sm text-slate-300">
 
             <li>
-              📧 spettsindia@gmail.com
+              📧 SPETTS AIindia@gmail.com
             </li>
 
             <li>
@@ -350,7 +350,7 @@ export default function Footer() {
           </div>
 
           <span>
-            © {new Date().getFullYear()} SPETTS AI |
+            © {new Date().getFullYear()} SPETTS AI AI |
             All rights reserved.
           </span>
 

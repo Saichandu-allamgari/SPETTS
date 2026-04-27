@@ -12,7 +12,7 @@ import {
 export default function CTABand() {
   const phoneNumber = "+919999999999";
   const whatsappNumber = "919999999999";
-  const email = "spettsindia@gmail.com";
+  const email = "SPETTS AIindia@gmail.com";
 
   return (
     <section
@@ -42,7 +42,7 @@ export default function CTABand() {
           </h2>
 
           <p className="mt-3 text-white/90">
-            Contact SPETTS AI for emergency
+            Contact SPETTS AI AI for emergency
             triage assistance, ambulance
             coordination, and hospital support.
           </p>
@@ -104,7 +104,7 @@ export default function CTABand() {
 
             <a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-                "Hi SPETTS AI, I need emergency support."
+                "Hi SPETTS AI AI, I need emergency support."
               )}`}
               target="_blank"
               rel="noopener noreferrer"

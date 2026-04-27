@@ -21,7 +21,7 @@
 
 // // Test Route
 // app.get("/", (req, res) => {
-//   res.send("🚑 SPETTS Backend Running");
+//   res.send("🚑 SPETTS AI Backend Running");
 // });
 
 // // Server Start
@@ -105,7 +105,7 @@ app.use("/api/auth", authRoutes);
 ================================= */
 
 app.get("/", (req, res) => {
-  res.send("🚑 SPETTS Backend Running");
+  res.send("🚑 SPETTS AI Backend Running");
 });
 
 /* ===============================

@@ -57,6 +57,7 @@ import LiveBanner from "@/components/LiveBanner";
 import HowItWorks from "@/components/HowITWorks";
 import Stats from "@/components/Stats";
 import CTA from "@/components/CTA";
+import TriageInfo from "@/components/TriageInfo";
 
 export default function Home() {
   const [patient, setPatient] = useState<any>(null);
@@ -67,9 +68,10 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+   
+       <LiveBanner/>
       <Hero />
-      <LiveBanner/>
+
 
       <Features />
            
@@ -77,6 +79,7 @@ export default function Home() {
       <HowItWorks/>
         
       <Stats/>
+      <TriageInfo/>
       <About />
   
   
@@ -88,7 +91,7 @@ export default function Home() {
 
       <PatientTable /> */}
 
-      <Footer />
+
     </>
   );
 }

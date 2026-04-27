@@ -37,7 +37,7 @@
 // // import "./globals.css";
 
 // // export const metadata = {
-// //   title: "SPETTS - Fire Triage System",
+// //   title: "SPETTS AI - Fire Triage System",
 // //   description:
 // //     "Smart Pre-hospital Emergency Evaluation, Triage & Transport System",
 // // };
@@ -60,7 +60,7 @@
 
 
 // export const metadata = {
-//   title: "SPETTS",
+//   title: "SPETTS AI",
 //   description: "Smart Emergency Triage System",
 // };
 
@@ -93,8 +93,10 @@
 //   );
 // }
 
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import Footer from "@/components/Footer";
 
 export default function RootLayout({
  children,
@@ -102,9 +104,11 @@ export default function RootLayout({
  return (
    <html lang="en">
      <body>
+         <Navbar />
        <AuthProvider>
          {children}
        </AuthProvider>
+        <Footer/>
      </body>
    </html>
  );
