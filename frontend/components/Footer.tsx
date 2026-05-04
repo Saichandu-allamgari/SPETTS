@@ -33,7 +33,7 @@
 //         {/* BRAND */}
 //         <div>
 //           <h2 className="text-2xl font-bold text-red-400">
-//             SPETTS AI AI
+//             SPETTS AI
 //           </h2>
 
 //           <p className="mt-2 text-sm text-slate-300 leading-6">
@@ -181,7 +181,7 @@
 //           </div>
 
 //           <span>
-//             © {new Date().getFullYear()} SPETTS AI AI |
+//             © {new Date().getFullYear()} SPETTS AI |
 //             All rights reserved.
 //           </span>
 
@@ -206,8 +206,8 @@ export default function Footer() {
 
         {/* BRAND */}
         <div>
-          <h2 className="text-2xl font-bold text-red-400">
-            SPETTS AI AI
+          <h2 className="text-2xl font-bold text-blue-600">
+            SPETTS AI
           </h2>
 
           <p className="mt-2 text-sm text-slate-300 leading-6">
@@ -220,7 +220,7 @@ export default function Footer() {
           </p>
 
           {/* SOCIAL */}
-          <div className="flex gap-3 mt-5 text-xl">
+          {/* <div className="flex gap-3 mt-5 text-xl">
 
             <a
               href="#"
@@ -257,7 +257,7 @@ export default function Footer() {
               ▶️
             </a>
 
-          </div>
+          </div> */}
         </div>
 
         {/* QUICK LINKS */}
@@ -317,19 +317,41 @@ export default function Footer() {
           <ul className="mt-4 space-y-4 text-sm text-slate-300">
 
             <li>
-              📧 SPETTS AIindia@gmail.com
+              📧 spettsindia@gmail.com
             </li>
 
             <li>
               📍 Hyderabad, Telangana, India
             </li>
 
-            <li>
+            {/* <li>
               📞 +91 XXXXX XXXXX
+            </li> */}
+
+          </ul>
+                <div className="mt-6">
+          <h4 className="font-semibold text-lg">
+           Ownership
+          </h4>
+
+          <ul className="mt-4 space-y-4 text-sm text-slate-300">
+
+            <li>
+             Founder : Priyanka Shaw
             </li>
+
+            <li>
+             Developer : Sai Chandu
+            </li>
+
+            {/* <li>
+              📞 +91 XXXXX XXXXX
+            </li> */}
 
           </ul>
         </div>
+        </div>
+        
 
       </div>
 
@@ -350,7 +372,7 @@ export default function Footer() {
           </div>
 
           <span>
-            © {new Date().getFullYear()} SPETTS AI AI |
+            © {new Date().getFullYear()} SPETTS AI |
             All rights reserved.
           </span>
 

@@ -72,10 +72,10 @@ export default function Home() {
        <LiveBanner/>
       <Hero />
 
-
+  <CTA/>
       <Features />
            
-           <CTA/>
+         
       <HowItWorks/>
         
       <Stats/>

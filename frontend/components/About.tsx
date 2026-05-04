@@ -11,11 +11,11 @@
 //         </h2>
 
 //         <p className="text-gray-600 max-w-2xl mx-auto">
-// SPETTS AI AI is a next-generation pre-hospital emergency triage system built to transform frontline medical response. Leveraging intelligent decision algorithms, it enables first responders to rapidly assess patient severity, detect critical risks, and initiate timely, protocol-driven interventions.
+// SPETTS AI is a next-generation pre-hospital emergency triage system built to transform frontline medical response. Leveraging intelligent decision algorithms, it enables first responders to rapidly assess patient severity, detect critical risks, and initiate timely, protocol-driven interventions.
 //         </p>
 
 //         <p>
-// Designed with scalability and real-world deployment in mind, SPETTS AI AI seeks to redefine emergency care delivery by combining clinical precision with accessible technology.
+// Designed with scalability and real-world deployment in mind, SPETTS AI seeks to redefine emergency care delivery by combining clinical precision with accessible technology.
 // </p>
 
 // <p>
@@ -51,7 +51,7 @@ export default function About() {
           </h2>
 
           <p className="text-gray-600 leading-8 text-lg">
-            SPETTS AI AI is a next-generation
+            SPETTS AI is a next-generation
             <span className="font-semibold text-gray-900">
               {" "}Pre-hospital Emergency Triage & Transport System
             </span>

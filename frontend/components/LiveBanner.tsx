@@ -15,13 +15,13 @@ export default function LiveBanner() {
       <div className="relative whitespace-nowrap py-3">
 
         <div className="inline-block animate-marquee text-red-600 font-semibold text-sm md:text-base">
-
+          
           🚑 Emergency Response Network Active 24/7 &nbsp;&nbsp;&nbsp;&nbsp;
           • Fast Patient Triage Support &nbsp;&nbsp;&nbsp;&nbsp;
           • Ambulance Coordination Enabled &nbsp;&nbsp;&nbsp;&nbsp;
           • Smart Emergency Alerts Live &nbsp;&nbsp;&nbsp;&nbsp;
           • Critical Care Response Ready &nbsp;&nbsp;&nbsp;&nbsp;
-          • Hyderabad Emergency Assistance Available &nbsp;&nbsp;&nbsp;&nbsp;
+          • Emergency Assistance Available &nbsp;&nbsp;&nbsp;&nbsp;
           • SPETTS AI Monitoring System Online &nbsp;&nbsp;&nbsp;&nbsp;
 
         </div>
